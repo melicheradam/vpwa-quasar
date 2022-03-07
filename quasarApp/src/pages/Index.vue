@@ -7,6 +7,7 @@
       :meta="meta"
     ></example-component>
   </q-page>
+  really?
 </template>
 
 <script lang="ts">
