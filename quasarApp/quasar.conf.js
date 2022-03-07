@@ -73,6 +73,13 @@ module.exports = configure(function (ctx) {
       chainWebpack(/* chain */) {
         //
       },
+      // Added to enable hot-reload on WSL2 setup
+      extendWebpack(cfg) {
+        cfg.watchOptions = {
+          aggregateTimeout: 200,
+          poll: 1000,
+        };
+      },
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
