@@ -39,7 +39,7 @@ export default defineComponent({
     name: 'RegistrationForm',
     props: {
       email_ok: {
-          type: String,
+          type: Boolean,
           required: true
       },
     },  
