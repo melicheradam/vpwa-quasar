@@ -26,7 +26,8 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <!--<router-view /> -->
+      <MessagesContainer></MessagesContainer>
     </q-page-container>
 
     <q-footer class="bg-grey-8 text-white">
@@ -46,6 +47,7 @@
 <script>
 import { ref } from 'vue'
 import Navbar from 'src/components/UserNavbarComponents/Navbar.vue'
+import MessagesContainer from 'src/components/MessageComponents/MessagesContainer.vue'
 
 export default {
   setup () {
@@ -64,6 +66,6 @@ export default {
       }
     }
   },
-  components: { Navbar },
+  components: { Navbar, MessagesContainer },
 }
 </script>
