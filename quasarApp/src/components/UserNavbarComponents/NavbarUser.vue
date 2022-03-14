@@ -5,6 +5,20 @@
     </q-item-section>
 
     <q-item-section>{{ displayName }}</q-item-section>
+
+    <q-menu anchor="center right" self="top right">
+        <q-item clickable>
+            <q-item-section>Kick user</q-item-section>
+        </q-item>
+        <q-item clickable>
+            <q-item-section>View profile</q-item-section>
+        </q-item>
+        <!--
+            # TODO
+            if i click on myself, show option to leave channel instead of Kick user
+            need to init vue store and create user objects
+        -->
+    </q-menu>
 </q-item>
 </template>
 
