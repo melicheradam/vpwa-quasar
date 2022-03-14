@@ -1,11 +1,7 @@
 <template>
 
 <q-input
-    dark
-    class="text-white"
     type="email"
-    color="grey-5"
-    label-color="grey-5"
     outlined
     v-model="email"
     :label="label"

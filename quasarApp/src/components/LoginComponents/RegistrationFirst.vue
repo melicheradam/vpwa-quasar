@@ -1,6 +1,6 @@
 <template>
-<q-card-section class="text-white">
-    <q-form class="q-gutter-md text-white" @submit="check_mail">
+<q-card-section>
+    <q-form class="q-gutter-md" @submit="check_mail">
         <EmailInput ref="email_ref" label="E-mail" v-model:input="email"></EmailInput>
         <PasswordInput label="Password" v-model:input="password"></PasswordInput>
         <PasswordInput label="Confirm password" v-model:input="password_c"></PasswordInput>

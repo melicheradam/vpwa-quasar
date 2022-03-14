@@ -1,11 +1,8 @@
 <template>
 
 <q-input
-    dark
     class="text-white"
     type="text"
-    color="grey-5"
-    label-color="grey-5"
     outlined
     v-model="input_local"
     :label="label"
