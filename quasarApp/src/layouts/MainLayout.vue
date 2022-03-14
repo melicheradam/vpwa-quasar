@@ -28,6 +28,7 @@
 
     <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated>
       <!-- drawer content -->
+      <Navbar></Navbar>
     </q-drawer>
 
     <q-page-container>
@@ -50,6 +51,7 @@
 
 <script>
 import { ref } from 'vue'
+import Navbar from 'src/components/UserNavbarComponents/Navbar.vue'
 
 export default {
   setup () {
@@ -67,6 +69,7 @@ export default {
         rightDrawerOpen.value = !rightDrawerOpen.value
       }
     }
-  }
+  },
+  components: { Navbar },
 }
 </script>
