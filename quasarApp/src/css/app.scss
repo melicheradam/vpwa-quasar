@@ -1,16 +1,16 @@
 // app global css in SCSS form
 $mainc: #2B2E4A;
 $secondaryc: #903749;
-//:root 
+//:root
 //  --q-color-mainc $mainc;
 
 body{
-  color: #f0f0f0 !important;
+  color: primary;
   background-color: $mainc;
 }
 
 .text-mainc{
-  color: $mainc !important;    
+  color: $mainc !important;
 }
 
 .bg-mainc{
@@ -18,9 +18,9 @@ body{
 }
 
 .text-secondaryc{
-  color: $secondaryc !important;    
+  color: $secondaryc !important;
 }
-  
+
 .bg-secondaryc{
   background: $secondaryc !important;
 }
