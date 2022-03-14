@@ -17,8 +17,12 @@ export default defineComponent({
     props: {
       displayName: {
           type: String,
-          required: true
-      }
+          required: true,
+      },
+      imageUrl: {
+          type: String,
+          default: 'default_image_url',
+      } 
     },
     data() {
         return {

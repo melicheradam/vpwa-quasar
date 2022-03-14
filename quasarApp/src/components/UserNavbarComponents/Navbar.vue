@@ -1,12 +1,14 @@
 <template>
 <q-card-section>
-    <q-list bordered>
-        <template v-for="user in users" :key="user.displayName" >
-            <NavbarUser :displayName="user.displayName"></NavbarUser>
-            <q-separator />
-        </template>
-    </q-list>
+    User list:
 </q-card-section>
+
+<q-list>
+    <template v-for="user in users" :key="user.displayName" >
+        <NavbarUser :displayName="user.displayName"></NavbarUser>
+        <q-separator />
+    </template>
+</q-list>
 </template>
 
 <script lang="ts">
