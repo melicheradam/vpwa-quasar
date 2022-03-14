@@ -21,9 +21,9 @@
             </q-form>
           </q-card-section>
           <q-card-actions class="q-px-md">
-            <q-btn to="/" unelevated color="secondaryc" padding="xs lg" size="md" label="Login" />
+            <q-btn to="/" unelevated color="secondary" padding="xs lg" size="md" label="Login" />
             <div class="col"></div>
-            <q-btn to="/login/create-user" unelevated color="secondaryc" padding="xs lg" size="md" label="Create account" />
+            <q-btn to="/login/create-user" unelevated color="secondary" padding="xs lg" size="md" label="Create account" />
           </q-card-actions>
         </q-card>
       </div>

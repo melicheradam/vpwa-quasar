@@ -8,7 +8,7 @@
             <div class="col">
                 <q-btn
                 onclickunelevated
-                color="secondaryc"
+                color="secondary"
                 type="submit"
                 padding="xs lg"
                 size="md"
