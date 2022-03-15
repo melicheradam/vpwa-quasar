@@ -50,9 +50,7 @@
 
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
-
-      <!-- drawer content -->
-
+      <ServerNavbar></ServerNavbar>
     </q-drawer>
 
 
@@ -96,7 +94,7 @@ import { ref } from 'vue'
 import Navbar from 'src/components/UserNavbarComponents/Navbar.vue'
 import InputText from 'src/components/TextInputComponents/InputText.vue'
 import MessagesContainer from 'src/components/MessageComponents/MessagesContainer.vue'
-
+import ServerNavbar from 'src/components/ServerNavbarComponents/ServerNavbar.vue'
 
 
 export default {
@@ -133,7 +131,7 @@ export default {
 
   },
 
-  components: { Navbar, MessagesContainer, InputText },
+  components: { Navbar, MessagesContainer, InputText, ServerNavbar },
 
 }
 
