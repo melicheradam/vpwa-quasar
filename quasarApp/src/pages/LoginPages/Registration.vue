@@ -2,7 +2,7 @@
   <q-page class="window-height window-width row justify-center items-center">
     <div class="column">
       <div class="row justify-end">
-        <h5 class="text-h5 text-white q-my-md">Registration</h5>
+        <h5 class="text-h5 q-my-md">Registration</h5>
       </div>
       <div class="row">
         <q-card class="transparent no-shadow">

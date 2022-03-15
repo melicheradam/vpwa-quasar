@@ -1,6 +1,6 @@
 <template>
-<q-card-section class="text-white">
-    <q-form class="q-gutter-md text-white" @submit="register">
+<q-card-section >
+    <q-form class="q-gutter-md" @submit="register">
         <TextInput label="First name" v-model:input="firstname"></TextInput>
         <TextInput label="Last name" :input="lastname"></TextInput>
         <TextInput label="Application nickname" :input="nickname"></TextInput>

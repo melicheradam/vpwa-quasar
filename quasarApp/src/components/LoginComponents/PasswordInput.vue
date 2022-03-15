@@ -1,13 +1,10 @@
 <template>
 
 <q-input
-    dark
     v-model="password"
     outlined
     :type="isPwd ? 'password' : 'text'"
     :label="label"
-    color="grey-5"
-    label-color="grey-5"
     :modelValue="input"
     @update:modelValue="event => $emit('update:input', event)" 
 > 
