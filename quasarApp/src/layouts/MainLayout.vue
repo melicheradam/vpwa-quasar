@@ -34,39 +34,31 @@
       <router-view />
     </q-page-container>
 
-    <q-footer class="bg-grey-8 text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          <div>Title</div>
-        </q-toolbar-title>
-      </q-toolbar>
+    <q-footer class="text-white">
+      <InputText></InputText>
     </q-footer>
-
   </q-layout>
 </template>
 
 <script>
 import { ref } from 'vue'
+import InputText from 'src/components/TextInputComponents/InputText.vue'
 
 export default {
-  setup () {
-    const leftDrawerOpen = ref(false)
-    const rightDrawerOpen = ref(false)
-
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-
-      rightDrawerOpen,
-      toggleRightDrawer () {
-        rightDrawerOpen.value = !rightDrawerOpen.value
-      }
-    }
-  }
+    setup() {
+        const leftDrawerOpen = ref(false);
+        const rightDrawerOpen = ref(false);
+        return {
+            leftDrawerOpen,
+            toggleLeftDrawer() {
+                leftDrawerOpen.value = !leftDrawerOpen.value;
+            },
+            rightDrawerOpen,
+            toggleRightDrawer() {
+                rightDrawerOpen.value = !rightDrawerOpen.value;
+            }
+        };
+    },
+    components: { InputText }
 }
 </script>
