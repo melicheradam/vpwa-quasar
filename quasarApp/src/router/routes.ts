@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     //main app pages
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
+      { path: '', component: () => import('src/pages/Main.vue') },
 
     ],
   },
@@ -15,8 +15,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/LoginLayout.vue'),
     //pages when logged out
     children: [
-      { path: '', component: () => import('pages/LoginPages/Login.vue') },
-      { path: 'create-user/', component: () => import('pages/LoginPages/Registration.vue') },
+      { path: '', component: () => import('pages/Login.vue') },
+      { path: 'create-user/', component: () => import('pages/Registration.vue') },
     ],
   },
   // Always leave this as last one,
