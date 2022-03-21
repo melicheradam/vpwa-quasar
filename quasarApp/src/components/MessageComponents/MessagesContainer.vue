@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md" style="overflow: auto">
-    <q-infinite-scroll @load="onLoad" reverse>
+  <div id="scroll-target-id" class="q-pa-md" style="overflow: auto; width: 100%; max-height: 86vh;">
+    <q-infinite-scroll @load="onLoad" reverse scroll-target="#scroll-target-id">
       <template v-slot:loading>
         <div class="row justify-center q-my-md">
           <q-spinner color="primary" name="dots" size="40px" />
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
 import Message from './Message.vue';
 
@@ -40,6 +40,7 @@ export default defineComponent({
     methods: {
         onLoad: function(){
             console.log('loading')
+            //this.$refs.messages.setScrollPosition( ... )
         },
     },
     components: { Message }

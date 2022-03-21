@@ -1,5 +1,5 @@
 <template>
-  <q-input color="primary" class="q-px-md"    borderless v-model="input" placeholder="message">
+  <q-input dark color="primary" class="q-px-md" borderless v-model="input" placeholder="Type a message or command">
     <template v-slot:append>
       <q-btn round dense color="grey-5"  flat icon="send" />
     </template>
@@ -10,7 +10,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'InputText',
+  name: 'FooterInput',
   props: {
   },
   data () {
