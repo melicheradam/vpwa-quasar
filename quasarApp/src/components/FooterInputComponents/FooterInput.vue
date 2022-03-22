@@ -1,19 +1,13 @@
-<!--
 <template>
-  <q-input dark color="primary" class="q-px-md" borderless v-model="input" placeholder="Type a message or command">
-    <template v-slot:append>
-      <q-btn round dense color="grey-5" flat icon="send" />
-    </template>
-    <template v-slot:prepend>
-      <q-btn round dense color="grey-5" flat icon="code" />
-    </template>
-  </q-input>
-</template>
--->
-<template>
+    <q-form @submit="onSubmit" autofocus autocorrect="off"
+      autocapitalize="off"
+      autocomplete="off"
+      spellcheck="false">
       <q-select
+        type="text"
         dark
         class="q-px-md"
+        name="message"
         placeholder="Type a message or command"
         borderless
         v-model="input"
@@ -25,8 +19,11 @@
         :options="options"
         @filter="filterFunction"
       >
+        <template v-slot:option="scope">
+          <CommandItem :commandObj="scope"></CommandItem>
+        </template>
         <template v-slot:append>
-          <q-btn round dense color="grey-5" flat icon="send" />
+          <q-btn type="submit" round dense color="grey-5" flat icon="send" @click="onSubmit" />
         </template>
         <template v-slot:prepend>
           <q-btn round dense color="grey-5" flat icon="code" />
@@ -39,37 +36,67 @@
           </q-item>
         </template>
       </q-select>
+    </q-form>
 </template>
 
 <script lang="ts">
+import { QSelect } from 'quasar';
 import { ref, defineComponent } from 'vue';
+import CommandItem from './CommandItem.vue';
 
-const commandList = [
-        'command1', 'command2', 'command3'
-      ]
+
+interface CommandObj{
+  label: string,
+  value: string,
+  description: string,
+}
+const commandList: CommandObj[] = [
+  {
+    label: '',
+    value: '',
+    description: ''
+  },
+  {
+    label: '/kick',
+    value: '/kick',
+    description: 'Kick user from server'
+  },
+  {
+    label: '/list',
+    value: '/list',
+    description: 'List users'
+  },
+  {
+    label: '/create',
+    value: '/create',
+    description: 'Create new channel'
+  }
+]
 
 export default defineComponent({
-
-  data() {
-    return {
-      options: ref(commandList),
-      input: '',
-    }
-  },
-
-  methods:{
-    filterFunction (val: string, update: (callbackFn: () => void, afterFn?: () => void) => void, abort: () => void) {
-        if (val.charAt(0) != '/') {
-          abort()
-          return
+    data() {
+        return {
+            options: ref(commandList),
+            input: '',
+        };
+    },
+    methods: {
+        filterFunction(val: string, update: (callbackFn: () => void,  afterFn?: (ref: QSelect) => void) => void, abort: () => void) {
+            if (val.charAt(0) != '/') {
+                abort();
+                return;
+            }
+            update(() => {
+                const needle = val.toLowerCase();
+                this.options = commandList.filter(v => v.value.toLowerCase().indexOf(needle) > -1);
+            });
+        },
+        onSubmit(evt: Event | SubmitEvent){
+          console.log(this.input)
+          this.input = ''
         }
-
-        update(() => {
-          const needle = val.substring(1).toLowerCase()
-          this.options = commandList.filter(v => v.toLowerCase().indexOf(needle) > -1)
-        })
-      }
-  },
+    },
+    components: { CommandItem }
 })
 </script>
 
