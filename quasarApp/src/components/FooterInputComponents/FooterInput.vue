@@ -1,9 +1,11 @@
-<template>
+: void<template>
     <q-form @submit="onSubmit" autofocus autocorrect="off"
       autocapitalize="off"
       autocomplete="off"
       spellcheck="false">
       <q-select
+        @keydown.enter="onSubmit"
+        ref="select"
         type="text"
         dark
         class="q-px-md"
@@ -11,6 +13,7 @@
         placeholder="Type a message or command"
         borderless
         v-model="input"
+        @input-value="setModel"
         use-input
         hide-selected
         fill-input
@@ -52,11 +55,6 @@ interface CommandObj{
 }
 const commandList: CommandObj[] = [
   {
-    label: '',
-    value: '',
-    description: ''
-  },
-  {
     label: '/kick',
     value: '/kick',
     description: 'Kick user from server'
@@ -74,12 +72,20 @@ const commandList: CommandObj[] = [
 ]
 
 export default defineComponent({
+ 
     data() {
         return {
             options: ref(commandList),
+            select: ref('select'),
             input: '',
+
         };
     },
+    $refs!:{
+      select: ref('select'),
+    },
+    /// <reference path="" />
+    
     methods: {
         filterFunction(val: string, update: (callbackFn: () => void,  afterFn?: (ref: QSelect) => void) => void, abort: () => void) {
             if (val.charAt(0) != '/') {
@@ -92,9 +98,15 @@ export default defineComponent({
             });
         },
         onSubmit(evt: Event | SubmitEvent){
-          console.log(this.input)
+          //here we will post message
+          //and store it to vuex store
           this.input = ''
-        }
+          const item = this.$refs.select as QSelect
+          item.updateInputValue('')
+        },
+        setModel (val: string) {
+          this.input = val
+        },
     },
     components: { CommandItem }
 })
