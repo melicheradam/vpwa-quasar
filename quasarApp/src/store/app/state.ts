@@ -1,11 +1,24 @@
-export interface ExampleStateInterface {
-  prop: boolean;
+import {MessageModel, User} from 'components/models';
+
+export interface MessagesStateInterface{
+  messages: Array<MessageModel>,
 }
 
-function state(): ExampleStateInterface {
+export function messagesState(): MessagesStateInterface{
+    return {
+      messages: Array<MessageModel>()
+    }
+  }
+
+  /*
+export function currentUser(): User{
   return {
-    prop: false,
-  };
-}
+    email: '',
+    username: 'foobar',
+    firstname: 'Fooo',
+    lastname: 'Bar',
+    id: 0
+  }
+}*/
 
-export default state;
+export default messagesState;

@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <MessagesContainer></MessagesContainer>
+    <MessagesContainer :channel_id="0" ></MessagesContainer>
   </q-page>
  
 </template>

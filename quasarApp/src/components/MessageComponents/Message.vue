@@ -2,12 +2,12 @@
 <div class="q-pa-md row justify-center">
     <div style="width: 90%;">
       <q-chat-message v-if="message.id===currentUser"
-        :name="message.displayName"
+        :name="message.user"
         :text="message.text"
         sent
       />
       <q-chat-message v-if="message.id!==currentUser"
-        :name="message.displayName"
+        :name="message.user"
         avatar="https://cdn.quasar.dev/img/avatar2.jpg"
         :text="message.text"
       />

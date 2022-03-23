@@ -1,3 +1,4 @@
+
 <template>
   <div id="scroll-target-id" class="q-pa-md" style="overflow: auto; width: 100%; max-height: 86vh;">
     <q-infinite-scroll @load="onLoad" reverse scroll-target="#scroll-target-id">
@@ -7,7 +8,7 @@
         </div>
       </template>
 
-      <div v-for="message in messages" :key="message.id" class="caption q-py-sm">
+      <div v-for="message in channelMessages" :key="message.id" class="caption q-py-sm">
         <Message :message="message" :currentUser="1"></Message>
       </div>
     </q-infinite-scroll>
@@ -16,33 +17,66 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, LegacyConfig} from 'vue';
 import { useQuasar } from 'quasar'
+import { useStore } from 'src/store';
 import Message from './Message.vue';
+import {MessageModel} from '../models';
+import {mapGetters} from 'vuex'
+import {getMessagesByChannel} from 'src/utils/GettersHelper'
 
 export default defineComponent({
     name: 'MessagesContainer',
 
+    props: {
+      channel_id: {
+        type: Number,
+        required: true,
+      }
+    },
+
     data() {
         return {
-            messages: [
-                {'id': 1, 'displayName': 'User1', 'text': ['lorem ipsum']},
-                {'id': 2, 'displayName': 'User2', 'text': ['lorem ipsum']},
-                {'id': 3, 'displayName': 'User2', 'text': ['lorem ipsum']},
-                {'id': 4, 'displayName': 'User4', 'text': ['lorem ipsum']},
-                {'id': 1, 'displayName': 'User1', 'text': ['lorem ipsum']},
-                {'id': 1, 'displayName': 'User1', 'text': ['lorem ipsum']},
-                {'id': 4, 'displayName': 'User4', 'text': ['lorem ipsum']},
-            ],
             $q: useQuasar(),
         };
     },
     methods: {
         onLoad: function(){
-            console.log('loading')
-            //this.$refs.messages.setScrollPosition( ... )
+            // fetch more messages from api
+            /*
+            const loaded_messages = [
+              {id: 0, channel_id: 0, date: new Date(), text: ['hello'], user: 'me'},
+              {id: 0, channel_id: 0, date: new Date(), text: ['hello', '????'], user: 'me'},
+              {id: 0, channel_id: 0, date: new Date(), text: ['hello'], user: 'me'},
+              {id: 0, channel_id: 0, date: new Date(), text: ['hello'], user: 'me'},
+            ]*/
+            //this.addMessages(loaded_messages)
+            
         },
+        addMessages(messages: Array<MessageModel>){
+          //this.messages = this.messages.concat(messages)
+        
+          //this.messages.sort(item => item.date)
+        }
     },
-    components: { Message }
+    components: { Message },
+    computed: {
+      channelMessages:{
+        get () {
+          return getMessagesByChannel(this.$store.state.app.messages, 0)
+        },
+        set (val: MessageModel[]) {
+          this.$store.commit('app/storeAllMessages', val)
+        }
+        
+      }
+    },
+
+    mounted(){
+      this.$store.commit('app/storeMessage', {id: 0, channel_id: 0, date: new Date(), text: ['hello'], user: 'me'})
+      this.$store.commit('app/storeMessage', {id: 0, channel_id: 1, date: new Date(), text: ['hello'], user: 'not me'})
+      console.log()
+
+    }
 });
 </script>

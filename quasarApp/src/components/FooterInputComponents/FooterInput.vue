@@ -1,4 +1,5 @@
-: void<template>
+
+<template>
     <q-form @submit="onSubmit" autofocus autocorrect="off"
       autocapitalize="off"
       autocomplete="off"
@@ -44,8 +45,10 @@
 
 <script lang="ts">
 import { QSelect } from 'quasar';
+import { useStore } from 'src/store';
 import { ref, defineComponent } from 'vue';
 import CommandItem from './CommandItem.vue';
+import {MessageModel } from 'components/models'
 
 
 interface CommandObj{
@@ -84,7 +87,6 @@ export default defineComponent({
     $refs!:{
       select: ref('select'),
     },
-    /// <reference path="" />
     
     methods: {
         filterFunction(val: string, update: (callbackFn: () => void,  afterFn?: (ref: QSelect) => void) => void, abort: () => void) {
@@ -101,7 +103,16 @@ export default defineComponent({
           //here we will post message
           //and store it to vuex store
           // if first character is command execute it against API
-          this.input = ''
+          
+          const message: MessageModel= {
+            id: -1,
+            date: new Date(),
+            user: 'me',
+            channel_id: 0,
+            text: [this.input]
+          }
+          this.$store.commit('app/storeMessage', message)
+
           const item = this.$refs.select as QSelect
           item.updateInputValue('')
         },

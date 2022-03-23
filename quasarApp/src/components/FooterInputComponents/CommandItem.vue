@@ -1,6 +1,6 @@
 <template>
 
-<q-item v-bind="commandObj.itemProps">
+<q-item v-bind="commandObj.itemProps" >
     <q-item-section>
         <q-item-label style="color:white">{{ commandObj.opt.label }}</q-item-label>
         <q-item-label caption>{{ commandObj.opt.description }}</q-item-label>
