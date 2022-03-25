@@ -1,9 +1,9 @@
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
-import { MessagesStateInterface } from './state';
+import { AppStateInterface } from './state';
 
 //fetchovanie moze ist aj sem
-const actions: ActionTree<MessagesStateInterface, StateInterface> = {
+const actions: ActionTree<AppStateInterface, StateInterface> = {
   someAction (/* context */) {
     // your code
   }

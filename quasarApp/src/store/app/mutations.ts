@@ -1,15 +1,15 @@
 import { MessageModel } from 'src/components/models';
 import { MutationTree } from 'vuex';
-import { MessagesStateInterface } from './state';
+import { AppStateInterface } from './state';
 
-const mutation: MutationTree<MessagesStateInterface> = {
+const mutation: MutationTree<AppStateInterface> = {
   someMutation (/* state: ExampleStateInterface */) {
     // your code
   },
-  storeMessage(state: MessagesStateInterface, messageObj: MessageModel) {
+  storeMessage (state: AppStateInterface, messageObj: MessageModel) {
     state.messages.push(messageObj)
   },
-  storeAllMessages(state: MessagesStateInterface, messageArr: MessageModel[]) {
+  storeAllMessages (state: AppStateInterface, messageArr: MessageModel[]) {
     state.messages = messageArr
   }
 };
