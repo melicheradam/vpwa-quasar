@@ -1,32 +1,28 @@
 <template>
-
   <q-layout view="hHh lpR lFr">
-   
-    <q-header class="bg-primary text-white" height-hint="98" style="height:7vh">
+    <q-header class="bg-primary text-white" height-hint="98" style="height:50px">
       <q-toolbar>
-
-        <q-btn dense flat round  @click="toggleLeftDrawer">
+        <q-btn dense flat round @click="toggleLeftDrawer">
           <q-avatar v-if="leftDrawerOpen">
-            <q-icon name="chevron_left"/>
+            <q-icon name="chevron_left" />
           </q-avatar>
           <q-avatar v-else>
-            <q-icon name="chevron_right"/>
+            <q-icon name="chevron_right" />
           </q-avatar>
         </q-btn>
 
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          Title
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+          </q-avatar>Title
         </q-toolbar-title>
 
-        <q-btn dense flat round  @click="toggleRightDrawer">
+        <q-btn dense flat round @click="toggleRightDrawer">
           <q-avatar v-if="rightDrawerOpen">
-            <q-icon name="chevron_right"/>
+            <q-icon name="chevron_right" />
           </q-avatar>
           <q-avatar v-else>
-            <q-icon name="chevron_left"/>
+            <q-icon name="chevron_left" />
           </q-avatar>
         </q-btn>
       </q-toolbar>
@@ -42,15 +38,13 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view /> 
+      <router-view />
     </q-page-container>
 
-    <q-footer class="text-white" style="height:7vh">
+    <q-footer class="text-white" style="height:50px">
       <FooterInput></FooterInput>
     </q-footer>
-  
   </q-layout>
-
 </template>
 
 
