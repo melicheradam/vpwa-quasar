@@ -6,7 +6,11 @@
     :icon="icon"
     :label="title"
   >
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, sequi?
+    <q-list dense padding>
+      <template v-for="server in servers" :key="server">
+        <Server :title="server"></Server>
+      </template>
+    </q-list>
   </q-expansion-item>
 </template>
 
@@ -15,6 +19,7 @@
 
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
+import  Server  from './Server.vue'
 
 export default defineComponent({
     name: 'CategoryExpansion',
@@ -30,12 +35,13 @@ export default defineComponent({
     },
     data() {
         return {
+          servers : ['server1', 'server2', 'server3'],
             $q: useQuasar(),
         };
     },
     methods: {
     },
-    components: {}
+    components: { Server }
 });
 </script>
 

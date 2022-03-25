@@ -20,7 +20,7 @@ export default defineComponent({
     return {
       rows : [
         {
-          icon : 'lock',
+          icon : 'priority_high',
           title : 'Invites'
         },
         {
