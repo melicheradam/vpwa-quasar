@@ -1,8 +1,8 @@
-import { MessageModel, User, ChannelModel } from 'components/models';
+import { MessageModel, UserModel, ChannelModel } from 'components/models';
 
 export interface AppStateInterface {
   messages: Array<MessageModel>,
-  currentUser: User,
+  currentUser: UserModel,
   channels_invites: Array<ChannelModel>,
   channels_joined: Array<ChannelModel>,
 }
@@ -21,16 +21,5 @@ export function appState (): AppStateInterface {
     channels_joined: Array<ChannelModel>(),
   }
 }
-
-/*
-export function currentUser(): User{
-return {
-  email: '',
-  username: 'foobar',
-  firstname: 'Fooo',
-  lastname: 'Bar',
-  id: 0
-}
-}*/
 
 export default appState;

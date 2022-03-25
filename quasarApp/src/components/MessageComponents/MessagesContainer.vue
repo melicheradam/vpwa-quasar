@@ -20,12 +20,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, LegacyConfig } from 'vue';
+import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
-import { useStore } from 'src/store';
 import Message from './Message.vue';
 import { MessageModel } from '../models';
-import { mapGetters } from 'vuex'
 import { getMessagesByChannel } from 'src/utils/GettersHelper'
 
 export default defineComponent({
@@ -41,12 +39,13 @@ export default defineComponent({
   data () {
     return {
       $q: useQuasar(),
+      temp_now: Date.now()
     };
   },
   methods: {
     onLoad: function () {
       // fetch more messages from api
-
+      this.$store.commit('app/storeMessage', { id: 0, channel_id: 1, date: this.temp_now, text: ['hello'], user: 'not me' })
 
     },
     addMessages (messages: Array<MessageModel>) {
@@ -69,9 +68,15 @@ export default defineComponent({
   },
 
   mounted () {
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: new Date(), text: ['hello'], user: 'me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 1, date: new Date(), text: ['hello'], user: 'not me' })
-    console.log()
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
+    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
 
   }
 });
