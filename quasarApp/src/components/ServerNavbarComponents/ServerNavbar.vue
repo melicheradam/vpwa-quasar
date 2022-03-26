@@ -1,16 +1,19 @@
 <template>
   <div>
-    <q-list padding bordered class="rounded-borders">
+    <q-list padding>
       <template v-for="row in rows" :key="row.icon">
         <CategoryExpansion :icon="row.icon" :title="row.title" ></CategoryExpansion>
       </template>
     </q-list>
+
+    <UserBlock></UserBlock>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CategoryExpansion from './CategoryExpansion.vue';
+import UserBlock from './UserBlock.vue'
 
 export default defineComponent({
   name: 'ServerNavbar',
@@ -34,7 +37,7 @@ export default defineComponent({
       ]
     }
   },
-  components: { CategoryExpansion },
+  components: { CategoryExpansion, UserBlock },
 
 
 });
