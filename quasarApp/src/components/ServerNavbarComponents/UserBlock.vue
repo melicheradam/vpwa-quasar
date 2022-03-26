@@ -14,22 +14,51 @@
       </q-item-section>
 
       <q-item-section side>
+        <q-btn @click="prompt = true" dense flat round class="">
+          <q-icon name="add_circle_outline"/>
+          <q-tooltip :offset="[0, 8]">Add channel</q-tooltip>
+        </q-btn>
+      </q-item-section>
+
+      <q-item-section side>
         <q-btn dense flat round class="">
           <q-icon name="settings"/>
+          <q-tooltip :offset="[0, 8]">Settings</q-tooltip>
         </q-btn>
       </q-item-section>
 
       <q-item-section side>
         <q-btn dense flat round @click="$router.push('/login/')">
           <q-icon name="logout"/>
+          <q-tooltip :offset="[0, 8]">Logout</q-tooltip>
         </q-btn>
       </q-item-section>
+
+      <q-dialog v-model="prompt" persistent>
+        <q-card style="min-width: 350px">
+          <q-card-section>
+            <div class="text-h6">Channel name</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <q-input dense v-model="channel_name" autofocus @keyup.enter="prompt = false" />
+          </q-card-section>
+
+          <q-card-section align="right">
+            <q-checkbox v-model="private" label="Private" color="negative"></q-checkbox>
+          </q-card-section>
+
+          <q-card-actions align="right" class="text-primary">
+            <q-btn flat label="Cancel" v-close-popup />
+            <q-btn flat label="Add Channel" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
 
     </q-item>
 </template>
 
 <script lang="ts">
-import { colors } from 'quasar';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -38,6 +67,9 @@ export default defineComponent({
   },
   data () {
     return {
+      private : false,
+      channel_name : '',
+      prompt : false,
       index : 0,
       colors : ['positive', 'negative', 'grey-5']
     }

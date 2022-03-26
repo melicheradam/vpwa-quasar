@@ -1,9 +1,9 @@
 <template>
   <div>
     <q-list padding>
-      <template v-for="row in rows" :key="row.icon">
-        <CategoryExpansion :icon="row.icon" :title="row.title" ></CategoryExpansion>
-      </template>
+        <template v-for="row in rows" :key="row.icon">
+          <CategoryExpansion :icon="row.icon" :title="row.title" ></CategoryExpansion>
+        </template>
     </q-list>
 
     <UserBlock></UserBlock>
@@ -28,11 +28,11 @@ export default defineComponent({
         },
         {
           icon : 'tag',
-          title : 'Servers'
+          title : 'Channels'
         },
         {
           icon : 'travel_explore',
-          title : 'Public Servers'
+          title : 'Public Channels'
         }
       ]
     }

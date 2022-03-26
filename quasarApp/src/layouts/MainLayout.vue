@@ -12,9 +12,9 @@
         </q-btn>
 
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>Title
+          <q-avatar class="q-mx-md">
+            <q-icon size="md" name="speaker_notes"/>
+          </q-avatar>IRC
         </q-toolbar-title>
 
         <q-btn dense flat round @click="toggleRightDrawer">
