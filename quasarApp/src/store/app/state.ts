@@ -12,7 +12,7 @@ export function appState (): AppStateInterface {
   return {
     messages: Array<MessageModel>(),
     currentUser: {
-      id: -1,
+      id: 10,
       username: 'MyUserName',
       firstname: 'Foo',
       lastname: 'Bar',

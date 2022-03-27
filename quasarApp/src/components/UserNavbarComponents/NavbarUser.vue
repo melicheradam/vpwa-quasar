@@ -18,7 +18,7 @@
 
         <q-item-section side v-if="currentUser.id === userObj.id">
             <q-tooltip :offset="[0, 2]">Leave channel</q-tooltip>
-            <q-btn flat icon="exit_to_app" help="Leave channel" />
+            <q-btn flat icon="exit_to_app" />
         </q-item-section>
         <!--
             # TODO

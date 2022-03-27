@@ -48,7 +48,9 @@ export default defineComponent({
   },
   data () {
     return {
-      publicChannels: Array<ChannelModel>(),
+      publicChannels: Array<ChannelModel>(
+        { id: 7, name: 'channel1', owner_id: 0, type: 'public', private: false }
+      ),
     }
   },
   computed: {
@@ -71,12 +73,12 @@ export default defineComponent({
   },
   components: { UserBlock, Server },
   mounted () {
-    this.$store.commit('app/storeChannel', { id: 0, name: 'channel1', owner: 'whatever', type: 'joined', private: true })
-    this.$store.commit('app/storeChannel', { id: 1, name: 'channel2', owner: 'whatever', type: 'joined', private: true })
-    this.$store.commit('app/storeChannel', { id: 2, name: 'channel3', owner: 'whatever', type: 'joined', private: false })
-    this.$store.commit('app/storeChannel', { id: 3, name: 'channel4', owner: 'whatever', type: 'joined', private: false })
-    this.$store.commit('app/storeChannel', { id: 4, name: 'channel5', owner: 'whatever', type: 'invite', private: false })
-    this.$store.commit('app/storeChannel', { id: 5, name: 'channel6', owner: 'whatever', type: 'invite', private: false })
+    this.$store.commit('app/storeChannel', { id: 0, name: 'channel1', owner_id: 0, type: 'joined', private: true })
+    this.$store.commit('app/storeChannel', { id: 1, name: 'channel2', owner_id: 0, type: 'joined', private: true })
+    this.$store.commit('app/storeChannel', { id: 2, name: 'channel3', owner_id: 1, type: 'joined', private: false })
+    this.$store.commit('app/storeChannel', { id: 3, name: 'channel4', owner_id: 10, type: 'joined', private: false })
+    this.$store.commit('app/storeChannel', { id: 4, name: 'channel5', owner_id: 1, type: 'invite', private: false })
+    this.$store.commit('app/storeChannel', { id: 5, name: 'channel6', owner_id: 10, type: 'invite', private: false })
   }
 
 
