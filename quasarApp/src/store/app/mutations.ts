@@ -30,6 +30,16 @@ const mutation: MutationTree<AppStateInterface> = {
       state.channels_joined.push(channelObj)
   },
 
+  DeleteChannel (state: AppStateInterface, DataObj: {type : string, id : number}) {
+    if(DataObj.type === 'invite')
+      state.channels_invites = state.channels_invites.filter(function (Channel : ChannelModel) : boolean {
+        return Channel.id !== DataObj.id;
+      })
+    else if (DataObj.type === 'joined')
+      state.channels_joined = state.channels_joined.filter(function (Channel : ChannelModel) : boolean {
+        return Channel.id !== DataObj.id;
+      })
+  },
 };
 
 export default mutation;
