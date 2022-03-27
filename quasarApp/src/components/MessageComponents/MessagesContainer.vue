@@ -29,47 +29,40 @@ import { getMessagesByChannel } from 'src/utils/GettersHelper'
 export default defineComponent({
   name: 'MessagesContainer',
 
-  props: {
-    channel_idProp: {
-      type: Number,
-      required: true,
-    }
-  },
-
   data () {
     return {
       $q: useQuasar(),
       temp_now: Date.now(),
-      channel_id: this.channel_idProp,
-
     };
   },
   methods: {
-    onLoad: function () {
+    onLoad(index: number, done: (stop?: boolean) => void): void {
       // fetch more messages from api
       this.$store.commit('app/storeMessage', { id: 0, channel_id: 1, date: this.temp_now, text: ['hello'], user: 'not me' })
 
+      done(true)
     },
   },
   components: { Message },
   computed: {
     channelMessages: {
-      get () {
-        console.log(this.channel_id)
-        return getMessagesByChannel(this.$store.state.app.messages, this.channel_id)
+      get (): Array<MessageModel>{
+        return getMessagesByChannel(this.$store.state.app.messages, this.channelID)
       },
       set (val: MessageModel[]) {
         this.$store.commit('app/storeAllMessages', val)
       }
-
+    },
+    channelID:{
+      get(): number{
+        return Number(this.$route.params.channelID)
+      },
+      set(){
+        //
+      }
+      
     }
   },
-  beforeRouteUpdate(to, from) {
-    // react to route changes...
-    console.log(this.$route.params.channel_id)
-    this.channel_id = Number(this.$route.params.channel_id)
-  },
-
   mounted () {
     this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
     this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })

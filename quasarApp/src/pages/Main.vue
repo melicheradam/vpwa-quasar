@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <MessagesContainer :channel_id="channel_id" :key="$route.fullPath" ></MessagesContainer>
+    <MessagesContainer :key="$route.fullPath" ></MessagesContainer>
   </q-page>
  
 </template>
@@ -13,10 +13,5 @@ import MessagesContainer from 'src/components/MessageComponents/MessagesContaine
 export default defineComponent({
   components: { MessagesContainer },
   name: 'IndexPage',
-  data () {
-    return {
-      channel_id: Number(this.$route.params.channel_id)
-    }
-  },
 });
 </script>
