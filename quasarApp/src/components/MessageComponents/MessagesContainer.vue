@@ -38,9 +38,9 @@ export default defineComponent({
   methods: {
     onLoad (index: number, done: (stop?: boolean) => void): void {
       // fetch more messages from api
-      this.$store.commit('app/storeMessage', { id: 0, channel_id: 1, date: this.temp_now, text: ['hello'], user: 'not me' })
+      this.$store.commit('app/storeMessage', { id: 0, channel_id: this.channelID, date: this.temp_now, text: ['hello'], user: 'not me' })
 
-      done(true)
+      done(false)
     },
   },
   components: { Message },

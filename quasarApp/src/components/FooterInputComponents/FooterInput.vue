@@ -34,7 +34,7 @@
         <q-btn type="submit" round dense color="grey-5" flat icon="send" @click="onSubmit" />
       </template>
       <template v-slot:prepend>
-        <q-btn round dense color="grey-5" flat icon="code" />
+        <q-btn round dense color="grey-5" flat icon="code" @click="toggleCommandList" />
       </template>
       <template v-slot:no-option>
         <q-item>
@@ -58,6 +58,31 @@ interface CommandObj {
   description: string,
 }
 const commandList: CommandObj[] = [
+  {
+    label: '/quit',
+    value: '/quit',
+    description: 'Delete channel'
+  },
+  {
+    label: '/cancel',
+    value: '/cancel',
+    description: 'Exit channel'
+  },
+  {
+    label: '/join',
+    value: '/join',
+    description: 'Join or create channel'
+  },
+  {
+    label: '/invite',
+    value: '/invite',
+    description: 'Invite user to this channel'
+  },
+  {
+    label: '/revoke',
+    value: '/revoke',
+    description: 'Remove user from server'
+  },
   {
     label: '/kick',
     value: '/kick',
@@ -110,20 +135,27 @@ export default defineComponent({
         this.options = commandList.filter(v => v.value.toLowerCase().indexOf(needle) > -1);
       });
     },
+    toggleCommandList () {
+      const item = this.$refs.select as QSelect
+      item.updateInputValue('/')
+    },
     onSubmit (evt: Event | SubmitEvent) {
       //here we will post message
       //and store it to vuex store
       // if first character is command execute it against API
-
-      const message: MessageModel = {
-        id: -1,
-        date: Date.now(),
-        user: '',
-        channel_id: this.channelID,
-        text: [this.input]
+      if (this.input.charAt(0) == '/') {
+        //
       }
-      this.$store.commit('app/storeMessage', message)
-
+      else {
+        const message: MessageModel = {
+          id: -1,
+          date: Date.now(),
+          user: '',
+          channel_id: this.channelID,
+          text: [this.input]
+        }
+        this.$store.commit('app/storeMessage', message)
+      }
       const item = this.$refs.select as QSelect
       item.updateInputValue('')
     },

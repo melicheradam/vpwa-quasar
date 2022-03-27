@@ -33,19 +33,8 @@ const mutation: MutationTree<AppStateInterface> = {
     /**
      * Add fetching of users in the current channel
      *  */
-    channelObj.users = Array<UserModel>(state.currentUser)
+    channelObj.users = Array<UserModel>(state.currentUser, { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' })
     state.currentChannel = channelObj
-  },
-
-  DeleteChannel (state: AppStateInterface, DataObj: {type : string, id : number}) {
-    if(DataObj.type === 'invite')
-      state.channels_invites = state.channels_invites.filter(function (Channel : ChannelModel) : boolean {
-        return Channel.id !== DataObj.id;
-      })
-    else if (DataObj.type === 'joined')
-      state.channels_joined = state.channels_joined.filter(function (Channel : ChannelModel) : boolean {
-        return Channel.id !== DataObj.id;
-      })
   },
 };
 

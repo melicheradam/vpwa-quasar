@@ -20,18 +20,18 @@
             <q-tooltip :offset="[0, 2]">Leave channel</q-tooltip>
             <q-btn flat icon="exit_to_app" />
         </q-item-section>
-        <!--
-            # TODO
-            if i click on myself, show option to leave channel instead of Kick user
-            !need to init vue store and create user objects
-        -->
+        <q-item-section side v-else>
+            <q-tooltip :offset="[0, 2]" v-if="currentChannel.owner_id === currentUser.id">Ban user</q-tooltip>
+            <q-tooltip :offset="[0, 2]" v-else>Vote kick</q-tooltip>
+            <q-btn flat icon="block" />
+        </q-item-section>
     </q-item>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
-import { ChannelModel, UserModel, ChannelUsersModel } from '../models';
+import { UserModel, ChannelUsersModel } from '../models';
 
 export default defineComponent({
     name: 'UserNavbar',
