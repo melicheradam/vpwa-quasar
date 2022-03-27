@@ -1,4 +1,4 @@
-import { MessageModel, UserModel, ChannelModel } from 'src/components/models';
+import { MessageModel, UserModel, ChannelModel, ChannelUsersModel } from 'src/components/models';
 import { MutationTree } from 'vuex';
 import { AppStateInterface } from './state';
 
@@ -18,16 +18,23 @@ const mutation: MutationTree<AppStateInterface> = {
   },
   storeCurrentUser (state: AppStateInterface, userObj: UserModel) {
     /**
-     * User when logging user in,
+     * Used when logging user in,
      * Add fetching of channels joined by user
      *  */
     state.currentUser = userObj
   },
   storeChannel (state: AppStateInterface, channelObj: ChannelModel) {
-    if(channelObj.type === 'invite')
+    if (channelObj.type === 'invite')
       state.channels_invites.push(channelObj)
     else if (channelObj.type === 'joined')
       state.channels_joined.push(channelObj)
+  },
+  storeCurrentChannel (state: AppStateInterface, channelObj: ChannelUsersModel) {
+    /**
+     * Add fetching of users in the current channel
+     *  */
+    channelObj.users = Array<UserModel>(state.currentUser)
+    state.currentChannel = channelObj
   },
 
 };

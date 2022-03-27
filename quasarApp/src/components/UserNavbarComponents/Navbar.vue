@@ -1,34 +1,45 @@
 <template>
-<q-card-section>
-    User list:
-</q-card-section>
-
-<q-list>
-    <template v-for="user in users" :key="user.displayName" >
-        <NavbarUser :displayName="user.displayName"></NavbarUser>
-        <q-separator />
-    </template>
-</q-list>
+    <q-card-section>User list:</q-card-section>
+    <q-list>
+        <template v-for="user in channelUsers" :key="user.username">
+            <NavbarUser :userObj="user"></NavbarUser>
+            <q-separator />
+        </template>
+    </q-list>
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
 import NavbarUser from './NavbarUser.vue';
+import { UserModel } from '../models';
 
 export default defineComponent({
     name: 'UserNavbar',
 
-    data() {
+    data () {
         return {
-            users: [
-                {'displayName': 'User1'},
-                {'displayName': 'User2'},
-                {'displayName': 'User3'},
-                {'displayName': 'User4'},
-            ],
             $q: useQuasar(),
         };
+    },
+    computed: {
+        channelUsers: {
+            get (): Array<UserModel> {
+                return this.$store.state.app.currentChannel.users
+            },
+            set () {
+                //
+            }
+        },
+        channelID: {
+            get (): number {
+                return Number(this.$store.state.app.currentChannel.id)
+            },
+            set () {
+                //
+            }
+
+        }
     },
     methods: {
     },

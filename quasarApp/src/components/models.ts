@@ -14,10 +14,14 @@ export interface MessageModel {
 
 export interface ChannelModel {
   id: number,
-  name: number,
-  owner: string,
+  name: string,
+  owner_id: number,
   // joined or invite or public
   type: string,
+}
+
+export interface ChannelUsersModel extends ChannelModel {
+  users: Array<UserModel>
 }
 
 
@@ -27,4 +31,5 @@ export interface UserModel {
   firstname: string,
   lastname: string,
   email: string,
+  status: string,
 }

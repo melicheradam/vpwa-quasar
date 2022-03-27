@@ -88,6 +88,16 @@ export default defineComponent({
   $refs!: {
     select: ref('select'),
   },
+  computed: {
+    channelID: {
+      get (): number {
+        return Number(this.$route.params.channelID)
+      },
+      set () {
+        //
+      }
+    }
+  },
 
   methods: {
     filterFunction (val: string, update: (callbackFn: () => void, afterFn?: (ref: QSelect) => void) => void, abort: () => void) {
@@ -109,7 +119,7 @@ export default defineComponent({
         id: -1,
         date: Date.now(),
         user: '',
-        channel_id: 0,
+        channel_id: this.channelID,
         text: [this.input]
       }
       this.$store.commit('app/storeMessage', message)

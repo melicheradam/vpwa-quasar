@@ -36,7 +36,7 @@ export default defineComponent({
     };
   },
   methods: {
-    onLoad(index: number, done: (stop?: boolean) => void): void {
+    onLoad (index: number, done: (stop?: boolean) => void): void {
       // fetch more messages from api
       this.$store.commit('app/storeMessage', { id: 0, channel_id: 1, date: this.temp_now, text: ['hello'], user: 'not me' })
 
@@ -46,21 +46,21 @@ export default defineComponent({
   components: { Message },
   computed: {
     channelMessages: {
-      get (): Array<MessageModel>{
+      get (): Array<MessageModel> {
         return getMessagesByChannel(this.$store.state.app.messages, this.channelID)
       },
       set (val: MessageModel[]) {
         this.$store.commit('app/storeAllMessages', val)
       }
     },
-    channelID:{
-      get(): number{
-        return Number(this.$route.params.channelID)
+    channelID: {
+      get (): number {
+        return Number(this.$store.state.app.currentChannel.id)
       },
-      set(){
+      set () {
         //
       }
-      
+
     }
   },
   mounted () {
