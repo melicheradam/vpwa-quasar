@@ -1,7 +1,7 @@
 <template>
     <q-item class="user">
 
-      <q-item-section side>
+      <q-item-section>
         <q-avatar rounded size="48px">
           <img src="https://cdn.quasar.dev/img/avatar.png" />
           <q-badge floating class="badge">
@@ -9,6 +9,7 @@
           </q-badge>
         </q-avatar>
       </q-item-section>
+
       <q-item-section>
         <q-item-label >Mary</q-item-label>
       </q-item-section>
@@ -41,7 +42,7 @@
           </q-card-section>
 
           <q-card-section class="q-pt-none">
-            <q-input dense v-model="channel_name" autofocus @keyup.enter="prompt = false" />
+            <q-input dense v-model="channel_name" autofocus @keyup.enter="prompt = false"/>
           </q-card-section>
 
           <q-card-section align="right">
@@ -93,6 +94,5 @@ background-color: #1e2033;
 }
 .badge  {
   background-color: transparent;
-  margin-left: 10%;
 }
 </style>
