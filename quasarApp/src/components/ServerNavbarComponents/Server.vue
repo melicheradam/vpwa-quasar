@@ -1,33 +1,33 @@
 <template>
-  <q-item clickable v-ripple :inset-level="3.8">
+  <q-item clickable v-ripple :inset-level="3.8" @click="redirect">
     <q-item-section>
-      {{ title }}
+      {{ name }}
     </q-item-section>
   </q-item>
 </template>
 
 
-<script>
-
+<script lang="ts">
 import { defineComponent } from 'vue';
-import { useQuasar } from 'quasar'
 
 export default defineComponent({
     name: 'Server',
     props: {
-      title: {
+      name: {
           type: String,
           required : true,
+      },
+      channel_id: {
+        type: Number,
+        requred: true
       }
     },
-    data() {
-        return {
-            $q: useQuasar(),
-        };
-    },
     methods: {
-    },
-    components: {}
+      redirect(evt: Event){
+        evt.preventDefault();
+        void this.$router.push('/channel/' + String(this.channel_id))
+      }
+    }
 });
 </script>
 
