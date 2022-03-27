@@ -30,7 +30,7 @@ export default defineComponent({
   name: 'MessagesContainer',
 
   props: {
-    channel_id: {
+    channel_idProp: {
       type: Number,
       required: true,
     }
@@ -39,7 +39,9 @@ export default defineComponent({
   data () {
     return {
       $q: useQuasar(),
-      temp_now: Date.now()
+      temp_now: Date.now(),
+      channel_id: this.channel_idProp,
+
     };
   },
   methods: {
@@ -48,23 +50,24 @@ export default defineComponent({
       this.$store.commit('app/storeMessage', { id: 0, channel_id: 1, date: this.temp_now, text: ['hello'], user: 'not me' })
 
     },
-    addMessages (messages: Array<MessageModel>) {
-      //this.messages = this.messages.concat(messages)
-
-      //this.messages.sort(item => item.date)
-    }
   },
   components: { Message },
   computed: {
     channelMessages: {
       get () {
-        return getMessagesByChannel(this.$store.state.app.messages, 0)
+        console.log(this.channel_id)
+        return getMessagesByChannel(this.$store.state.app.messages, this.channel_id)
       },
       set (val: MessageModel[]) {
         this.$store.commit('app/storeAllMessages', val)
       }
 
     }
+  },
+  beforeRouteUpdate(to, from) {
+    // react to route changes...
+    console.log(this.$route.params.channel_id)
+    this.channel_id = Number(this.$route.params.channel_id)
   },
 
   mounted () {
@@ -77,7 +80,6 @@ export default defineComponent({
     this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
     this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
     this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
-
   }
 });
 </script>
