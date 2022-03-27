@@ -15,6 +15,7 @@ export interface MessageModel {
 export interface ChannelModel {
   id: number,
   name: string,
+  private: boolean,
   owner_id: number,
   // joined or invite or public
   type: string,

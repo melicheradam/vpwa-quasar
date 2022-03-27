@@ -1,5 +1,5 @@
 <template>
-    <q-item class="user bg-primary">
+    <q-item class="user">
 
       <q-item-section>
         <q-avatar rounded size="48px">
@@ -100,7 +100,9 @@ export default defineComponent({
 *{
   color: #afb0bb
 }
-
+.user {
+  background-color: #1e2033;
+}
 .badge  {
   background-color: transparent;
 }

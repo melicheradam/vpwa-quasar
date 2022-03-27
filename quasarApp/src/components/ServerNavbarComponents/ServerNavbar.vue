@@ -71,12 +71,12 @@ export default defineComponent({
   },
   components: { UserBlock, Server },
   mounted () {
-    this.$store.commit('app/storeChannel', { id: 0, name: 'channel1', owner: 'whatever', type: 'joined' })
-    this.$store.commit('app/storeChannel', { id: 1, name: 'channel2', owner: 'whatever', type: 'joined' })
-    this.$store.commit('app/storeChannel', { id: 2, name: 'channel3', owner: 'whatever', type: 'joined' })
-    this.$store.commit('app/storeChannel', { id: 3, name: 'channel4', owner: 'whatever', type: 'joined' })
-    this.$store.commit('app/storeChannel', { id: 4, name: 'channel5', owner: 'whatever', type: 'invite' })
-    this.$store.commit('app/storeChannel', { id: 5, name: 'channel6', owner: 'whatever', type: 'invite' })
+    this.$store.commit('app/storeChannel', { id: 0, name: 'channel1', owner: 'whatever', type: 'joined', private: true })
+    this.$store.commit('app/storeChannel', { id: 1, name: 'channel2', owner: 'whatever', type: 'joined', private: true })
+    this.$store.commit('app/storeChannel', { id: 2, name: 'channel3', owner: 'whatever', type: 'joined', private: false })
+    this.$store.commit('app/storeChannel', { id: 3, name: 'channel4', owner: 'whatever', type: 'joined', private: false })
+    this.$store.commit('app/storeChannel', { id: 4, name: 'channel5', owner: 'whatever', type: 'invite', private: false })
+    this.$store.commit('app/storeChannel', { id: 5, name: 'channel6', owner: 'whatever', type: 'invite', private: false })
   }
 
 
