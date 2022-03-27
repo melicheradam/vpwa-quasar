@@ -1,5 +1,5 @@
 <template>
-    <q-item class="user">
+    <q-item class="user bg-primary">
 
       <q-item-section side>
         <q-avatar rounded size="48px">
@@ -10,7 +10,7 @@
         </q-avatar>
       </q-item-section>
       <q-item-section>
-        <q-item-label >Mary</q-item-label>
+        <q-item-label >{{ currentUser.firstname }} {{ currentUser.lastname }}</q-item-label>
       </q-item-section>
 
       <q-item-section side>
@@ -74,6 +74,17 @@ export default defineComponent({
       colors : ['positive', 'negative', 'grey-5']
     }
   },
+  computed: {
+    currentUser: {
+      get () {
+        return this.$store.state.app.currentUser
+      },
+      set () {
+        //do nothing
+      }
+
+    }
+  },
   components: {},
   methods : {
     toggle_status() : void {
@@ -88,9 +99,7 @@ export default defineComponent({
 *{
   color: #afb0bb
 }
-.user {
-background-color: #1e2033;
-}
+
 .badge  {
   background-color: transparent;
   margin-left: 10%;

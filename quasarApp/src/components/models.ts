@@ -16,6 +16,8 @@ export interface ChannelModel {
   id: number,
   name: number,
   owner: string,
+  // joined or invite or public
+  type: string,
 }
 
 
