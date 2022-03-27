@@ -26,6 +26,7 @@ export function appState (): AppStateInterface {
       name: 'channel0',
       owner_id: -1,
       type: 'joined',
+      private: true,
       users: Array<UserModel>(
         { id: -1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'grey-5' },
         { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' },

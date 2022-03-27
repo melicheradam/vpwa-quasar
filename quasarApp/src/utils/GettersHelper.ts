@@ -9,6 +9,7 @@ export function getChannelByID (channel_id: number): ChannelModel {
         id: channel_id,
         name: 'huh',
         owner_id: 0,
+        private: false,
         type: 'public'
     }
 }
