@@ -67,3 +67,9 @@ export default defineComponent({
     components: {}
 });
 </script>
+
+<style scoped>
+.badge {
+  background-color: transparent;
+}
+</style>
