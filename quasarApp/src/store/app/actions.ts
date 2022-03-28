@@ -1,5 +1,4 @@
-import { store } from 'quasar/wrappers';
-import { ChannelModel } from 'src/components/models';
+import { ChannelModel, UserModel } from 'src/components/models';
 import { ActionTree } from 'vuex';
 import { StateInterface } from '../index';
 import { AppStateInterface } from './state';
@@ -21,10 +20,24 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
     if(!context.state.currentChannel.private){
       context.commit('storeChannel', this.state.app.currentChannel)
     }
+
+    //also if user is owner delete whole channel
   },
   createChannel(context, payload){
     context.commit('storeChannel', payload)
   },
+  changeCurrentChannel(context, channelID: number){
+    const channelObj = {
+      id: channelID,
+      name: 'test',
+      owner_id: 1,
+      private: false,
+      state: 'joined'
+    } as ChannelModel
+    context.commit('storeCurrentChannel', channelObj)
+    const channelUsers = Array<UserModel>(context.state.currentUser)
+    context.commit('storeChannelUsers', channelUsers)
+  }
 
 };
 

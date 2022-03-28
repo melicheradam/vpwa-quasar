@@ -139,7 +139,7 @@ export default defineComponent({
       const item = this.$refs.select as QSelect
       item.updateInputValue('/')
     },
-    onSubmit (evt: Event | SubmitEvent) {
+    onSubmit () {
       //here we will post message
       //and store it to vuex store
       // if first character is command execute it against API

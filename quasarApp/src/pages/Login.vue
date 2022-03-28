@@ -56,7 +56,6 @@
 
 import { useQuasar } from 'quasar'
 import { defineComponent } from 'vue';
-import { UserModel } from '../components/models';
 
 export default defineComponent({
   name: 'Login',

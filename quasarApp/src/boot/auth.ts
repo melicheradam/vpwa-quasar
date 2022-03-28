@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { boot } from 'quasar/wrappers'
 
 export default boot(({ app, router, store }) => {
