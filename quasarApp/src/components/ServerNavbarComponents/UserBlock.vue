@@ -42,7 +42,7 @@
           </q-card-section>
 
           <q-card-section class="q-pt-none">
-            <q-input dense v-model="channel_name" autofocus @keyup.enter="prompt = false"/>
+            <q-input dense v-model="channel_name" autofocus @keyup.enter="createChannel"/>
           </q-card-section>
 
           <q-card-section align="right">
@@ -51,7 +51,7 @@
 
           <q-card-actions align="right" class="text-primary">
             <q-btn flat label="Cancel" v-close-popup />
-            <q-btn flat label="Add Channel" v-close-popup />
+            <q-btn flat label="Add Channel" v-close-popup @click="createChannel" />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -61,6 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ChannelModel } from '../models';
 
 export default defineComponent({
   name: 'UserBlock',
@@ -90,6 +91,17 @@ export default defineComponent({
   methods : {
     toggle_status() : void {
       this.index = (this.index + 1) %3
+    },
+    createChannel(){
+      this.prompt = false
+      const payload = {
+        id: -1,
+        name: this.channel_name,
+        private: this.private,
+        state: 'joined',
+        owner_id: this.currentUser.id
+      } as ChannelModel
+      void this.$store.dispatch('app/createChannel', payload)
     }
   }
 
