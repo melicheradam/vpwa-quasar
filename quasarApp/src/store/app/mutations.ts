@@ -36,6 +36,17 @@ const mutation: MutationTree<AppStateInterface> = {
     channelObj.users = Array<UserModel>(state.currentUser, { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' })
     state.currentChannel = channelObj
   },
+
+  declineInvite (state: AppStateInterface, dataObj: ChannelModel) {
+      console.log('pes')
+      state.channels_invites = state.channels_invites.filter(function (Channel : ChannelModel) : boolean {
+        return Channel.id !== dataObj.id;
+      })
+  },
+  acceptInvite (state: AppStateInterface, dataObj: ChannelModel) {
+    dataObj.type = 'joined';
+    state.channels_joined.push(dataObj);
+  }
 };
 
 export default mutation;

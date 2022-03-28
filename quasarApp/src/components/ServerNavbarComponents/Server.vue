@@ -3,13 +3,13 @@
     <template v-if="serverObj.type == 'invite'">
       <q-item-section side>
         <q-btn rounded flat dense>
-          <q-icon color="positive" name="done" />
+          <q-icon color="positive" name="done" @click="accept"/>
           <q-tooltip :offset="[0, 2]">Accept</q-tooltip>
         </q-btn>
       </q-item-section>
 
       <q-item-section side>
-        <q-btn rounded dense flat>
+        <q-btn rounded dense flat @click="decline">
           <q-icon color="negative" name="close" />
           <q-tooltip :offset="[0, 2]">Decline</q-tooltip>
         </q-btn>
@@ -53,7 +53,15 @@ export default defineComponent({
     redirect (evt: Event) {
       evt.preventDefault();
       void this.$router.push('/channel/' + String(this.serverObj.id))
-    }
+    },
+    decline(evt : Event) {
+      evt.preventDefault();
+      void this.$store.dispatch('app/declineInvite',this.serverObj)
+      },
+    accept(evt : Event) {
+      evt.preventDefault();
+      void this.$store.dispatch('app/acceptInvite',this.serverObj)
+      }
   },
   computed: {
     currentUser: {
