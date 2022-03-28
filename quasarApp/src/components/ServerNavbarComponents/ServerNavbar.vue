@@ -23,7 +23,7 @@
         label="Public Channels"
       >
         <q-list dense padding>
-          <template v-for="server in publicChannels" :key="server.id">
+          <template v-for="server in channelsPublic" :key="server.id">
             <Server :serverObj="server"></Server>
           </template>
         </q-list>
@@ -46,13 +46,6 @@ export default defineComponent({
   name: 'ServerNavbar',
   props: {
   },
-  data () {
-    return {
-      publicChannels: Array<ChannelModel>(
-        { id: 7, name: 'channel1', owner_id: 0, type: 'public', private: false }
-      ),
-    }
-  },
   computed: {
     channelsJoined: {
       get (): Array<ChannelModel> {
@@ -69,16 +62,24 @@ export default defineComponent({
       set () {
         //
       }
-    }
+    },
+    channelsPublic: {
+      get (): Array<ChannelModel> {
+        return this.$store.state.app.channels_public
+      },
+      set () {
+        //
+      }
+    },
   },
   components: { UserBlock, Server },
   mounted () {
-    this.$store.commit('app/storeChannel', { id: 0, name: 'channel1', owner_id: 0, type: 'joined', private: true })
-    this.$store.commit('app/storeChannel', { id: 1, name: 'channel2', owner_id: 0, type: 'joined', private: true })
-    this.$store.commit('app/storeChannel', { id: 2, name: 'channel3', owner_id: 1, type: 'joined', private: false })
-    this.$store.commit('app/storeChannel', { id: 3, name: 'channel4', owner_id: 10, type: 'joined', private: false })
-    this.$store.commit('app/storeChannel', { id: 4, name: 'channel5', owner_id: 1, type: 'invite', private: false })
-    this.$store.commit('app/storeChannel', { id: 5, name: 'channel6', owner_id: 10, type: 'invite', private: false })
+    this.$store.commit('app/storeChannel', { id: 0, name: 'channel1', owner_id: 0, state: 'joined', private: true })
+    this.$store.commit('app/storeChannel', { id: 1, name: 'channel2', owner_id: 0, state: 'joined', private: true })
+    this.$store.commit('app/storeChannel', { id: 2, name: 'channel3', owner_id: 1, state: 'joined', private: false })
+    this.$store.commit('app/storeChannel', { id: 3, name: 'channel4', owner_id: 10, state: 'joined', private: false })
+    this.$store.commit('app/storeChannel', { id: 4, name: 'channel5', owner_id: 1, state: 'invite', private: false })
+    this.$store.commit('app/storeChannel', { id: 5, name: 'channel6', owner_id: 10, state: 'invite', private: false })
   }
 
 

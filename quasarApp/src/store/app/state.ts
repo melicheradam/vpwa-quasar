@@ -1,11 +1,13 @@
-import { MessageModel, UserModel, ChannelModel, ChannelUsersModel } from 'components/models';
+import { MessageModel, UserModel, ChannelModel } from 'components/models';
 
 export interface AppStateInterface {
   messages: Array<MessageModel>,
   currentUser: UserModel,
   channels_invites: Array<ChannelModel>,
   channels_joined: Array<ChannelModel>,
-  currentChannel: ChannelUsersModel
+  channels_public: Array<ChannelModel>,
+  currentChannel: ChannelModel,
+  currentChannelUsers: Array<UserModel>
 }
 
 export function appState (): AppStateInterface {
@@ -21,19 +23,20 @@ export function appState (): AppStateInterface {
     },
     channels_invites: Array<ChannelModel>(),
     channels_joined: Array<ChannelModel>(),
+    channels_public: Array<ChannelModel>(),
     currentChannel: {
       id: 0,
       name: 'channel0',
       owner_id: -1,
-      type: 'joined',
-      private: true,
-      users: Array<UserModel>(
+      private: false,
+      state: 'joined',
+    },
+    currentChannelUsers: Array<UserModel>(
         { id: -1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'grey-5' },
         { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' },
         { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' },
         { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'negative' },
         { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'grey-5' }),
-    }
   }
 }
 

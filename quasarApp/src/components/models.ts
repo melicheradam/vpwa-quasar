@@ -11,14 +11,12 @@ export interface MessageModel {
   date: number,
 }
 
-
-export interface ChannelModel {
-  id: number,
-  name: string,
-  private: boolean,
-  owner_id: number,
-  // joined or invite or public
-  type: string,
+export interface ChannelModel{
+  id: number;
+  name: string;
+  private: boolean;
+  owner_id: number;
+  state: 'invite' | 'joined' | null,
 }
 
 export interface ChannelUsersModel extends ChannelModel {

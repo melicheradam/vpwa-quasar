@@ -25,7 +25,7 @@ export default defineComponent({
     computed: {
         channelUsers: {
             get (): Array<UserModel> {
-                return this.$store.state.app.currentChannel.users
+                return this.$store.state.app.currentChannelUsers
             },
             set () {
                 //

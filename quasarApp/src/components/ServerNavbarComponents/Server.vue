@@ -1,6 +1,6 @@
 <template>
   <q-item clickable right>
-    <template v-if="serverObj.type == 'invite'">
+    <template v-if="serverObj.state === 'invite'">
       <q-item-section side>
         <q-btn rounded flat dense>
           <q-icon color="positive" name="done" @click="accept"/>
@@ -16,7 +16,7 @@
       </q-item-section>
     </template>
 
-    <template v-else-if="serverObj.type == 'joined'">
+    <template v-else-if="serverObj.state === 'joined'">
       <q-item-section v-if="serverObj.private" side>
         <q-btn rounded dense flat>
           <q-icon name="lock" />

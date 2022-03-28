@@ -24,10 +24,26 @@ const mutation: MutationTree<AppStateInterface> = {
     state.currentUser = userObj
   },
   storeChannel (state: AppStateInterface, channelObj: ChannelModel) {
-    if (channelObj.type === 'invite')
+    if (channelObj.state === 'invite')
       state.channels_invites.push(channelObj)
-    else if (channelObj.type === 'joined')
+    else if (channelObj.state === 'joined')
       state.channels_joined.push(channelObj)
+    else
+      state.channels_public.push(channelObj)
+  },
+  removeChannel (state: AppStateInterface, channelObj: ChannelModel) {
+    if (channelObj.state === 'invite')
+      state.channels_invites = state.channels_invites.filter(function (channel : ChannelModel) : boolean {
+        return channel.id !== channelObj.id;
+      })
+      else if (channelObj.state === 'joined')
+      state.channels_joined = state.channels_joined.filter(function (channel : ChannelModel) : boolean {
+        return channel.id !== channelObj.id;
+      })
+    else
+      state.channels_public = state.channels_public.filter(function (channel : ChannelModel) : boolean {
+        return channel.id !== channelObj.id;
+      })
   },
   storeCurrentChannel (state: AppStateInterface, channelObj: ChannelUsersModel) {
     /**
@@ -37,15 +53,21 @@ const mutation: MutationTree<AppStateInterface> = {
     state.currentChannel = channelObj
   },
 
-  declineInvite (state: AppStateInterface, dataObj: ChannelModel) {
+  declineInvite (state: AppStateInterface, channelObj: ChannelModel) {
       console.log('pes')
-      state.channels_invites = state.channels_invites.filter(function (Channel : ChannelModel) : boolean {
-        return Channel.id !== dataObj.id;
+      state.channels_invites = state.channels_invites.filter(function (channel : ChannelModel) : boolean {
+        return channel.id !== channelObj.id;
       })
   },
-  acceptInvite (state: AppStateInterface, dataObj: ChannelModel) {
-    dataObj.type = 'joined';
-    state.channels_joined.push(dataObj);
+  acceptInvite (state: AppStateInterface, channelObj: ChannelModel) {
+    channelObj.state = 'joined'
+    state.channels_joined.push(channelObj);
+  },
+  leaveChannel (state: AppStateInterface) {
+    state.channels_joined = state.channels_joined.filter(function (channel : ChannelModel) : boolean {
+      return channel.id !== state.currentChannel.id;
+    })
+      
   }
 };
 

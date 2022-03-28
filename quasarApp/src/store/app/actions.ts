@@ -11,6 +11,9 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
   declineInvite (context, payload) {
     context.commit('declineInvite', payload)
   },
+  leaveChannel(context){
+    context.commit('leaveChannel')
+  }
 
 };
 

@@ -18,12 +18,12 @@
 
         <q-item-section side v-if="currentUser.id === userObj.id">
             <q-tooltip :offset="[0, 2]">Leave channel</q-tooltip>
-            <q-btn flat icon="exit_to_app" />
+            <q-btn flat icon="exit_to_app" @click="leaveChannel" />
         </q-item-section>
         <q-item-section side v-else>
             <q-tooltip :offset="[0, 2]" v-if="currentChannel.owner_id === currentUser.id">Ban user</q-tooltip>
             <q-tooltip :offset="[0, 2]" v-else>Vote kick</q-tooltip>
-            <q-btn flat icon="block" />
+            <q-btn flat icon="block" @click="kickOrBanUser" />
         </q-item-section>
     </q-item>
 </template>
@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
-import { UserModel, ChannelUsersModel } from '../models';
+import { UserModel, ChannelModel } from '../models';
 
 export default defineComponent({
     name: 'UserNavbar',
@@ -56,7 +56,7 @@ export default defineComponent({
             }
         },
         currentChannel: {
-            get (): ChannelUsersModel {
+            get (): ChannelModel {
                 return this.$store.state.app.currentChannel
             },
             set () {
@@ -64,7 +64,16 @@ export default defineComponent({
             }
         }
     },
-    components: {}
+    methods: {
+        kickOrBanUser(){
+            //
+        },
+        leaveChannel(){
+            void this.$store.dispatch('app/leaveChannel')
+
+        }
+        
+    }
 });
 </script>
 
