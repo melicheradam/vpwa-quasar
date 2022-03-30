@@ -30,7 +30,10 @@
       "@adonisjs/repl",
       "@adonisjs/session",
       "@adonisjs/view",
-      "@adonisjs/shield"
+      "@adonisjs/shield",
+      "@adonisjs/lucid",
+      "@adonisjs/auth",
+      "@ruby184/adonis-socket.io"
     ]
   }
 }
