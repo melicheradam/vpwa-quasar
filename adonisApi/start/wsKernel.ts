@@ -20,7 +20,7 @@ import Ws from '@ioc:Ruby184/Socket.IO/Ws'
 |
 */
 Ws.middleware.register([
-  // () => import('App/Middleware/Auth')
+  () => import('App/Middleware/Auth')
 ])
 
 /*
