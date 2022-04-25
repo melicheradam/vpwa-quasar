@@ -6,10 +6,12 @@ import {
   useStore as vuexUseStore,
 } from 'vuex'
 import app from './app'
+import auth from './auth'
 
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 import { AppStateInterface } from './app/state'
+import { AuthStateInterface } from './auth/state'
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -24,6 +26,7 @@ export interface StateInterface {
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   app: AppStateInterface,
+  auth: AuthStateInterface,
 }
 
 // provide typings for `this.$store`
@@ -40,7 +43,8 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
       // example
-      app
+      app,
+      auth
     },
 
 

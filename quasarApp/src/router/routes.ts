@@ -4,19 +4,25 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    //main app pages
+    redirect: () => ({ name: 'login' })
+  },
+  {
+    path: '/auth',
+    component: () => import('layouts/LoginLayout.vue'),
+    meta: { guestOnly: true },
+    //pages when logged out
     children: [
-      { path: 'channel/:channelID', component: () => import('src/pages/Main.vue')},
-
+      { path: 'login', name: 'login', component: () => import('pages/Login.vue') },
+      { path: 'register/', name: 'register', component: () => import('pages/Registration.vue') },
     ],
   },
   {
-    path: '/login/',
-    component: () => import('layouts/LoginLayout.vue'),
+    path: '/channel',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: { requiresAuth: true },
     //pages when logged out
     children: [
-      { path: '', component: () => import('pages/Login.vue') },
-      { path: 'create-user/', component: () => import('pages/Registration.vue') },
+      { path: ':channelID',component: () => import('src/pages/Main.vue')},
     ],
   },
   // Always leave this as last one,
