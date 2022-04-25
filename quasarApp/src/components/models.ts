@@ -41,9 +41,9 @@ export interface ApiToken {
 }
 
 export interface RegisterData {
-  email: string
   password: string
   passwordConfirmation: string
+  user: UserModel
 }
 
 export interface LoginCredentials {

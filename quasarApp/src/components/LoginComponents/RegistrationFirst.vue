@@ -1,9 +1,7 @@
 <template>
 <q-card-section>
     <q-form class="q-gutter-md" @submit="check_mail">
-        <EmailInput ref="email_ref" label="E-mail" v-model:input="email"></EmailInput>
-        <PasswordInput label="Password" v-model:input="password"></PasswordInput>
-        <PasswordInput label="Confirm password" v-model:input="password_c"></PasswordInput>
+        
         <q-card-actions class="q-px-md">
             <div class="col">
                 <q-btn
@@ -21,10 +19,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue';
-import PasswordInput from './PasswordInput.vue';
-import EmailInput from './EmailInput.vue';
+import { defineComponent, PropType } from 'vue';
 import { useQuasar } from 'quasar'
+import { UserModel } from '../models';
 
 export default defineComponent({
     name: 'RegistrationForm',
@@ -32,13 +29,15 @@ export default defineComponent({
       email_ok: {
           type: Boolean,
           required: true
+      },
+      emailProp: {
+          type: String,
+          required: true
       }
     },
     data() {
         return {
-            email: '',
-            password: '',
-            password_c: '',
+            email: this.emailProp,
             $q: useQuasar(),
         };
     },
@@ -63,6 +62,6 @@ export default defineComponent({
             }
         },
     },
-    components: { PasswordInput, EmailInput}
+    components: { }
 });
 </script>

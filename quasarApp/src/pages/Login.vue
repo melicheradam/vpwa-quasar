@@ -35,7 +35,7 @@
                 />
                 <div class="col"></div>
                 <q-btn
-                  to="/login/create-user"
+                  to="/auth/register"
                   unelevated
                   color="secondary"
                   padding="xs lg"
@@ -81,7 +81,7 @@ export default defineComponent({
         // pull info from backend
         this.$store.commit('app/storeCurrentUser', { id: 0, username: 'foobar', firstname: 'Foo', lastname: 'Nar', email: this.email })
 
-        void this.$router.push('/')
+        void this.$router.push('/channel')
 
       }
       else {

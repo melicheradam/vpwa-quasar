@@ -9,9 +9,9 @@ export default class UsersSchema extends BaseSchema {
       table.string('email', 255).notNullable()
       table.string('password', 180).notNullable()
       table.string('remember_me_token').nullable()
-      table.string('firstName', 255).notNullable()
-      table.string('lastName', 255).notNullable()
-      table.string('nickName', 255)
+      table.string('first_name', 255).notNullable()
+      table.string('last_name', 255).notNullable()
+      table.string('nick_name', 255)
 
       /**
        * Uses timestampz for PostgreSQL and DATETIME2 for MSSQL

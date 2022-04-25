@@ -1,9 +1,12 @@
 <template>
     <q-card-section>
         <q-form class="q-gutter-md" @submit="register">
+            <EmailInput ref="email_ref" label="E-mail" v-model:input="email"></EmailInput>
             <TextInput label="First name" v-model:input="firstname"></TextInput>
-            <TextInput label="Last name" :input="lastname"></TextInput>
-            <TextInput label="Application nickname" :input="nickname"></TextInput>
+            <TextInput label="Last name" v-model:input="lastname"></TextInput>
+            <TextInput label="Application nickname" v-model:input="nickname"></TextInput>
+            <PasswordInput label="Password" v-model:input="password"></PasswordInput>
+            <PasswordInput label="Confirm password" v-model:input="password_c"></PasswordInput>
             <q-card-actions class="q-px-md">
                 <div class="col">
                     <q-btn
@@ -23,6 +26,7 @@
                         padding="xs lg"
                         size="md"
                         label="Register"
+                        :loading="loading"
                     />
                 </div>
             </q-card-actions>
@@ -34,22 +38,30 @@
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
 import TextInput from './TextInput.vue'
+import PasswordInput from './PasswordInput.vue';
+import EmailInput from './EmailInput.vue';
+
+
 
 export default defineComponent({
     name: 'RegistrationForm',
-    props: {
-        email_ok: {
-            type: Boolean,
-            required: true
-        },
-    },
+
     data () {
         return {
+            email: '',
+            password: '',
+            password_c: '',
             firstname: '',
             lastname: '',
             nickname: '',
+            
             $q: useQuasar(),
         };
+    },
+    computed: {
+        loading (): boolean {
+            return this.$store.state.auth.status === 'pending'
+        }
     },
     methods: {
         //here check api if email is not taken
@@ -57,14 +69,26 @@ export default defineComponent({
             this.$emit('update:email_ok', false)
         },
         register: function () {
-            this.$q.notify({
-                type: 'positive',
-                message: 'Account created!'
-            })
+            const form = {
+                password: this.password,
+                nickName: this.nickname,
+                email: this.email,
+                firstName: this.firstname,
+                lastName: this.lastname
+            }
+            void this.$store.dispatch('auth/register', form).then(
+                () => {
+                        this.$q.notify({
+                        type: 'positive',
+                        message: 'Account created!'
+                    })
 
-            void this.$router.push('/login')
+                    void this.$router.push('/auth/login')
+                }
+            )
+            
         },
     },
-    components: { TextInput }
+    components: { EmailInput, TextInput, PasswordInput }
 });
 </script>

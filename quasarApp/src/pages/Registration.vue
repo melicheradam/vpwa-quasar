@@ -6,8 +6,7 @@
       </div>
       <div class="row">
         <q-card class="transparent no-shadow">
-          <RegistrationFirst  v-if="!email_ok" v-model:email_ok="email_ok"></RegistrationFirst>
-          <RegistrationSecond  v-if="email_ok" v-model:email_ok="email_ok"></RegistrationSecond>
+          <RegistrationSecond ></RegistrationSecond>
         </q-card>
       </div>
     </div>
@@ -16,17 +15,17 @@
 
 
 
-<script>
-import RegistrationFirst from 'src/components/LoginComponents/RegistrationFirst.vue';
+<script lang="ts">
 import RegistrationSecond from 'src/components/LoginComponents/RegistrationSecond.vue';
 
 export default {
     name: 'Register1',
     data() {
         return {
+          email:'',
           email_ok: false,
         };
     },
-    components: { RegistrationFirst, RegistrationSecond }
+    components: { RegistrationSecond }
 }
 </script>
