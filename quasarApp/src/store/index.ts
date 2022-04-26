@@ -7,11 +7,13 @@ import {
 } from 'vuex'
 import app from './app'
 import auth from './auth'
+import channels from './channels'
 
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 import { AppStateInterface } from './app/state'
 import { AuthStateInterface } from './auth/state'
+import { ChannelsStateInterface } from './channels/state'
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -27,6 +29,7 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   app: AppStateInterface,
   auth: AuthStateInterface,
+  channels: ChannelsStateInterface,
 }
 
 // provide typings for `this.$store`
@@ -44,7 +47,8 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       // example
       app,
-      auth
+      auth,
+      channels,
     },
 
 
