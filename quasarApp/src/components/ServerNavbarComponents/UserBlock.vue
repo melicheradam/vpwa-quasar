@@ -29,7 +29,7 @@
       </q-item-section>
 
       <q-item-section side>
-        <q-btn dense flat round @click="$router.push('/login/')">
+        <q-btn dense flat round @click="logout">
           <q-icon name="logout"/>
           <q-tooltip :offset="[0, 8]">Logout</q-tooltip>
         </q-btn>
@@ -102,6 +102,12 @@ export default defineComponent({
         owner_id: this.currentUser.id
       } as ChannelModel
       void this.$store.dispatch('app/createChannel', payload)
+    },
+    logout(){
+      void this.$store.dispatch('auth/logout').then(
+        void this.$router.push('/auth/login')
+      )
+      
     }
   }
 

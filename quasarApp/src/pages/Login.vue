@@ -8,9 +8,9 @@
         <q-card class="transparent no-shadow">
           <q-card-section>
             <q-form class="q-gutter-md">
-              <q-input type="email" outlined v-model="email" label="Email" />
+              <q-input type="email" outlined v-model="creds.email" label="Email" />
               <q-input
-                v-model="password"
+                v-model="creds.password"
                 outlined
                 :type="isPwd ? 'password' : 'text'"
                 label="Password"
@@ -25,7 +25,6 @@
               </q-input>
               <q-card-actions class="q-px-md">
                 <q-btn
-                  type="submit"
                   unelevated
                   color="secondary"
                   padding="xs lg"
@@ -61,9 +60,12 @@ export default defineComponent({
   name: 'Login',
   data () {
     return {
+      creds: {
+        email: '',
+        password: '',
+        remember: false
+      },
       isPwd: true,
-      email: '',
-      password: '',
       $q: useQuasar(),
     }
   },
@@ -72,24 +74,19 @@ export default defineComponent({
     authorize () {
       // add api authorize function
       // succesfull
-      if (this.email.charAt(0) === 'a') {
+      void this.$store.dispatch('auth/login', this.creds).then(() => {
         this.$q.notify({
           type: 'positive',
           message: 'Authorized',
         })
-        //add user
-        // pull info from backend
-        this.$store.commit('app/storeCurrentUser', { id: 0, username: 'foobar', firstname: 'Foo', lastname: 'Nar', email: this.email })
-
         void this.$router.push('/channel')
-
-      }
-      else {
+      })
+      .catch(() => {
         this.$q.notify({
           type: 'negative',
           message: 'Username or password invalid!'
         })
-      }
+      })
     }
   }
 })
