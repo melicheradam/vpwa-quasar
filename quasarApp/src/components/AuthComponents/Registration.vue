@@ -12,7 +12,7 @@
                     <q-btn
                         onclickunelevated
                         color="secondary"
-                        @click="go_back"
+                        @click="$router.push('/auth/login')"
                         padding="xs lg"
                         size="md"
                         label="Back"
@@ -64,10 +64,6 @@ export default defineComponent({
         }
     },
     methods: {
-        //here check api if email is not taken
-        go_back: function () {
-            this.$emit('update:email_ok', false)
-        },
         register: function () {
             const form = {
                 password: this.password,
@@ -85,7 +81,12 @@ export default defineComponent({
 
                     void this.$router.push('/auth/login')
                 }
-            )
+            ).catch(() => {
+                this.$q.notify({
+                type: 'negative',
+                message: 'Please fill all fields!'
+                })
+            })
             
         },
     },

@@ -31,7 +31,7 @@ class AuthManager {
     this.currentToken = newToken
   }
 
-  // ads listener for changes, returns unsubscribe function
+  // adds listener for changes, returns unsubscribe function
   public onChange (listener: ChangeListener): () => void {
     this.onChangeListeners.push(listener)
 

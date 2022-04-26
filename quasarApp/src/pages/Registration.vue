@@ -6,7 +6,7 @@
       </div>
       <div class="row">
         <q-card class="transparent no-shadow">
-          <RegistrationSecond ></RegistrationSecond>
+          <Registration ></Registration>
         </q-card>
       </div>
     </div>
@@ -16,7 +16,7 @@
 
 
 <script lang="ts">
-import RegistrationSecond from 'src/components/LoginComponents/RegistrationSecond.vue';
+import Registration from 'src/components/AuthComponents/Registration.vue';
 
 export default {
     name: 'Register1',
@@ -26,6 +26,6 @@ export default {
           email_ok: false,
         };
     },
-    components: { RegistrationSecond }
+    components: { Registration }
 }
 </script>
