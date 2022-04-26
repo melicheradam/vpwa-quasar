@@ -50,7 +50,7 @@ import { QSelect } from 'quasar';
 import { ref, defineComponent } from 'vue';
 import CommandItem from './CommandItem.vue';
 import { MessageModel } from 'components/models'
-
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 interface CommandObj {
   label: string,
@@ -107,6 +107,7 @@ export default defineComponent({
       options: ref(commandList),
       select: ref('select'),
       input: '',
+      loading: false
 
     };
   },
@@ -114,6 +115,9 @@ export default defineComponent({
     select: ref('select'),
   },
   computed: {
+    activeChannel (): number | null {
+      return this.$store.state.channels.active
+    },
     channelID: {
       get (): number {
         return Number(this.$route.params.channelID)
@@ -139,7 +143,7 @@ export default defineComponent({
       const item = this.$refs.select as QSelect
       item.updateInputValue('/')
     },
-    onSubmit () {
+    async onSubmit () {
       //here we will post message
       //and store it to vuex store
       // if first character is command execute it against API
@@ -147,18 +151,22 @@ export default defineComponent({
         //
       }
       else {
-        const message: MessageModel = {
+        this.loading = true
+        await this.addMessage({ channel: this.activeChannel, message: this.input })
+        this.loading = false
+        /*const message: MessageModel = {
           id: -1,
           date: Date.now(),
           user: '',
           channel_id: this.channelID,
           text: [this.input]
         }
-        this.$store.commit('app/storeMessage', message)
+        this.$store.commit('app/storeMessage', message)*/
       }
       const item = this.$refs.select as QSelect
       item.updateInputValue('')
     },
+    ...mapActions('channels', ['addMessage']),
     setModel (val: string) {
       this.input = val
     },

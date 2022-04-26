@@ -17,8 +17,10 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   },
   leave ({ getters, commit }, channel: number | null) {
     //const leaving: number[] = channel !== null ? [channel] : getters.joinedChannels
-    if(channel)
+    if(channel){
       channelService.leave(channel)
+      commit('CLEAR_CHANNEL', channel)
+    }
     /*leaving.forEach((c) => {
       channelService.leave(c)
       commit('CLEAR_CHANNEL', c)

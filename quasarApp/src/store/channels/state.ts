@@ -4,7 +4,7 @@ export interface ChannelsStateInterface {
   loading: boolean,
   error: Error | null,
   messages: { [channel: string]: MessageModel[] }
-  active: string | null
+  active: number | null
 }
 
 function state (): ChannelsStateInterface {

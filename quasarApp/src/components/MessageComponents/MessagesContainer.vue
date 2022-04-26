@@ -25,6 +25,7 @@ import { useQuasar } from 'quasar'
 import Message from './Message.vue';
 import { MessageModel } from '../models';
 import { getMessagesByChannel } from 'src/utils/GettersHelper'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default defineComponent({
   name: 'MessagesContainer',
@@ -33,6 +34,8 @@ export default defineComponent({
     return {
       $q: useQuasar(),
       temp_now: Date.now(),
+      message: '',
+      loading: false
     };
   },
   methods: {
@@ -42,16 +45,19 @@ export default defineComponent({
 
       done(false)
     },
+    ...mapMutations('channels', {
+      setActiveChannel: 'SET_ACTIVE'
+    })
   },
   components: { Message },
   computed: {
-    channelMessages: {
-      get (): Array<MessageModel> {
-        return getMessagesByChannel(this.$store.state.app.messages, this.channelID)
-      },
-      set (val: MessageModel[]) {
-        this.$store.commit('app/storeAllMessages', val)
-      }
+    ...mapGetters('channels', {
+      channels: 'joinedChannels',
+      lastMessageOf: 'lastMessageOf'
+    }),
+    channelMessages (): MessageModel[] | [] {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return 
+        return this.$store.getters['channels/currentMessages']
     },
     channelID: {
       get (): number {

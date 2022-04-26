@@ -1,12 +1,13 @@
 import { GetterTree } from 'vuex'
 import { StateInterface } from '../index'
 import { ChannelsStateInterface } from './state'
+import { MessageModel } from 'src/components/models'
 
 const getters: GetterTree<ChannelsStateInterface, StateInterface> = {
   joinedChannels (context){
     return Object.keys(context.messages)
   },
-  currentMessages (context) {
+  currentMessages (context): MessageModel[] | []{
     return context.active !== null ? context.messages[context.active] : []
   },
   lastMessageOf (context) {
