@@ -1,5 +1,20 @@
 
 
+export type RawMessage = string
+
+export interface MessageModelDB {
+  /**
+   * If user is empty, message is assigned as logged users message.
+   */
+  id: number,
+  channel: number,
+  user: string,
+  content: string,
+  createdAt: number,
+  updatedAt: number
+}
+
+
 export interface MessageModel {
   /**
    * If user is empty, message is assigned as logged users message.
