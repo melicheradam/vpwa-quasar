@@ -2,7 +2,8 @@ import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
 import { ChannelsStateInterface } from './state'
 import { channelService } from 'src/services'
-import { RawMessage } from 'src/components/models'
+import { ChannelModel, RawMessage, MessageModel } from 'src/components/models'
+import { join } from 'path'
 
 const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   async join ({ commit }, channel: number) {
@@ -29,7 +30,18 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   async addMessage ({ commit }, { channel, message }: { channel: number, message: RawMessage }) {
     const newMessage = await channelService.in(channel)?.addMessage(message)
     commit('NEW_MESSAGE', { channel, message: newMessage })
-  }
+  },
+  async create ({ commit }, channel: ChannelModel) {
+    try {
+      commit('LOADING_START')
+      const new_channel = await channelService.create(channel)
+      const messages: ChannelModel[] = []
+      commit('LOADING_SUCCESS', { new_channel, messages })
+    } catch (err) {
+      commit('LOADING_ERROR', err)
+      throw err
+    }
+  },
 }
 
 export default actions

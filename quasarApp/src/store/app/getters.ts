@@ -9,7 +9,7 @@ const getters: GetterTree<AppStateInterface, StateInterface> = {
     // your code
   },
   getMessagesByChannel: (state: AppStateInterface) => (id: number): Array<MessageModel> => {
-    return state.messages.filter(item => item.channel_id === id);
+    return state.messages.filter(item => item.channelId === id);
   }
 };
 

@@ -10,7 +10,7 @@
       </q-expansion-item>
       <q-expansion-item dense dense-toggle expand-separator icon="tag" label="Channels">
         <q-list dense padding>
-          <template v-for="server in channelsJoined" :key="server.id">
+          <template v-for="server in joinedChannels" :key="server.id">
             <Server :serverObj="server"></Server>
           </template>
         </q-list>
@@ -40,6 +40,7 @@ import { defineComponent } from 'vue';
 import { ChannelModel } from '../models'
 import UserBlock from './UserBlock.vue'
 import Server from './Server.vue'
+import { mapGetters } from 'vuex';
 
 
 export default defineComponent({
@@ -47,6 +48,13 @@ export default defineComponent({
   props: {
   },
   computed: {
+    ...mapGetters('channels', {
+      channels: 'joinedChannels',
+      lastMessageOf: 'lastMessageOf'
+    }),
+    activeChannel () {
+      return this.$store.state.channels.active
+    },
     channelsJoined: {
       get (): Array<ChannelModel> {
         return this.$store.state.app.channels_joined
@@ -74,12 +82,7 @@ export default defineComponent({
   },
   components: { UserBlock, Server },
   mounted () {
-    this.$store.commit('app/storeChannel', { id: 0, name: 'channel1', owner_id: 0, state: 'joined', private: true })
-    this.$store.commit('app/storeChannel', { id: 1, name: 'channel2', owner_id: 0, state: 'joined', private: true })
-    this.$store.commit('app/storeChannel', { id: 2, name: 'channel3', owner_id: 1, state: 'joined', private: false })
-    this.$store.commit('app/storeChannel', { id: 3, name: 'channel4', owner_id: 10, state: 'joined', private: false })
-    this.$store.commit('app/storeChannel', { id: 4, name: 'channel5', owner_id: 1, state: 'invite', private: false })
-    this.$store.commit('app/storeChannel', { id: 5, name: 'channel6', owner_id: 10, state: 'invite', private: false })
+    //
   }
 
 

@@ -20,7 +20,7 @@ export interface MessageModel {
    * If user is empty, message is assigned as logged users message.
    */
   id: number,
-  channel_id: number,
+  channelId: number,
   user: string,
   text: Array<string>,
   date: number,
@@ -30,7 +30,7 @@ export interface ChannelModel{
   id: number;
   name: string;
   private: boolean;
-  owner_id: number;
+  ownerId: number;
   state: 'invite' | 'joined' | null,
 }
 
@@ -41,9 +41,9 @@ export interface ChannelUsersModel extends ChannelModel {
 
 export interface UserModel {
   id: number,
-  username: string,
-  firstname: string,
-  lastname: string,
+  userName: string,
+  firstName: string,
+  lastName: string,
   email: string,
   status: string,
 }
@@ -51,8 +51,8 @@ export interface UserModel {
 export interface ApiToken {
   type: 'bearer'
   token: string
-  expires_at?: string
-  expires_in?: number
+  expiresAt?: string
+  expiresIn?: number
 }
 
 export interface RegisterData {

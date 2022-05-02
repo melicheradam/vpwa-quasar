@@ -49,7 +49,7 @@ const mutation: MutationTree<AppStateInterface> = {
     /**
      * Add fetching of users in the current channel
      *  */
-    channelObj.users = Array<UserModel>(state.currentUser, { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' })
+    channelObj.users = Array<UserModel>(state.currentUser, { id: 1, userName: 'test', firstName: 'testtt', lastName: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' })
     state.currentChannel = channelObj
   },
   storeChannelUsers (state: AppStateInterface, userList: Array<UserModel>) {

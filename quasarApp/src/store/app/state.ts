@@ -15,9 +15,9 @@ export function appState (): AppStateInterface {
     messages: Array<MessageModel>(),
     currentUser: {
       id: 10,
-      username: 'MyUserName',
-      firstname: 'Foo',
-      lastname: 'Bar',
+      userName: 'MyUserName',
+      firstName: 'Foo',
+      lastName: 'Bar',
       email: 'custom@custom.com',
       status: 'online'
     },
@@ -27,16 +27,11 @@ export function appState (): AppStateInterface {
     currentChannel: {
       id: 0,
       name: 'channel0',
-      owner_id: -1,
+      ownerId: -1,
       private: false,
       state: 'joined',
     },
-    currentChannelUsers: Array<UserModel>(
-        { id: -1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'grey-5' },
-        { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' },
-        { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'positive' },
-        { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'negative' },
-        { id: 1, username: 'test', firstname: 'testtt', lastname: 'asdfasdf', email: 'asdfadfgdfg', status: 'grey-5' }),
+    currentChannelUsers: Array<UserModel>()
   }
 }
 

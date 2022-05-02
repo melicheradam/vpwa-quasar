@@ -30,7 +30,7 @@ const actions: ActionTree<AppStateInterface, StateInterface> = {
     const channelObj = {
       id: channelID,
       name: 'test',
-      owner_id: 1,
+      ownerId: 1,
       private: false,
       state: 'joined'
     } as ChannelModel

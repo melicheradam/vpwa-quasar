@@ -39,7 +39,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { UserModel } from '../models';
 
 export default defineComponent({
   name: 'Server',
@@ -63,17 +62,6 @@ export default defineComponent({
       void this.$store.dispatch('app/acceptInvite',this.serverObj)
       }
   },
-  computed: {
-    currentUser: {
-      get (): UserModel {
-        return this.$store.state.app.currentUser
-      },
-      set () {
-        //
-      }
-    }
-  }
-
 });
 </script>
 

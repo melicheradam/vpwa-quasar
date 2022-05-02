@@ -1,5 +1,7 @@
-import { RawMessage, MessageModel } from 'src/components/models'
+import { RawMessage, MessageModel, ChannelModel } from 'src/components/models'
 import { BootParams, SocketManager } from './SocketManager'
+import { api } from 'src/boot/axios'
+
 
 // creating instance of this class automatically connects to given socket.io namespace
 // subscribe is called with boot params, so you can use it to dispatch actions for socket events
@@ -50,6 +52,11 @@ class ChannelService {
 
   public in (id: number): ChannelSocketManager | undefined {
     return this.channels.get(id)
+  }
+
+  async create (data: ChannelModel): Promise<ChannelModel> {
+    const response = await api.post<ChannelModel>('channels/create', data)
+    return response.data
   }
 }
 

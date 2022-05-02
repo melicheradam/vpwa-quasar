@@ -11,7 +11,7 @@
       </q-item-section>
 
       <q-item-section>
-        <q-item-label >{{ currentUser.firstname }} {{ currentUser.lastname }}</q-item-label>
+        <q-item-label >{{ currentUser.firstName }} {{ currentUser.lastName }}</q-item-label>
       </q-item-section>
 
       <q-item-section side>
@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ChannelModel } from '../models';
+import { ChannelModel, UserModel } from '../models';
 
 export default defineComponent({
   name: 'UserBlock',
@@ -78,8 +78,19 @@ export default defineComponent({
   },
   computed: {
     currentUser: {
-      get () {
-        return this.$store.state.app.currentUser
+      get (): UserModel {
+        console.log(this.$store.state.auth.user)
+        if(this.$store.state.auth.user === null)
+          return {
+            id: -1,
+            userName: 'null',
+            firstName: 'null',
+            lastName: 'null',
+            email: 'null',
+            status: 'null'  
+          }
+        else
+          return this.$store.state.auth.user
       },
       set () {
         //do nothing
@@ -98,10 +109,10 @@ export default defineComponent({
         id: -1,
         name: this.channel_name,
         private: this.private,
-        state: 'joined',
-        owner_id: this.currentUser.id
+        ownerId: this.currentUser.id
       } as ChannelModel
-      void this.$store.dispatch('app/createChannel', payload)
+      void this.$store.dispatch('channels/create', payload)
+      void this.$store.dispatch('channels/join', payload.id)
     },
     logout(){
       void this.$store.dispatch('auth/logout').then(
