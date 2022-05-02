@@ -110,8 +110,11 @@ export default defineComponent({
         private: this.private,
         owner: this.currentUser.id
       } as ChannelModelForm
-      console.log(this.$store.dispatch('channels/create', payload))
-      //void this.$store.dispatch('channels/join', payload.id)
+      void this.$store.dispatch('channels/create', payload).then(
+        (value: ChannelModel) => {
+          void this.$store.dispatch('channels/join', value.id)
+        }
+      )
     },
     logout(){
       void this.$store.dispatch('auth/logout').then(

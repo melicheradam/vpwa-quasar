@@ -1,4 +1,4 @@
-import { RawMessage, MessageModel, ChannelModel } from 'src/components/models'
+import { RawMessage, MessageModel, ChannelModel, ChannelModelForm } from 'src/components/models'
 import { BootParams, SocketManager } from './SocketManager'
 import { api } from 'src/boot/axios'
 
@@ -54,7 +54,7 @@ class ChannelService {
     return this.channels.get(id)
   }
 
-  async create (data: ChannelModel): Promise<ChannelModel> {
+  async create (data: ChannelModelForm): Promise<ChannelModel> {
     const response = await api.post<ChannelModel>('channel/create', data)
     return response.data
   }

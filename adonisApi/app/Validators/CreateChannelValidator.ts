@@ -1,7 +1,5 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Channel from 'App/Models/Channel'
-import User from 'App/Models/User'
 
 export default class CreateChannelValidator {
   constructor(protected ctx: HttpContextContract) {}
