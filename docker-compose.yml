@@ -10,11 +10,32 @@ services:
   #  volumes:
   #    - build/:/usr/share/nginx/html 
   quasar:
+    dockerfile: quasarApp/Dockerfile
     container_name: quasar
     restart: unless-stopped
-    dockerfile: quasarApp/Dockerfile
+    ports:
+      - 8090:8080
+    
   adonis:
+    dokcerfile: adonisApi/Dockerfile
     container_name: adonis
     restart: unless-stopped
-    dokcerfile: adonisApi/Dockerfile
+    ports:
+      - 3333:3333
+    environment:
+      DB_CONNECTION="${DB_CONNECTION}"
+      PG_HOST="${PG_HOST}"
+      PG_PORT="${PG_PORT}"
+      PG_USER="${PG_USER}"
+      PG_PASSWORD="${PG_PASSWORD}"
+      PG_DB_NAME="${PG_DB_NAME}"
+      APP_KEY="${APP_KEY}"
+      APP_NAME="${APP_NAME}"
+      CACHE_VIEWS="${CACHE_VIEWS}"
+      DRIVE_DISK="${DRIVE_DISK}"
+      NODE_ENV="${NODE_ENV}"
+      HOST="${HOST}"
+      PORT="${PORT}"
+      SESSION_DRIVER="${SESSION_DRIVER}"
+    
     
