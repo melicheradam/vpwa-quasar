@@ -33,5 +33,6 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post('create', 'ChannelController.create')
-  //Route.get('me', 'AuthController.me').middleware('auth')
+  Route.post('join', 'ChannelController.join').middleware('auth')
+  Route.get('getAll', 'ChannelController.getAll')
 }).prefix('channel')

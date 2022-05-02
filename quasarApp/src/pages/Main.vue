@@ -13,5 +13,9 @@ import MessagesContainer from 'src/components/MessageComponents/MessagesContaine
 export default defineComponent({
   components: { MessagesContainer },
   name: 'IndexPage',
+
+  mounted(){
+    void this.$store.dispatch('channels/loadChannels')
+  }
 });
 </script>

@@ -73,7 +73,7 @@ export default defineComponent({
     },
     channelsPublic: {
       get (): Array<ChannelModel> {
-        return this.$store.state.app.channels_public
+        return this.$store.state.channels.channelList
       },
       set () {
         //

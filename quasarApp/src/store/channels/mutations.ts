@@ -1,4 +1,4 @@
-import { MessageModel } from 'src/components/models'
+import { ChannelModel, MessageModel } from 'src/components/models'
 import { MutationTree } from 'vuex'
 import { ChannelsStateInterface } from './state'
 
@@ -33,6 +33,9 @@ const mutation: MutationTree<ChannelsStateInterface> = {
       state.messages[channel].push(message)
     */
 
+  },
+  NEW_CHANNEL (state, channel: ChannelModel) {
+    state.channelList.push(channel)
   }
 }
 

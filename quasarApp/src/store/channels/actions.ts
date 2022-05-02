@@ -2,12 +2,11 @@ import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
 import { ChannelsStateInterface } from './state'
 import { channelService } from 'src/services'
-import { ChannelModel, RawMessage, MessageModel, ChannelModelForm } from 'src/components/models'
-import { join } from 'path'
+import { ChannelModel, RawMessage, ChannelModelForm } from 'src/components/models'
 
 const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   async join ({ commit }, channel: number) {
-    try {
+      try {
       commit('LOADING_START')
       const messages = await channelService.join(channel).loadMessages()
       commit('LOADING_SUCCESS', { channel, messages })
@@ -43,6 +42,30 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       throw err
     }
   },
+  async joindb ({ commit }, { channel, user }: { channel: number, user: number }) {
+    try {
+      //commit('LOADING_START')
+      const retval = await channelService.joindb(channel, user)
+      //commit('LOADING_SUCCESS', { channel, user })
+    } catch (err) {
+      //commit('LOADING_ERROR', err)
+      throw err
+    }
+  },
+  async loadChannels ({ commit }) {
+    try {
+      //commit('LOADING_START')
+      const retval = await channelService.getChannels()
+      console.log(retval)
+      retval.forEach(element => {
+        commit('NEW_CHANNEL', element)
+      });
+      //commit('LOADING_SUCCESS', { channel, user })
+    } catch (err) {
+      //commit('LOADING_ERROR', err)
+      throw err
+    }
+  }
 }
 
 export default actions

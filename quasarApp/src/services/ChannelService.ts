@@ -1,6 +1,7 @@
 import { RawMessage, MessageModel, ChannelModel, ChannelModelForm } from 'src/components/models'
 import { BootParams, SocketManager } from './SocketManager'
 import { api } from 'src/boot/axios'
+import { AxiosError } from 'axios'
 
 
 // creating instance of this class automatically connects to given socket.io namespace
@@ -8,15 +9,26 @@ import { api } from 'src/boot/axios'
 // you have access to socket.io socket using this.socket
 class ChannelSocketManager extends SocketManager {
   public subscribe ({ store }: BootParams): void {
-    const channel = this.namespace.split('/').pop() as string
+    const active = this.namespace.split('/').pop() as string
 
     this.socket.on('message', (message: MessageModel) => {
-      store.commit('channels/NEW_MESSAGE', { channel, message })
+      store.commit('channels/NEW_MESSAGE', { active, message })
     })
+
+    // get notification from websocket that a new channel was created
+    // push it to store
+    this.socket.on('channelCreated', (channel: ChannelModel) => {
+      store.commit('channels/NEW_CHANNEL', channel)
+    } )
   }
 
   public addMessage (message: RawMessage): Promise<MessageModel> {
     return this.emitAsync('addMessage', message)
+  }
+
+  // notify all listeners that a new channel was created
+  public addChannel (channel: number): Promise<ChannelModel> {
+    return this.emitAsync('addChannel', channel)
   }
 
   public loadMessages (): Promise<MessageModel[]> {
@@ -31,7 +43,7 @@ class ChannelService {
     if (this.channels.has(id)) {
       throw new Error(`User is already joined in channel "${id}"`)
     }
-
+    
     // connect to given channel namespace
     const channel = new ChannelSocketManager(`/channels/${id}`)
     this.channels.set(id, channel)
@@ -57,6 +69,27 @@ class ChannelService {
   async create (data: ChannelModelForm): Promise<ChannelModel> {
     const response = await api.post<ChannelModel>('channel/create', data)
     return response.data
+  }
+
+  async joindb (id: number, userId: number): Promise<boolean> {
+    const data = {
+      channelId: id,
+      userId: userId
+    }
+    const response = await api.post<boolean>('channel/join', data)
+    return response.data
+  }
+
+  public getChannels (): Promise<ChannelModel[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return api.get(
+        'channel/getAll'
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .then((response) => response.data)
+      .catch((error: AxiosError) => {
+        return Promise.reject(error)
+      })
   }
 }
 

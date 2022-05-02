@@ -22,6 +22,7 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true },
     //pages when logged out
     children: [
+      { path: '', meta: { requiresAuth: true }, component: () => import('src/pages/Main.vue')},
       { path: ':channelID', meta: { requiresAuth: true }, component: () => import('src/pages/Main.vue')},
     ],
   },
