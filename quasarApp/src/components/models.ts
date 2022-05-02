@@ -34,6 +34,12 @@ export interface ChannelModel{
   state: 'invite' | 'joined' | null,
 }
 
+export interface ChannelModelForm{
+  name: string;
+  private: boolean;
+  owner: number;
+}
+
 export interface ChannelUsersModel extends ChannelModel {
   users: Array<UserModel>
 }

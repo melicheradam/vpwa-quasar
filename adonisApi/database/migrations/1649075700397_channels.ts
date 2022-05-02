@@ -7,8 +7,9 @@ export default class Channels extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
       table.string('name', 255).notNullable()
-
-      table.integer("owner").notNullable().references("id").inTable("users").onDelete("CASCADE")
+      
+      table.boolean('private').notNullable()
+      table.integer("owner_id").notNullable().references("id").inTable("users").onDelete("CASCADE")
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

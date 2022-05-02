@@ -55,7 +55,7 @@ class ChannelService {
   }
 
   async create (data: ChannelModel): Promise<ChannelModel> {
-    const response = await api.post<ChannelModel>('channels/create', data)
+    const response = await api.post<ChannelModel>('channel/create', data)
     return response.data
   }
 }

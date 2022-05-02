@@ -9,6 +9,12 @@ export default class Channel extends BaseModel {
   @column()
   public name: string
 
+  @column()
+  public ownerId: number
+
+  @column()
+  public private: boolean
+
   @belongsTo(() => User)
   public owner: BelongsTo<typeof User>
 

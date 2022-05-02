@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, manyToMany, ManyToMany, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import Channel from './Channel'
+import Message from './Message'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -54,6 +55,11 @@ export default class User extends BaseModel {
     pivotTimestamps: true,
   })
   public kicks: ManyToMany<typeof User>
+
+  @hasMany(() => Channel, {
+    foreignKey: 'ownerId',
+  })
+  public ownedChannels: HasMany<typeof Channel>
 
   @beforeSave()
   public static async hashPassword (user: User) {

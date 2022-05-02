@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ChannelModel, UserModel } from '../models';
+import { ChannelModel, ChannelModelForm, UserModel } from '../models';
 
 export default defineComponent({
   name: 'UserBlock',
@@ -106,13 +106,12 @@ export default defineComponent({
     createChannel(){
       this.prompt = false
       const payload = {
-        id: -1,
         name: this.channel_name,
         private: this.private,
-        ownerId: this.currentUser.id
-      } as ChannelModel
-      void this.$store.dispatch('channels/create', payload)
-      void this.$store.dispatch('channels/join', payload.id)
+        owner: this.currentUser.id
+      } as ChannelModelForm
+      console.log(this.$store.dispatch('channels/create', payload))
+      //void this.$store.dispatch('channels/join', payload.id)
     },
     logout(){
       void this.$store.dispatch('auth/logout').then(
