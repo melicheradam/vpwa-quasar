@@ -7,7 +7,7 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     state.loading = true
     state.error = null
   },
-  LOADING_SUCCESS (state, { channel, messages }: { channel: string, messages: MessageModel[] }) {
+  LOADING_SUCCESS (state, { channel, messages }: { channel: number, messages: MessageModel[] }) {
     state.loading = false
     state.messages[channel] = messages
   },
@@ -19,18 +19,20 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     state.active = null
     delete state.messages[channel]
   },
-  SET_ACTIVE (state, channel: string) {
+  SET_ACTIVE (state, channel: number) {
     state.active = channel
   },
-  NEW_MESSAGE (state, { channel, message }: { channel: string, message: MessageModel }) {
+  NEW_MESSAGE (state, { channel, message }: { channel: number, message: MessageModel }) {
     state.messages[channel].push(message)
-    const last_message = state.messages[channel][state.messages[channel].length - 1]
-
+    //const last_message = state.messages[channel][state.messages[channel].length - 1]
+    /*
     //combine messages sent withing 10s
     if (state.messages[channel].length > 0 && last_message.user === message.user && message.date - last_message.date < (1000 * 10))
       state.messages[channel][state.messages[channel].length - 1].text.push(message.text[0])
     else
       state.messages[channel].push(message)
+    */
+
   }
 }
 

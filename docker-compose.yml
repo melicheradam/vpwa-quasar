@@ -15,7 +15,6 @@ services:
     restart: unless-stopped
     ports:
       - 8090:8080
-    
   adonis:
     dokcerfile: adonisApi/Dockerfile
     container_name: adonis
