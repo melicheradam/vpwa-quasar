@@ -16,6 +16,7 @@ export default defineComponent({
 
   mounted(){
     void this.$store.dispatch('channels/loadChannels')
+    void this.$store.dispatch('channels/join')
   }
 });
 </script>

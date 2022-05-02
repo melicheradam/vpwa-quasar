@@ -65,7 +65,7 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       //commit('LOADING_ERROR', err)
       throw err
     }
-  }
+  },
 }
 
 export default actions

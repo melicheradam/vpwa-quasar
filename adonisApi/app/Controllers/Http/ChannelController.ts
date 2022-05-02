@@ -32,7 +32,7 @@ export default class ChannelController {
       Logger.warn(String(user))
       if(user !== undefined)
         await user.related('channels').attach(channel)
-      return false
+      return true
     }
     catch(err){
       Logger.warn('Could not join channel' + String(channel))

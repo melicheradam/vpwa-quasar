@@ -154,14 +154,6 @@ export default defineComponent({
         this.loading = true
         await this.addMessage({ channel: this.activeChannel, message: this.input })
         this.loading = false
-        /*const message: MessageModel = {
-          id: -1,
-          date: Date.now(),
-          user: '',
-          channel_id: this.channelID,
-          text: [this.input]
-        }
-        this.$store.commit('app/storeMessage', message)*/
       }
       const item = this.$refs.select as QSelect
       item.updateInputValue('')

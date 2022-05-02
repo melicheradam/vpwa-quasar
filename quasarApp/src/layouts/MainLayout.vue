@@ -49,36 +49,42 @@
 
 
 
-<script>
+<script lang="ts">
 
-import { ref } from 'vue'
+import { defineComponent } from 'vue'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 import Navbar from 'src/components/UserNavbarComponents/Navbar.vue'
 import FooterInput from 'src/components/FooterInputComponents/FooterInput.vue'
 import ServerNavbar from 'src/components/ServerNavbarComponents/ServerNavbar.vue'
 
-export default {
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-    const rightDrawerOpen = ref(false)
+export default defineComponent({
+  name: 'MainLayout',
+  data () {
     return {
-
-      leftDrawerOpen,
-
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-
-      rightDrawerOpen,
-
-      toggleRightDrawer () {
-        rightDrawerOpen.value = !rightDrawerOpen.value
-      }
+      leftDrawerOpen: true,
+      rightDrawerOpen: false,
     }
   },
+  computed: {
+    ...mapGetters('channels', {
+      channels: 'joinedChannels',
+      lastMessageOf: 'lastMessageOf'
+    }),
+    activeChannel () {
+      return this.$store.state.channels.active
+    }
+  },
+  methods: {
+    toggleLeftDrawer () {
+      this.leftDrawerOpen = !this.leftDrawerOpen
+    },
+    toggleRightDrawer () {
+      this.rightDrawerOpen = !this.rightDrawerOpen
+    },
+  },
   components: { Navbar, FooterInput, ServerNavbar },
-}
+})
 
 </script>
 
