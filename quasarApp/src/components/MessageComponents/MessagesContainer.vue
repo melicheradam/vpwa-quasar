@@ -70,15 +70,7 @@ export default defineComponent({
     }
   },
   mounted () {
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'not me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
-    this.$store.commit('app/storeMessage', { id: 0, channel_id: 0, date: Date.now(), text: ['hello'], user: 'me' })
+    //void this.$store.dispatch('channels/join')
   }
 });
 </script>

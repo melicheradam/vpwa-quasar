@@ -11,7 +11,7 @@ export default class ChannelUsers extends BaseSchema {
       .references('id').inTable('users').onDelete('CASCADE')
       table.integer('channel_id').unsigned().notNullable()
       .references('id').inTable('channels').onDelete('CASCADE')
-      table.string("status", 255).notNullable()
+      //table.string("status", 255).notNullable()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

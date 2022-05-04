@@ -26,17 +26,17 @@ export default class ChannelController {
     // TODO
     //add authentication to requests
     auth.use('api').authenticate
-    const channel = request.input('channel_id', -1)
+    const channel = request.input('channelId', -1)
     try{
-      const user = auth.user
-      Logger.warn(String(user))
-      if(user !== undefined)
-        await user.related('channels').attach(channel)
+      const user = auth.use('api').user
+      if(user !== undefined){
+        await user.related('channels').attach([channel])
+      }
       return true
     }
     catch(err){
       Logger.warn('Could not join channel' + String(channel))
-      return false
+      throw err
     }
   }
   async getAll({ auth, request }: HttpContextContract) {
