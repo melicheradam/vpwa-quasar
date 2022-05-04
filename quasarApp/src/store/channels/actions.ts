@@ -68,10 +68,10 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       throw err
     }
   },
-  async joindb ({ commit }, { channel, user }: { channel: number, user: number }) {
+  async joindb ({ commit }, { channel }: { channel: number}) {
     try {
       //commit('LOADING_START')
-      const retval = await channelService.joindb(channel, user)
+      const retval = await channelService.joindb(channel)
       //commit('LOADING_SUCCESS', { channel, user })
     } catch (err) {
       //commit('LOADING_ERROR', err)

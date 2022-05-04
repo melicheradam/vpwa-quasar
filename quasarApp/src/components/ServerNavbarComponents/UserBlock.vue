@@ -79,7 +79,6 @@ export default defineComponent({
   computed: {
     currentUser: {
       get (): UserModel {
-        console.log(this.$store.state.auth.user)
         if(this.$store.state.auth.user === null)
           return {
             id: -1,
@@ -112,7 +111,7 @@ export default defineComponent({
       } as ChannelModelForm
       void this.$store.dispatch('channels/create', payload).then(
         (value: ChannelModel) => {
-          void this.$store.dispatch('channels/joindb', {channel:value.id, user:this.currentUser.id})
+          void this.$store.dispatch('channels/joindb', {channel:value.id})
         }
       )
     },

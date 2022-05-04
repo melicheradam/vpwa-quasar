@@ -24,7 +24,7 @@
       >
         <q-list dense padding>
           <template v-for="server in channelsPublic" :key="server.id">
-            <Server :serverObj="server"></Server>
+            <Server :serverObj="server" :serverType="'public'"></Server>
           </template>
         </q-list>
       </q-expansion-item>

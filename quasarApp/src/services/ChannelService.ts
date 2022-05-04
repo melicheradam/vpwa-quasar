@@ -73,7 +73,7 @@ class ChannelService {
     return response.data
   }
 
-  async joindb (id: number, userId: number): Promise<boolean> {
+  async joindb (id: number): Promise<boolean> {
     const data = {
       channelId: id,
       //userId: userId
