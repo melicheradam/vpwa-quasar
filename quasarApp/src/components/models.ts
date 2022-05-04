@@ -19,8 +19,8 @@ export interface SerializedMessage {
   userId: number
   content: string
   channelId: number,
-  createdAt: string,
-  updatedAt: string,
+  createdAt: number,
+  updatedAt: number,
   id: number,
   user: UserModel
 }
@@ -31,10 +31,10 @@ export interface MessageModel {
    * If user is empty, message is assigned as logged users message.
    */
   userId: number
-  content: string
+  contentArr: Array<string>
   channelId: number,
-  createdAt: string,
-  updatedAt: string,
+  createdAt: number,
+  updatedAt: number,
   id: number,
   user: UserModel
 }

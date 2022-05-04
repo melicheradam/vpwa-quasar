@@ -13,7 +13,7 @@
       </template>
 
       <div v-for="message in channelMessages" :key="message.id" class="caption q-py-sm">
-        <Message :message="message" :currentUser="1"></Message>
+        <Message :message="message" :currentUser="currentUser.id"></Message>
       </div>
     </q-infinite-scroll>
   </div>
@@ -23,7 +23,7 @@
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
 import Message from './Message.vue';
-import { MessageModel } from '../models';
+import { MessageModel, UserModel } from '../models';
 import { getMessagesByChannel } from 'src/utils/GettersHelper'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
@@ -53,6 +53,9 @@ export default defineComponent({
   computed: {
     activeChannel(): number | null{
       return this.$store.state.channels.active
+    },
+    currentUser(): UserModel | null{
+      return this.$store.state.auth.user
     },
     ...mapGetters('channels', {
       channels: 'joinedChannels',

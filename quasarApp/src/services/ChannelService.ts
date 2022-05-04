@@ -22,7 +22,7 @@ class ChannelSocketManager extends SocketManager {
     } )
   }
 
-  public addMessage (message: RawMessage): Promise<MessageModel> {
+  public addMessage (message: RawMessage): Promise<SerializedMessage> {
     return this.emitAsync('addMessage', message)
   }
 

@@ -23,15 +23,15 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     state.active = channel
   },
   NEW_MESSAGE (state, { channel, message }: { channel: number, message: MessageModel }) {
-    state.messages[channel].push(message)
-    //const last_message = state.messages[channel][state.messages[channel].length - 1]
-    /*
+    //state.messages[channel].push(message)
+    const last_message = state.messages[channel][state.messages[channel].length - 1]
+    
     //combine messages sent withing 10s
-    if (state.messages[channel].length > 0 && last_message.user === message.user && message.date - last_message.date < (1000 * 10))
-      state.messages[channel][state.messages[channel].length - 1].text.push(message.text[0])
+    if (state.messages[channel].length > 0 && last_message.user.id === message.user.id && message.createdAt - last_message.createdAt < (1000 * 10))
+      state.messages[channel][state.messages[channel].length - 1].contentArr.push(message.contentArr[0])
     else
       state.messages[channel].push(message)
-    */
+    
 
   },
   NEW_CHANNEL (state, channel: ChannelModel) {
