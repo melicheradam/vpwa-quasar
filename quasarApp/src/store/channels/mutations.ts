@@ -23,7 +23,11 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     state.active = channel
   },
   NEW_MESSAGE (state, { channel, message }: { channel: number, message: MessageModel }) {
-    //state.messages[channel].push(message)
+    if(state.messages[channel].length === 0){
+      state.messages[channel].push(message)
+      return
+    }
+
     const last_message = state.messages[channel][state.messages[channel].length - 1]
     
     //combine messages sent withing 10s
