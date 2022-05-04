@@ -16,7 +16,9 @@ export default class Channel extends BaseModel {
   @column()
   public private: boolean
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'ownerId',
+  })
   public owner: BelongsTo<typeof User>
 
   @hasMany(() => Message, {

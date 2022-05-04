@@ -8,9 +8,9 @@ const mutation: MutationTree<AppStateInterface> = {
     //check if own last message is within minute
     const last_message = state.messages[state.messages.length - 1]
 
-    if (state.messages.length > 0 && last_message.user === messageObj.user && messageObj.date - last_message.date < (1000 * 10))
-      state.messages[state.messages.length - 1].text.push(messageObj.text[0])
-    else
+    //if (state.messages.length > 0 && last_message.user === messageObj.user && messageObj.date - last_message.date < (1000 * 10))
+      //state.messages[state.messages.length - 1].text.push(messageObj.text[0])
+    //else
       state.messages.push(messageObj)
   },
   storeAllMessages (state: AppStateInterface, messageArr: MessageModel[]) {

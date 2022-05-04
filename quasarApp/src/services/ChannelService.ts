@@ -1,4 +1,4 @@
-import { RawMessage, MessageModel, ChannelModel, ChannelModelForm } from 'src/components/models'
+import { RawMessage, MessageModel, ChannelModel, ChannelModelForm, SerializedMessage } from 'src/components/models'
 import { BootParams, SocketManager } from './SocketManager'
 import { api } from 'src/boot/axios'
 import { AxiosError } from 'axios'
@@ -31,8 +31,8 @@ class ChannelSocketManager extends SocketManager {
     return this.emitAsync('addChannel', channel)
   }
 
-  public loadMessages (): Promise<MessageModel[]> {
-    console.log('emitted')
+  public loadMessages (): Promise<SerializedMessage[]> {
+    console.log(this.emitAsync('loadMessages'))
     return this.emitAsync('loadMessages')
   }
 }

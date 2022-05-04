@@ -6,9 +6,8 @@ import { ChannelModel, RawMessage, ChannelModelForm } from 'src/components/model
 
 const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   async join ({ commit }, channel: number) {
-      try {
+    try {
       commit('LOADING_START')
-      console.log('joining')
       const messages = await channelService.join(channel).loadMessages()
       commit('LOADING_SUCCESS', { channel, messages })
     } catch (err) {

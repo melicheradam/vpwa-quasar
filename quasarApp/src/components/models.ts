@@ -15,15 +15,28 @@ export interface MessageModelDB {
 }
 
 
+export interface SerializedMessage {
+  userId: number
+  content: string
+  channelId: number,
+  createdAt: string,
+  updatedAt: string,
+  id: number,
+  user: UserModel
+}
+
+
 export interface MessageModel {
   /**
    * If user is empty, message is assigned as logged users message.
    */
-  id: number,
+  userId: number
+  content: string
   channelId: number,
-  user: string,
-  text: Array<string>,
-  date: number,
+  createdAt: string,
+  updatedAt: string,
+  id: number,
+  user: UserModel
 }
 
 export interface ChannelModel{
@@ -51,7 +64,7 @@ export interface UserModel {
   firstName: string,
   lastName: string,
   email: string,
-  status: string,
+  status: string | null,
 }
 
 export interface ApiToken {
