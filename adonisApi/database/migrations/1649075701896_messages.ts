@@ -7,8 +7,8 @@ export default class Messages extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
       table.string("content", 8095).notNullable()
-      table.integer("user").notNullable().references("id").inTable("users")
-      table.integer("channel").notNullable().references("id").inTable("channels").onDelete("CASCADE")
+      table.integer("user_id").notNullable().references("id").inTable("users")
+      table.integer("channel_id").notNullable().references("id").inTable("channels").onDelete("CASCADE")
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

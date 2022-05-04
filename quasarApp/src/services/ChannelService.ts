@@ -32,6 +32,7 @@ class ChannelSocketManager extends SocketManager {
   }
 
   public loadMessages (): Promise<MessageModel[]> {
+    console.log('emitted')
     return this.emitAsync('loadMessages')
   }
 }
@@ -40,6 +41,7 @@ class ChannelService {
   private channels: Map<number, ChannelSocketManager> = new Map()
 
   public join (id: number): ChannelSocketManager {
+    console.log('joining' + String(id))
     if (this.channels.has(id)) {
       throw new Error(`User is already joined in channel "${id}"`)
     }

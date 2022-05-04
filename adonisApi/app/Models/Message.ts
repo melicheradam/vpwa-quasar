@@ -10,6 +10,12 @@ export default class Message extends BaseModel {
   @column()
   public content: string
 
+  @column()
+  public channelId: number
+
+  @column()
+  public userId: number
+
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 

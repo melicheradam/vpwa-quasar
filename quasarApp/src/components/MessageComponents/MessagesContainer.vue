@@ -51,6 +51,9 @@ export default defineComponent({
   },
   components: { Message },
   computed: {
+    activeChannel(): number | null{
+      return this.$store.state.channels.active
+    },
     ...mapGetters('channels', {
       channels: 'joinedChannels',
       lastMessageOf: 'lastMessageOf'
@@ -70,7 +73,8 @@ export default defineComponent({
     }
   },
   mounted () {
-    //void this.$store.dispatch('channels/join')
+    if(this.activeChannel !== null)
+      void this.$store.dispatch('channels/join', this.activeChannel)
   }
 });
 </script>
