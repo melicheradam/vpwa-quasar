@@ -54,7 +54,11 @@ const mutation: MutationTree<ChannelsStateInterface> = {
       state.invitesChannels = channels
     if(type === 'joined')
       state.joinedChannels = channels
-
+  },
+  REMOVE_CHANNEL (state, { channel_id }: { channel_id: number}){
+    state.publicChannels.filter(item => item.id !== channel_id)
+    state.invitesChannels.filter(item => item.id !== channel_id)
+    state.joinedChannels.filter(item => item.id !== channel_id)
   }
 }
 

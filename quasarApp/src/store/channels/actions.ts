@@ -62,6 +62,7 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       const new_channel = await channelService.create(channel)
       const messages: ChannelModel[] = []
       commit('LOADING_SUCCESS', { new_channel, messages })
+      commit('NEW_CHANNEL', {channel: new_channel, type: 'joined'})
       return new_channel
     } catch (err) {
       commit('LOADING_ERROR', err)

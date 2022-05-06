@@ -109,6 +109,7 @@ export default defineComponent({
         private: this.private,
         owner: this.currentUser.id
       } as ChannelModelForm
+
       void this.$store.dispatch('channels/create', payload).then(
         (value: ChannelModel) => {
           void this.$store.dispatch('channels/joindb', {channel:value.id})

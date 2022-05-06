@@ -18,8 +18,15 @@ class ChannelSocketManager extends SocketManager {
     // get notification from websocket that a new channel was created
     // push it to store
     this.socket.on('channelCreated', (channel: ChannelModel) => {
-      store.commit('channels/NEW_CHANNEL', channel)
-    } )
+      console.log('CREATED CHANNEL')
+      console.log(channel)
+      if(!channel.private)
+        store.commit('channels/NEW_CHANNEL', {channel: channel, type: 'public'})
+    })
+
+    this.socket.on('channelRemoved', (channel_id: number) => {
+      store.commit('channels/REMOVE_CHANNEL', {channel_id: channel_id})
+    })
   }
 
   public addMessage (message: RawMessage): Promise<SerializedMessage> {
@@ -37,8 +44,33 @@ class ChannelSocketManager extends SocketManager {
   }
 }
 
+class ChannelOpsSocketManager extends SocketManager {
+  public subscribe ({ store }: BootParams): void {
+
+    // get notification from websocket that a new channel was created
+    // push it to store
+    this.socket.on('channelCreated', (channel: ChannelModel) => {
+      console.log('CREATED CHANNEL')
+      console.log(channel)
+      if(!channel.private)
+        store.commit('channels/NEW_CHANNEL', {channel: channel, type: 'public'})
+    })
+
+    this.socket.on('channelRemoved', (channel_id: number) => {
+      store.commit('channels/REMOVE_CHANNEL', {channel_id: channel_id})
+    })
+  }
+
+  // notify all listeners that a new channel was created
+  public addChannel (channel: number): Promise<ChannelModel> {
+    return this.emitAsync('addChannel', channel)
+  }
+
+}
+
 class ChannelService {
   private channels: Map<number, ChannelSocketManager> = new Map()
+  public channel = new ChannelOpsSocketManager('/channel')
 
   public join (id: number): ChannelSocketManager {
     if(isNaN(id))
@@ -72,6 +104,7 @@ class ChannelService {
 
   async create (data: ChannelModelForm): Promise<ChannelModel> {
     const response = await api.post<ChannelModel>('channel/create', data)
+    void this.channel.addChannel(response.data.id)
     return response.data
   }
 
