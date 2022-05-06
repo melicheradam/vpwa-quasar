@@ -41,7 +41,9 @@ class ChannelService {
   private channels: Map<number, ChannelSocketManager> = new Map()
 
   public join (id: number): ChannelSocketManager {
-    console.log('joining' + String(id))
+    if(isNaN(id))
+      throw new Error('Channel id is not a number!')
+
     if (this.channels.has(id)) {
       throw new Error(`User is already joined in channel "${id}"`)
     }
@@ -82,10 +84,32 @@ class ChannelService {
     return response.data
   }
 
-  public getChannels (): Promise<ChannelModel[]> {
+  public getPublicChannels (): Promise<ChannelModel[]> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return api.get(
-        'channel/getAll'
+        'channel/getPublic'
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .then((response) => response.data)
+      .catch((error: AxiosError) => {
+        return Promise.reject(error)
+      })
+  }
+  public getInvitesChannels (): Promise<ChannelModel[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return api.get(
+        'channel/getInvites'
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .then((response) => response.data)
+      .catch((error: AxiosError) => {
+        return Promise.reject(error)
+      })
+  }
+  public getJoinedChannels (): Promise<ChannelModel[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return api.get(
+        'channel/getJoined'
       )
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       .then((response) => response.data)

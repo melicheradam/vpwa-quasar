@@ -34,5 +34,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post('create', 'ChannelController.create')
   Route.post('join', 'ChannelController.join').middleware('auth')
-  Route.get('getAll', 'ChannelController.getAll')
+  Route.get('getPublic', 'ChannelController.getPublic').middleware('auth')
+  Route.get('getJoined', 'ChannelController.getJoined').middleware('auth')
+  Route.get('getInvites', 'ChannelController.getInvites').middleware('auth')
 }).prefix('channel')

@@ -10,8 +10,8 @@
       </q-expansion-item>
       <q-expansion-item dense dense-toggle expand-separator icon="tag" label="Channels">
         <q-list dense padding>
-          <template v-for="server in joinedChannels" :key="server.id">
-            <Server :serverObj="server"></Server>
+          <template v-for="server in channelsJoined" :key="server.id">
+            <Server :serverObj="server" :serverType="'joined'"></Server>
           </template>
         </q-list>
       </q-expansion-item>
@@ -57,7 +57,7 @@ export default defineComponent({
     },
     channelsJoined: {
       get (): Array<ChannelModel> {
-        return this.$store.state.app.channels_joined
+        return this.$store.state.channels.joinedChannels
       },
       set () {
         //
@@ -65,7 +65,7 @@ export default defineComponent({
     },
     channelsInvites: {
       get (): Array<ChannelModel> {
-        return this.$store.state.app.channels_invites
+        return this.$store.state.channels.invitesChannels
       },
       set () {
         //
@@ -73,7 +73,7 @@ export default defineComponent({
     },
     channelsPublic: {
       get (): Array<ChannelModel> {
-        return this.$store.state.channels.channelList
+        return this.$store.state.channels.publicChannels
       },
       set () {
         //

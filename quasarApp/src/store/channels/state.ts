@@ -4,7 +4,9 @@ export interface ChannelsStateInterface {
   loading: boolean,
   error: Error | null,
   messages: { [channel: number]: MessageModel[] }
-  channelList: ChannelModel[]
+  publicChannels: ChannelModel[]
+  joinedChannels: ChannelModel[]
+  invitesChannels: ChannelModel[]
   active: number | null
 }
 
@@ -13,7 +15,9 @@ function state (): ChannelsStateInterface {
     loading: false,
     error: null,
     messages: {},
-    channelList: [],
+    publicChannels: [],
+    joinedChannels: [],
+    invitesChannels: [],
     active: null
   }
 }

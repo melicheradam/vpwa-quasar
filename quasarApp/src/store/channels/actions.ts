@@ -81,11 +81,13 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   async loadChannels ({ commit }) {
     try {
       //commit('LOADING_START')
-      const retval = await channelService.getChannels()
-      console.log(retval)
-      retval.forEach(element => {
-        commit('NEW_CHANNEL', element)
-      });
+      const publicChannels = await channelService.getPublicChannels()
+      const joinedChannels = await channelService.getJoinedChannels()
+      const invitesChannels = await channelService.getInvitesChannels()
+      
+      commit('SET_CHANNELS', {channels: publicChannels.filter(item => !joinedChannels.some(jItem => jItem.id === item.id)), type: 'public'})
+      commit('SET_CHANNELS', {channels: joinedChannels, type: 'joined'})
+      commit('SET_CHANNELS', {channels: invitesChannels, type: 'invites'})
       //commit('LOADING_SUCCESS', { channel, user })
     } catch (err) {
       //commit('LOADING_ERROR', err)

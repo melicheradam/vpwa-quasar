@@ -39,12 +39,30 @@ export default class ChannelController {
       throw err
     }
   }
-  async getAll({ auth, request }: HttpContextContract) {
+  async getPublic({ auth, request }: HttpContextContract) {
+
+    auth.use('api').authenticate()
+
+    const publicChannels = await Channel.query().where('private', false)
+
+    return publicChannels
+  }
+  async getJoined({ auth, request }: HttpContextContract) {
+
+    auth.use('api').authenticate()
+
+    auth.user?.preload('channels')
+    const joinedChannels = await auth.user?.related('channels').query()
+    
+    return joinedChannels
+  }
+  async getInvites({ auth, request }: HttpContextContract) {
 
     auth.use('api').authenticate
 
-    const publicChannels = Channel.query().where('private', false)
+    auth.user?.preload('invites')
+    const invitedChannels = auth.user?.related('invites').query()
 
-    return publicChannels
+    return invitedChannels
   }
 }

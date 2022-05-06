@@ -38,8 +38,23 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     
 
   },
-  NEW_CHANNEL (state, channel: ChannelModel) {
-    state.channelList.push(channel)
+  NEW_CHANNEL (state, { channel, type }: { channel: ChannelModel, type: string }) {
+    if(type === 'public')
+      state.publicChannels.push(channel)
+    if(type === 'invite')
+      state.invitesChannels.push(channel)
+    if(type === 'joined')
+      state.joinedChannels.push(channel)
+
+  },
+  SET_CHANNELS (state, { channels, type }: { channels: ChannelModel[], type: string }){
+    if(type === 'public')
+      state.publicChannels = channels
+    if(type === 'invite')
+      state.invitesChannels = channels
+    if(type === 'joined')
+      state.joinedChannels = channels
+
   }
 }
 

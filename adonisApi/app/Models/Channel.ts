@@ -10,6 +10,8 @@ export default class Channel extends BaseModel {
   @column()
   public name: string
 
+  public state: string | null
+
   @column()
   public ownerId: number
 
