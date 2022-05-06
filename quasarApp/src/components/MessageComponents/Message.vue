@@ -6,7 +6,7 @@
         v-if="message.user.id !== currentUser"
         :name="message.user.firstName"
         avatar="https://cdn.quasar.dev/img/avatar2.jpg"
-        :text="message.content"
+        :text="message.contentArr"
       />
     </div>
   </div>
