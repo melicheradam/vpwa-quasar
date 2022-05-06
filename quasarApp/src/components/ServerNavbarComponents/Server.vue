@@ -73,17 +73,21 @@ export default defineComponent({
       accepted: false
     };
   },
+  watch : {
+    accepted() {
+      if(this.accepted)
+      {
+        void this.$store.dispatch('channels/joindb', { channel: (this.serverObj as ChannelModel).id })
+        this.accepted = false
+        void this.$router.push('/channel/' + String(this.serverObj.id))
+      }
+    }
+  },
   methods: {
     redirect (evt: Event) {
       evt.preventDefault();
-      if(this.serverType === 'public'){        
+      if(this.serverType === 'public'){
         this.showDialog = true
-        if(this.accepted){
-          void this.$store.dispatch('channels/joindb', { channel: (this.serverObj as ChannelModel).id }).then(
-            () => void this.$router.push('/channel/' + String(this.serverObj.id))
-          )
-        }
-        this.accepted = false
       }
       else
         void this.$router.push('/channel/' + String(this.serverObj.id))

@@ -29,13 +29,13 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     }
 
     const last_message = state.messages[channel][state.messages[channel].length - 1]
-    
+
     //combine messages sent withing 10s
     if (state.messages[channel].length > 0 && last_message.user.id === message.user.id && message.createdAt - last_message.createdAt < (1000 * 10))
       state.messages[channel][state.messages[channel].length - 1].contentArr.push(message.contentArr[0])
     else
       state.messages[channel].push(message)
-    
+
 
   },
   NEW_CHANNEL (state, { channel, type }: { channel: ChannelModel, type: string }) {
@@ -56,9 +56,14 @@ const mutation: MutationTree<ChannelsStateInterface> = {
       state.joinedChannels = channels
   },
   REMOVE_CHANNEL (state, { channel_id }: { channel_id: number}){
-    state.publicChannels.filter(item => item.id !== channel_id)
     state.invitesChannels.filter(item => item.id !== channel_id)
     state.joinedChannels.filter(item => item.id !== channel_id)
+    state.publicChannels.filter(item => item.id !== channel_id)
+  },
+  JOIN_CHANNEL(state, {channel_id}: {channel_id: number}){
+    const channel = state.publicChannels.filter(item => item.id === channel_id)
+    state.joinedChannels.push(channel[0])
+    state.publicChannels = state.publicChannels.filter(item => item.id !== channel_id)
   }
 }
 

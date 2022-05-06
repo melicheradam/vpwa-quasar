@@ -59,7 +59,9 @@ const mutation: MutationTree<AppStateInterface> = {
      *  */
     state.currentChannelUsers = userList
   },
-
+  addChannelUser(state: AppStateInterface, user : UserModel) {
+    state.currentChannelUsers.push(user)
+  }
 };
 
 export default mutation;

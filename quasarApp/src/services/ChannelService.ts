@@ -1,4 +1,4 @@
-import { RawMessage, MessageModel, ChannelModel, ChannelModelForm, SerializedMessage } from 'src/components/models'
+import { RawMessage, MessageModel, ChannelModel, ChannelModelForm, SerializedMessage, UserModel } from 'src/components/models'
 import { BootParams, SocketManager } from './SocketManager'
 import { api } from 'src/boot/axios'
 import { AxiosError } from 'axios'
@@ -27,6 +27,10 @@ class ChannelSocketManager extends SocketManager {
     this.socket.on('channelRemoved', (channel_id: number) => {
       store.commit('channels/REMOVE_CHANNEL', {channel_id: channel_id})
     })
+
+    this.socket.on('addMember', (user: UserModel) => {
+      store.commit('app/addChannelUser', user)
+    })
   }
 
   public addMessage (message: RawMessage): Promise<SerializedMessage> {
@@ -41,6 +45,9 @@ class ChannelSocketManager extends SocketManager {
   public loadMessages (): Promise<SerializedMessage[]> {
     console.log(this.emitAsync('loadMessages'))
     return this.emitAsync('loadMessages')
+  }
+  public addMember(): Promise<UserModel> {
+    return this.emitAsync('addMember')
   }
 }
 
@@ -79,7 +86,7 @@ class ChannelService {
     if (this.channels.has(id)) {
       throw new Error(`User is already joined in channel "${id}"`)
     }
-    
+
     // connect to given channel namespace
     const channel = new ChannelSocketManager(`/channels/${id}`)
     this.channels.set(id, channel)
@@ -114,6 +121,12 @@ class ChannelService {
       //userId: userId
     }
     const response = await api.post<boolean>('channel/join', data)
+    const channel = this.channels.get(id)
+    if(!channel)
+    {
+      return false
+    }
+    void channel.addMember()
     return response.data
   }
 

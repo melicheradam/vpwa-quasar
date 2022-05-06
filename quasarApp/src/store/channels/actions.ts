@@ -28,7 +28,7 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
         }
         else{
           formattedMessages.push(new_message)
-        }          
+        }
       })
       commit('LOADING_SUCCESS', { channel, messages: formattedMessages })
     } catch (err) {
@@ -71,11 +71,10 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   },
   async joindb ({ commit }, { channel }: { channel: number}) {
     try {
-      //commit('LOADING_START')
       const retval = await channelService.joindb(channel)
-      //commit('LOADING_SUCCESS', { channel, user })
+      commit('JOIN_CHANNEL', {channel_id : channel} )
+      return retval
     } catch (err) {
-      //commit('LOADING_ERROR', err)
       throw err
     }
   },
@@ -85,7 +84,7 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       const publicChannels = await channelService.getPublicChannels()
       const joinedChannels = await channelService.getJoinedChannels()
       const invitesChannels = await channelService.getInvitesChannels()
-      
+
       commit('SET_CHANNELS', {channels: publicChannels.filter(item => !joinedChannels.some(jItem => jItem.id === item.id)), type: 'public'})
       commit('SET_CHANNELS', {channels: joinedChannels, type: 'joined'})
       commit('SET_CHANNELS', {channels: invitesChannels, type: 'invites'})

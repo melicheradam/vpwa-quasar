@@ -2,6 +2,7 @@ import type { WsContextContract } from '@ioc:Ruby184/Socket.IO/WsContext'
 import type { MessageRepositoryContract } from '@ioc:Repositories/MessageRepository'
 import { inject } from '@adonisjs/core/build/standalone'
 import Logger from '@ioc:Adonis/Core/Logger'
+import User from 'App/Models/User'
 
 
 // inject repository from container to controller constructor
@@ -25,5 +26,9 @@ export default class MessageController {
     socket.broadcast.emit('message', message)
     // return message to sender
     return message
+  }
+  public async addMemeber({ socket, auth}: WsContextContract) {
+    const user = await User.find(auth.user!.id)
+    socket.broadcast.emit('addedMember', user)
   }
 }
