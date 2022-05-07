@@ -46,10 +46,10 @@
 </template>
 
 <script lang="ts">
-import { QSelect } from 'quasar';
+import { QSelect, useQuasar } from 'quasar';
 import { ref, defineComponent } from 'vue';
 import CommandItem from './CommandItem.vue';
-import { MessageModel } from 'components/models'
+import { ChannelModel, MessageModel } from 'components/models'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 interface CommandObj {
@@ -93,11 +93,7 @@ const commandList: CommandObj[] = [
     value: '/list',
     description: 'List users'
   },
-  {
-    label: '/create',
-    value: '/create',
-    description: 'Create new channel'
-  }
+
 ]
 
 export default defineComponent({
@@ -107,7 +103,8 @@ export default defineComponent({
       options: ref(commandList),
       select: ref('select'),
       input: '',
-      loading: false
+      loading: false,
+      $q: useQuasar(),
 
     };
   },
@@ -115,8 +112,8 @@ export default defineComponent({
     select: ref('select'),
   },
   computed: {
-    activeChannel (): number | null {
-      return this.$store.state.channels.active
+    activeChannel (): ChannelModel | null {
+      return this.$store.state.channels.activeChannel
     },
     channelID: {
       get (): number {
@@ -148,7 +145,28 @@ export default defineComponent({
       //and store it to vuex store
       // if first character is command execute it against API
       if (this.input.charAt(0) == '/') {
-        //
+        const command = this.input
+        switch(command) {
+          case('/list'):
+            this.$store.commit('app/EXPAND_RIGHT_DRAWER')
+            break
+          case('/quit'):
+            if(this.activeChannel?.ownerId !== this.$store.state.auth.user?.id) {
+              this.$q.notify({
+              type: 'negative',
+              message: 'You are not the owner of this channel'
+              })
+            }
+            else {
+              //this.$store.dispatch('channesl/delete', {channel : this.activeChannel.id})
+            }
+            break
+          default:
+              this.$q.notify({
+              type: 'negative',
+              message: 'Command doesn\'t exist'
+              })
+        }
       }
       else {
         this.loading = true

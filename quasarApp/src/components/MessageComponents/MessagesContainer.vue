@@ -62,12 +62,12 @@ export default defineComponent({
       lastMessageOf: 'lastMessageOf'
     }),
     channelMessages (): MessageModel[] | [] {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
         return this.$store.getters['channels/currentMessages']
     },
     channelID: {
       get (): number {
-        return Number(this.$store.state.app.currentChannel.id)
+        return Number(this.$store.state.channels.active)
       },
       set () {
         //

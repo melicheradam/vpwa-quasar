@@ -1,3 +1,4 @@
+import { strictEqual } from 'assert'
 import { ChannelModel, MessageModel, UserModel } from 'src/components/models'
 import { MutationTree } from 'vuex'
 import { ChannelsStateInterface } from './state'
@@ -17,6 +18,7 @@ const mutation: MutationTree<ChannelsStateInterface> = {
   },
   CLEAR_CHANNEL (state, channel: number) {
     state.active = null
+    state.activeChannel = null
     delete state.messages[channel]
   },
   SET_ACTIVE (state, channel: number) {

@@ -62,8 +62,6 @@ export default defineComponent({
   name: 'MainLayout',
   data () {
     return {
-      leftDrawerOpen: true,
-      rightDrawerOpen: false,
     }
   },
   computed: {
@@ -73,14 +71,20 @@ export default defineComponent({
     }),
     activeChannel () {
       return this.$store.state.channels.active
+    },
+    leftDrawerOpen () {
+      return this.$store.state.app.leftDrawerOpen
+    },
+    rightDrawerOpen () {
+      return this.$store.state.app.rightDrawerOpen
     }
   },
   methods: {
     toggleLeftDrawer () {
-      this.leftDrawerOpen = !this.leftDrawerOpen
+      this.$store.commit('app/TOGGLE_LEFT_DRAWER')
     },
     toggleRightDrawer () {
-      this.rightDrawerOpen = !this.rightDrawerOpen
+      this.$store.commit('app/TOGGLE_RIGHT_DRAWER')
     },
   },
   components: { Navbar, FooterInput, ServerNavbar },
