@@ -20,7 +20,9 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     delete state.messages[channel]
   },
   SET_ACTIVE (state, channel: number) {
+    const active = state.joinedChannels.filter(item => item.id == channel)
     state.active = channel
+    state.activeChannel = active[0]
   },
   NEW_MESSAGE (state, { channel, message }: { channel: number, message: MessageModel }) {
     if(state.messages[channel].length === 0){

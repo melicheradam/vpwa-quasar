@@ -1,5 +1,4 @@
 <template>
-    <q-card-section>User list:</q-card-section>
     <q-list>
         <template v-for="user in channelUsers" :key="user.username">
             <NavbarUser :userObj="user"></NavbarUser>

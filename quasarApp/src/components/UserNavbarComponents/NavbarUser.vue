@@ -14,19 +14,57 @@
             </q-avatar>
         </q-item-section>
 
-        <q-item-section>{{ userObj.firstName }} {{ userObj.lastName }}</q-item-section>
+        <q-item-section>{{userObj.nickName}}</q-item-section>
 
         <q-item-section side v-if="currentUser.id === userObj.id">
             <q-tooltip :offset="[0, 2]">Leave channel</q-tooltip>
-            <q-btn flat icon="exit_to_app" @click="leaveChannel" />
+            <q-btn flat icon="exit_to_app" @click="showDialog = true" />
         </q-item-section>
         <q-item-section side v-else>
-            <q-tooltip :offset="[0, 2]" v-if="currentChannel.ownerId === currentUser.id">Ban user</q-tooltip>
-            <q-tooltip :offset="[0, 2]" v-else>Vote kick</q-tooltip>
-            <q-btn flat icon="block" @click="kickOrBanUser" />
+            <template v-if="activeChannel.ownerId === currentUser.id">
+              <q-tooltip :offset="[0, 2]" >Ban user</q-tooltip>
+              <q-btn flat icon="hardware" @click="kickOrBanUser" />
+            </template>
+            <template v-else>
+              <q-tooltip :offset="[0, 2]">Vote kick</q-tooltip>
+              <q-btn flat icon="block" @click="kickOrBanUser" />
+            </template>
         </q-item-section>
     </q-item>
-</template>
+
+      <q-dialog v-model="showDialog" persistent>
+        <template v-if="activeChannel.ownerId === currentUser.id">
+          <q-card style="min-width: 350px" >
+            <q-card-section>
+              <div class="">
+                <q-avatar icon="warning" color="" text-color="negative" />
+                You are the owner of this channel, if you leave, channel will be deleted
+              </div>
+            </q-card-section>
+            <q-card-actions align="right" class="text-primary" >
+              <q-btn flat label="Cancel" v-close-popup />
+              <q-btn flat label="Leave" color="negative"  v-close-popup @click="showDialog = false" />
+            </q-card-actions>
+          </q-card>
+        </template>
+
+        <template v-else>
+          <q-card style="min-width: 350px">
+            <q-card-section>
+              <div class="">
+                    Are you sure you want to leave this channel?
+                </div>
+            </q-card-section>
+            <q-card-actions align="right" class="text-primary">
+              <q-btn flat label="Cancel" v-close-popup />
+              <q-btn flat label="Leave" color="negative"  v-close-popup @click="showDialog = false" />
+            </q-card-actions>
+          </q-card>
+        </template>
+
+      </q-dialog>
+
+  </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -44,6 +82,8 @@ export default defineComponent({
     },
     data () {
         return {
+            activeChannel : this.$store.state.channels.activeChannel,
+            showDialog : false,
             $q: useQuasar(),
         };
     },
@@ -63,7 +103,7 @@ export default defineComponent({
             void this.$store.dispatch('app/leaveChannel')
 
         }
-        
+
     }
 });
 </script>
