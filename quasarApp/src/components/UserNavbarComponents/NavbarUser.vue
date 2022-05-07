@@ -82,17 +82,19 @@ export default defineComponent({
     },
     data () {
         return {
-            activeChannel : this.$store.state.channels.activeChannel,
             showDialog : false,
             $q: useQuasar(),
         };
     },
     computed: {
+        activeChannel(){
+          return this.$store.state.channels.activeChannel
+        },
         currentUser(): UserModel | null{
-            return this.$store.state.auth.user
+          return this.$store.state.auth.user
         },
         ...mapGetters('channels', {
-            currentChannel: 'activeChannelModel'
+          currentChannel: 'activeChannelModel'
         }),
     },
     methods: {

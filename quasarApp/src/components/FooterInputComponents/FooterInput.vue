@@ -112,7 +112,7 @@ export default defineComponent({
     select: ref('select'),
   },
   computed: {
-    activeChannel (): ChannelModel | null {
+    activeChannel () {
       return this.$store.state.channels.activeChannel
     },
     channelID: {
