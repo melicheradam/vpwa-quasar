@@ -1,4 +1,4 @@
-import { ChannelModel, MessageModel } from 'src/components/models'
+import { ChannelModel, MessageModel, UserModel } from 'src/components/models'
 import { MutationTree } from 'vuex'
 import { ChannelsStateInterface } from './state'
 
@@ -64,6 +64,9 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     const channel = state.publicChannels.filter(item => item.id === channel_id)
     state.joinedChannels.push(channel[0])
     state.publicChannels = state.publicChannels.filter(item => item.id !== channel_id)
+  },
+  SET_USERS(state, { channel, users }: { channel: number, users: UserModel[] }){
+    state.users[channel] = users
   }
 }
 

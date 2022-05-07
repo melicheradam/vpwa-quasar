@@ -23,22 +23,14 @@ export default defineComponent({
         };
     },
     computed: {
-        channelUsers: {
-            get (): Array<UserModel> {
-                return this.$store.state.app.currentChannelUsers
-            },
-            set () {
-                //
-            }
+        channelUsers() {
+            const channel = this.activeChannel
+            if(channel === null || isNaN(channel))
+                return []
+            return this.$store.state.channels.users[channel]
         },
-        channelID: {
-            get (): number {
-                return Number(this.$store.state.app.currentChannel.id)
-            },
-            set () {
-                //
-            }
-
+        activeChannel(): number | null{
+            return this.$store.state.channels.active
         }
     },
     methods: {

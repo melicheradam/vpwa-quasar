@@ -18,8 +18,6 @@ class ChannelSocketManager extends SocketManager {
     // get notification from websocket that a new channel was created
     // push it to store
     this.socket.on('channelCreated', (channel: ChannelModel) => {
-      console.log('CREATED CHANNEL')
-      console.log(channel)
       if(!channel.private)
         store.commit('channels/NEW_CHANNEL', {channel: channel, type: 'public'})
     })
@@ -37,13 +35,7 @@ class ChannelSocketManager extends SocketManager {
     return this.emitAsync('addMessage', message)
   }
 
-  // notify all listeners that a new channel was created
-  public addChannel (channel: number): Promise<ChannelModel> {
-    return this.emitAsync('addChannel', channel)
-  }
-
   public loadMessages (): Promise<SerializedMessage[]> {
-    console.log(this.emitAsync('loadMessages'))
     return this.emitAsync('loadMessages')
   }
   public addMember(): Promise<UserModel> {
@@ -118,7 +110,6 @@ class ChannelService {
   async joindb (id: number): Promise<boolean> {
     const data = {
       channelId: id,
-      //userId: userId
     }
     const response = await api.post<boolean>('channel/join', data)
     const channel = this.channels.get(id)
@@ -156,6 +147,17 @@ class ChannelService {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return api.get(
         'channel/getJoined'
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .then((response) => response.data)
+      .catch((error: AxiosError) => {
+        return Promise.reject(error)
+      })
+  }
+  public getChannelUsers (id: number): Promise<UserModel[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return api.get(
+        'channel/' + String(id) + '/getUsers'
       )
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       .then((response) => response.data)

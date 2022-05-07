@@ -14,14 +14,14 @@
             </q-avatar>
         </q-item-section>
 
-        <q-item-section>{{ userObj.firstname }} {{ userObj.lastname }}</q-item-section>
+        <q-item-section>{{ userObj.firstName }} {{ userObj.lastName }}</q-item-section>
 
         <q-item-section side v-if="currentUser.id === userObj.id">
             <q-tooltip :offset="[0, 2]">Leave channel</q-tooltip>
             <q-btn flat icon="exit_to_app" @click="leaveChannel" />
         </q-item-section>
         <q-item-section side v-else>
-            <q-tooltip :offset="[0, 2]" v-if="currentChannel.owner_id === currentUser.id">Ban user</q-tooltip>
+            <q-tooltip :offset="[0, 2]" v-if="currentChannel.ownerId === currentUser.id">Ban user</q-tooltip>
             <q-tooltip :offset="[0, 2]" v-else>Vote kick</q-tooltip>
             <q-btn flat icon="block" @click="kickOrBanUser" />
         </q-item-section>
@@ -47,21 +47,17 @@ export default defineComponent({
         };
     },
     computed: {
-        currentUser: {
-            get (): UserModel {
-                return this.$store.state.app.currentUser
-            },
-            set () {
-                //
-            }
+        currentUser(): UserModel | null{
+            return this.$store.state.auth.user
         },
-        currentChannel: {
-            get (): ChannelModel {
-                return this.$store.state.app.currentChannel
-            },
-            set () {
-                //
-            }
+        currentChannel(): ChannelModel | null{
+            const channel = this.activeChannel
+            if(channel === null || isNaN(channel))
+                return null
+            return this.$store.state.channels.joinedChannels[channel]
+        },
+        activeChannel(): number | null{
+            return this.$store.state.channels.active
         }
     },
     methods: {

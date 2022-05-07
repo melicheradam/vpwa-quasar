@@ -94,6 +94,19 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       throw err
     }
   },
+  async loadUsers ({ commit }, { channel }: { channel: number}) {
+    try {
+      //commit('LOADING_START')
+      const users = await channelService.getChannelUsers(channel)
+
+      commit('SET_USERS', {channel: channel, users: users})
+
+      //commit('LOADING_SUCCESS', { channel, user })
+    } catch (err) {
+      //commit('LOADING_ERROR', err)
+      throw err
+    }
+  },
 }
 
 export default actions

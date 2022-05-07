@@ -1,9 +1,10 @@
-import { ChannelModel, MessageModel } from 'src/components/models'
+import { ChannelModel, MessageModel, UserModel } from 'src/components/models'
 
 export interface ChannelsStateInterface {
   loading: boolean,
   error: Error | null,
-  messages: { [channel: number]: MessageModel[] }
+  messages: { [channel: number]: MessageModel[] },
+  users: { [channel: number]: UserModel[]}
   publicChannels: ChannelModel[]
   joinedChannels: ChannelModel[]
   invitesChannels: ChannelModel[]
@@ -15,6 +16,7 @@ function state (): ChannelsStateInterface {
     loading: false,
     error: null,
     messages: {},
+    users: {},
     publicChannels: [],
     joinedChannels: [],
     invitesChannels: [],

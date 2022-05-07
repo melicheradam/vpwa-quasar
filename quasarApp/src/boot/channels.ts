@@ -11,9 +11,9 @@ export default boot(({ app, router, store }) => {
         if (to.path.indexOf('channel') !== -1) {
             const toChannel = Number(to.params.channelID)
             store.commit('channels/SET_ACTIVE', toChannel)
-            void store.dispatch('app/changeCurrentChannel', Number(to.params.channelID))
+            if(!isNaN(toChannel))
+                void store.dispatch('channels/loadUsers', {channel: toChannel})
         }
-
 
         next()
     })

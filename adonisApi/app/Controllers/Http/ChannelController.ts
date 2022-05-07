@@ -58,11 +58,19 @@ export default class ChannelController {
   }
   async getInvites({ auth, request }: HttpContextContract) {
 
-    auth.use('api').authenticate
+    auth.use('api').authenticate()
 
     auth.user?.preload('invites')
     const invitedChannels = auth.user?.related('invites').query()
 
     return invitedChannels
+  }
+  async getUsers({ auth, request, params }: HttpContextContract) {
+
+    auth.use('api').authenticate()
+
+    const channelUsers = (await Channel.findOrFail(params.id)).related('users').query()
+
+    return channelUsers
   }
 }
