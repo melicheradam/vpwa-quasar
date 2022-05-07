@@ -67,6 +67,9 @@ const mutation: MutationTree<ChannelsStateInterface> = {
   },
   SET_USERS(state, { channel, users }: { channel: number, users: UserModel[] }){
     state.users[channel] = users
+  },
+  ADD_USER(state, { channel, user }: { channel: number, user: UserModel }){
+    state.users[channel].push(user)
   }
 }
 

@@ -52,6 +52,7 @@
 
 <script lang="ts">
 import { QDialog } from 'quasar';
+import { channelService } from 'src/services'
 import { defineComponent, ref } from 'vue';
 import { ChannelModel } from '../models';
 
@@ -77,9 +78,15 @@ export default defineComponent({
     accepted() {
       if(this.accepted)
       {
-        void this.$store.dispatch('channels/joindb', { channel: (this.serverObj as ChannelModel).id })
         this.accepted = false
-        void this.$router.push('/channel/' + String(this.serverObj.id))
+
+        void this.$store.dispatch('channels/joindb', { channel: (this.serverObj as ChannelModel).id }).then(
+          () => void this.$router.push('/channel/' + String(this.serverObj.id)).then(
+            () => void channelService.addMember(Number(this.serverObj.id))
+            )
+        )
+        
+        
       }
     }
   },

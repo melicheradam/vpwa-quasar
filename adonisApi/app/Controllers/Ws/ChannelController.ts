@@ -3,17 +3,9 @@ import type { MessageRepositoryContract } from '@ioc:Repositories/MessageReposit
 import { inject } from '@adonisjs/core/build/standalone'
 import Channel from 'App/Models/Channel'
 import Logger from '@ioc:Adonis/Core/Logger'
+import User from 'App/Models/User'
 
-
-// inject repository from container to controller constructor
-// we do so because we can extract database specific storage to another class
-// and also to prevent big controller methods doing everything
-// controler method just gets data (validates it) and calls repository
-// also we can then test standalone repository without controller
-// implementation is bind into container inside providers/AppProvider.ts
-@inject(['Repositories/MessageRepository'])
 export default class ChannelController {
-  constructor (private messageRepository: MessageRepositoryContract) {}
 
   //new channel was created
   public async addChannel({ params, socket, auth }: WsContextContract, channel_id: number) {
@@ -28,5 +20,11 @@ export default class ChannelController {
     socket.broadcast.emit('channelRemoved', params.id)
     // return message to sender
     return true
+  }
+
+  public async addMember({ params, socket, auth}: WsContextContract) {
+    socket.broadcast.emit('addedMember', auth.user)
+    Logger.info('emitted')
+    return auth.user
   }
 }

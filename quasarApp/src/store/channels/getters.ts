@@ -1,15 +1,17 @@
 import { GetterTree } from 'vuex'
 import { StateInterface } from '../index'
 import { ChannelsStateInterface } from './state'
-import { MessageModel } from 'src/components/models'
+import { ChannelModel, MessageModel } from 'src/components/models'
 
 const getters: GetterTree<ChannelsStateInterface, StateInterface> = {
   joinedChannels (context){
     return Object.keys(context.messages)
   },
-  /*publicChannels (context){
-    return context.channelList
-  },*/
+  activeChannelModel (context): ChannelModel | undefined{
+    if(context.active === null)
+      return undefined
+    return context.joinedChannels[context.active]
+  },
   currentMessages (context): MessageModel[] | []{
     return context.active !== null ? context.messages[context.active] : []
   },

@@ -27,8 +27,5 @@ export default class MessageController {
     // return message to sender
     return message
   }
-  public async addMemeber({ socket, auth}: WsContextContract) {
-    const user = await User.find(auth.user!.id)
-    socket.broadcast.emit('addedMember', user)
-  }
+  
 }

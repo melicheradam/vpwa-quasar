@@ -11,23 +11,15 @@ class ChannelSocketManager extends SocketManager {
   public subscribe ({ store }: BootParams): void {
     const active = this.namespace.split('/').pop() as string
 
-    this.socket.on('message', (message: MessageModel) => {
-      store.commit('channels/NEW_MESSAGE', { active, message })
+    this.socket.on('message', (message: SerializedMessage) => {
+      const new_message = message as unknown as MessageModel
+      new_message.contentArr = Array<string>(message.content)
+      new_message.createdAt = Number(new Date(message.createdAt))
+      store.commit('channels/NEW_MESSAGE', {channel: active, message: new_message})
     })
 
-    // get notification from websocket that a new channel was created
-    // push it to store
-    this.socket.on('channelCreated', (channel: ChannelModel) => {
-      if(!channel.private)
-        store.commit('channels/NEW_CHANNEL', {channel: channel, type: 'public'})
-    })
-
-    this.socket.on('channelRemoved', (channel_id: number) => {
-      store.commit('channels/REMOVE_CHANNEL', {channel_id: channel_id})
-    })
-
-    this.socket.on('addMember', (user: UserModel) => {
-      store.commit('app/addChannelUser', user)
+    this.socket.on('addedMember', (user: UserModel) => {
+      store.commit('channels/ADD_USER', {channel: active, user: user})
     })
   }
 
@@ -49,8 +41,6 @@ class ChannelOpsSocketManager extends SocketManager {
     // get notification from websocket that a new channel was created
     // push it to store
     this.socket.on('channelCreated', (channel: ChannelModel) => {
-      console.log('CREATED CHANNEL')
-      console.log(channel)
       if(!channel.private)
         store.commit('channels/NEW_CHANNEL', {channel: channel, type: 'public'})
     })
@@ -82,6 +72,7 @@ class ChannelService {
     // connect to given channel namespace
     const channel = new ChannelSocketManager(`/channels/${id}`)
     this.channels.set(id, channel)
+
     return channel
   }
 
@@ -107,17 +98,21 @@ class ChannelService {
     return response.data
   }
 
+  public addMember (id: number) {
+    const channel = this.channels.get(id)
+
+    if (!channel) {
+      console.log('CANNOT ADD MEMBER, CHANNEL DOES NOT EXIST YET')
+      return false
+    }
+    void channel.addMember()
+  }
+
   async joindb (id: number): Promise<boolean> {
     const data = {
       channelId: id,
     }
     const response = await api.post<boolean>('channel/join', data)
-    const channel = this.channels.get(id)
-    if(!channel)
-    {
-      return false
-    }
-    void channel.addMember()
     return response.data
   }
 

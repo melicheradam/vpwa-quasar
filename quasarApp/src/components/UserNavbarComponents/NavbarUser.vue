@@ -32,6 +32,7 @@
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar'
 import { UserModel, ChannelModel } from '../models';
+import { mapGetters } from 'vuex';
 
 export default defineComponent({
     name: 'UserNavbar',
@@ -50,15 +51,9 @@ export default defineComponent({
         currentUser(): UserModel | null{
             return this.$store.state.auth.user
         },
-        currentChannel(): ChannelModel | null{
-            const channel = this.activeChannel
-            if(channel === null || isNaN(channel))
-                return null
-            return this.$store.state.channels.joinedChannels[channel]
-        },
-        activeChannel(): number | null{
-            return this.$store.state.channels.active
-        }
+        ...mapGetters('channels', {
+            currentChannel: 'activeChannelModel'
+        }),
     },
     methods: {
         kickOrBanUser(){
