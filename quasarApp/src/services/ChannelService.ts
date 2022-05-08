@@ -213,6 +213,17 @@ class ChannelService {
         return Promise.reject(error)
       })
   }
+  public getMoreMessages (id: number, lastDate: number): Promise<SerializedMessage[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return api.get(
+        'channel/' + String(id) + '/messages/' + String(lastDate)
+      )
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .then((response) => response.data)
+      .catch((error: AxiosError) => {
+        return Promise.reject(error)
+      })
+  }
 }
 
 export default new ChannelService()

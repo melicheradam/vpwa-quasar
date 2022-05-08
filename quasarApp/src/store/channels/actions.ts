@@ -10,10 +10,11 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
     try {
       commit('LOADING_START')
 
-      const messages = await channelService.join(channel).loadMessages()
+      const messages = (await channelService.join(channel).loadMessages()).reverse()
       const formattedMessages = Array<MessageModel>()
 
       messages.forEach((message: SerializedMessage, index: number) => {
+        console.log(message)
         const new_message = message as unknown as MessageModel
         new_message.contentArr = Array<string>(message.content)
         new_message.createdAt = Number(new Date(message.createdAt))
@@ -142,10 +143,23 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
         commit('JOINED_TO_PUBLIC', {channel_id: channel})
       }
 
-
-
-
       //commit('LOADING_SUCCESS', { channel, user })
+    } catch (err) {
+      //commit('LOADING_ERROR', err)
+      throw err
+    }
+  },
+  async fetchMessages ({ commit }, { channel, lastDate }: { channel: number, lastDate: number}) {
+    try {
+      //commit('LOADING_START')
+      const messages = (await channelService.getMoreMessages(channel, lastDate)).reverse()
+      messages.forEach((item) => {
+        const formattedMessage = item as unknown as MessageModel
+        formattedMessage.contentArr = Array<string>(item.content)
+        formattedMessage.createdAt = Number(new Date(item.createdAt))
+        commit('PREPEND_MESSAGE', {channel: channel, message: formattedMessage})
+      })
+
     } catch (err) {
       //commit('LOADING_ERROR', err)
       throw err

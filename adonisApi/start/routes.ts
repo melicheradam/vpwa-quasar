@@ -42,4 +42,5 @@ Route.group(() => {
   Route.get('getJoined', 'ChannelController.getJoined').middleware('auth')
   Route.get('getInvites', 'ChannelController.getInvites').middleware('auth')
   Route.get('/:id/getUsers', 'ChannelController.getUsers').middleware('auth')
+  Route.get('/:id/messages/:lastDate', 'ChannelController.getMoreMessages').middleware('auth')
 }).prefix('channel')
