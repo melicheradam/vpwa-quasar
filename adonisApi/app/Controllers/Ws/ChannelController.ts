@@ -33,4 +33,11 @@ export default class ChannelController {
 
     return auth.user
   }
+
+  public async addInivte({ params, socket, auth}: WsContextContract, {channelId, nickName}: {channelId: number, nickName: string}) {
+    const channel = await Channel.findOrFail(channelId)
+    socket.broadcast.emit('addedInvite', {channel: channel, nickName: params.nickName})
+
+    return auth.user
+  }
 }

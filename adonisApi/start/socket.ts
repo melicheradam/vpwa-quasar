@@ -28,6 +28,7 @@ Ws.namespace('channel')
   .on('setOnline', 'ChannelController.setOnline')
   .on('setOffline', 'ChannelController.setOffline')
   .on('destroyChannel', 'ChannelController.destroyChannel')
+  .on('addInvite', 'ChannelController.addInvite')
 
 
 Ws.namespace('/')

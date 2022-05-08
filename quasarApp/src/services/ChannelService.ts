@@ -65,6 +65,14 @@ class ChannelOpsSocketManager extends SocketManager {
     this.socket.on('userOffline', (user: UserModel) => {
       store.commit('channels/SET_STATUS', {user: user, new_status: 'grey'})
     })
+
+    this.socket.on('addedInvite', ({channel, nickName}: {channel: ChannelModel, nickName: string}) => {
+      if(store.state.auth.user?.nickName === nickName){
+        //store.commit('channels/REMOVE_CHANNEL', {channel_id: channel.id})
+        store.commit('channels/NEW_CHANNEL', {channel: channel, type: 'invite'})
+      }
+      
+    })
   }
 
   // notify all listeners that a new channel was created
@@ -75,6 +83,12 @@ class ChannelOpsSocketManager extends SocketManager {
   public destroyChannel (channel: number): Promise<ChannelModel> {
     return this.emitAsync('destroyChannel', channel)
   }
+
+  // notify all listeners that a new channel was created
+  public addInvite (data: {channelId: number, nickName: string}): Promise<ChannelModel> {
+    return this.emitAsync('addChannel', data)
+  }
+
 
 }
 
@@ -119,7 +133,7 @@ class ChannelService {
       nickName : user
     }
     const response = await api.post<boolean>('channel/invite', data)
-    //void this.channel.addChannel(response.data.id)
+    void this.channel.addInvite(data)
     return true
   }
 
