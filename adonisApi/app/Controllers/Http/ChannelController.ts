@@ -35,7 +35,30 @@ export default class ChannelController {
       return true
     }
     catch(err){
-      Logger.warn('Could not join channel' + String(channel))
+      Logger.error('Could not join channel' + String(channel))
+      throw err
+    }
+  }
+  async leave({ auth, request }: HttpContextContract) {
+    //console.log(auth.use('api'))
+    // TODO
+    //add authentication to requests
+    auth.use('api').authenticate()
+    const channelId = request.input('channelId', -1)
+    try{
+      const user = auth.user
+      const channel = await Channel.findOrFail(channelId)
+      // destroy channel and return true
+      if(user?.id === channel.ownerId){
+        channel.delete()
+        return true
+      }
+      // just remove record from channels_users
+      await user?.related('channels').detach([channelId])
+      return false
+    }
+    catch(err){
+      Logger.error('Could not leave channel' + String(channelId))
       throw err
     }
   }

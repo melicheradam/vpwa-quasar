@@ -18,12 +18,13 @@ Ws.namespace('channels/:id')
   .on('loadMessages', 'MessageController.loadMessages')
   .on('addMessage', 'MessageController.addMessage')
   .on('addMember', 'ChannelController.addMember')
+  .on('removeMember', 'ChannelController.removeMember')
 
 
 Ws.namespace('channel')
   // .middleware('channel') // check if user can join given channel
   .on('addChannel', 'ChannelController.addChannel')
-  .on('removeChannel', 'ChannelController.removeChannel')
+  .on('destroyChannel', 'ChannelController.destroyChannel')
 
 
 Ws.namespace('/')

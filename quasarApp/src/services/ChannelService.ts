@@ -21,6 +21,10 @@ class ChannelSocketManager extends SocketManager {
     this.socket.on('addedMember', (user: UserModel) => {
       store.commit('channels/ADD_USER', {channel: active, user: user})
     })
+
+    this.socket.on('removedMember', (user: UserModel) => {
+      store.commit('channels/REMOVE_USER', {channel: active, user: user})
+    })
   }
 
   public addMessage (message: RawMessage): Promise<SerializedMessage> {
@@ -33,10 +37,14 @@ class ChannelSocketManager extends SocketManager {
   public addMember(): Promise<UserModel> {
     return this.emitAsync('addMember')
   }
+
+  public removeMember(): Promise<UserModel> {
+    return this.emitAsync('removeMember')
+  }
 }
 
 class ChannelOpsSocketManager extends SocketManager {
-  public subscribe ({ store }: BootParams): void {
+  public subscribe ({ store, router }: BootParams): void {
 
     // get notification from websocket that a new channel was created
     // push it to store
@@ -45,14 +53,19 @@ class ChannelOpsSocketManager extends SocketManager {
         store.commit('channels/NEW_CHANNEL', {channel: channel, type: 'public'})
     })
 
-    this.socket.on('channelRemoved', (channel_id: number) => {
+    this.socket.on('channelDestroyed', (channel_id: number) => {
       store.commit('channels/REMOVE_CHANNEL', {channel_id: channel_id})
+      void router.push('/channel')
     })
   }
 
   // notify all listeners that a new channel was created
   public addChannel (channel: number): Promise<ChannelModel> {
     return this.emitAsync('addChannel', channel)
+  }
+
+  public destroyChannel (channel: number): Promise<ChannelModel> {
+    return this.emitAsync('destroyChannel', channel)
   }
 
 }
@@ -97,7 +110,15 @@ class ChannelService {
     void this.channel.addChannel(response.data.id)
     return response.data
   }
+  async leaveChannel (channel: number): Promise<boolean>{
+    const data = {
+      channelId: channel
+    }
+    const response = await api.post<boolean>('channel/leave', data)
+    //void this.channel.addChannel(response.data.id)
 
+    return Boolean(response.data)
+  }
   public addMember (id: number) {
     const channel = this.channels.get(id)
 
@@ -106,6 +127,16 @@ class ChannelService {
       return false
     }
     void channel.addMember()
+  }
+
+  public removeMember (id: number) {
+    const channel = this.channels.get(id)
+
+    if (!channel) {
+      console.log('CANNOT REMOVE MEMBER, CHANNEL DOES NOT EXIST YET')
+      return false
+    }
+    void channel.removeMember()
   }
 
   async joindb (id: number): Promise<boolean> {

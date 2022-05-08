@@ -4,6 +4,7 @@ import { ChannelsStateInterface } from './state'
 import { channelService } from 'src/services'
 import { ChannelModel, RawMessage, ChannelModelForm, SerializedMessage, MessageModel } from 'src/components/models'
 
+
 const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   async join ({ commit }, channel: number) {
     try {
@@ -37,15 +38,16 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
     }
   },
   leave ({ getters, commit }, channel: number | null) {
-    //const leaving: number[] = channel !== null ? [channel] : getters.joinedChannels
+    // eslint-disable-next-line 
+    const leaving: number[] = channel !== null ? [channel] : getters.joinedChannels
     if(channel){
       channelService.leave(channel)
       commit('CLEAR_CHANNEL', channel)
     }
-    /*leaving.forEach((c) => {
+    leaving.forEach((c) => {
       channelService.leave(c)
       commit('CLEAR_CHANNEL', c)
-    })*/
+    })
   },
   async addMessage ({ commit }, { channel, message }: { channel: number, message: RawMessage }) {
     const newMessage = await channelService.in(channel)?.addMessage(message)
@@ -58,14 +60,14 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   },
   async create ({ commit }, channel: ChannelModelForm): Promise<ChannelModel | null> {
     try {
-      commit('LOADING_START')
+      //commit('LOADING_START')
       const new_channel = await channelService.create(channel)
       const messages: ChannelModel[] = []
-      commit('LOADING_SUCCESS', { new_channel, messages })
+      //commit('LOADING_SUCCESS', { new_channel, messages })
       commit('NEW_CHANNEL', {channel: new_channel, type: 'joined'})
       return new_channel
     } catch (err) {
-      commit('LOADING_ERROR', err)
+      //commit('LOADING_ERROR', err)
       throw err
     }
   },
@@ -100,6 +102,31 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       const users = await channelService.getChannelUsers(channel)
 
       commit('SET_USERS', {channel: channel, users: users})
+
+      //commit('LOADING_SUCCESS', { channel, user })
+    } catch (err) {
+      //commit('LOADING_ERROR', err)
+      throw err
+    }
+  },
+  async leaveChannel ({ commit }, { channel }: { channel: number}) {
+    try {
+      //commit('LOADING_START')
+      // if status true, it means that channel was destroyed, emit to all users to remove it
+      // if status false, emit to all users i left the channel
+      const status = await channelService.leaveChannel(channel)
+
+      if(status){
+        void channelService.channel.destroyChannel(channel)
+        commit('REMOVE_CHANNEL', {channel_id: channel})
+      }
+      else{
+        channelService.removeMember(channel)
+        commit('JOINED_TO_PUBLIC', {channel_id: channel})
+      }
+        
+
+      
 
       //commit('LOADING_SUCCESS', { channel, user })
     } catch (err) {
