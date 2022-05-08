@@ -7,7 +7,7 @@
       <div class="row">
         <q-card class="transparent no-shadow">
           <q-card-section>
-            <q-form class="q-gutter-md">
+            <q-form class="q-gutter-md" @keydown.enter="authorize">
               <q-input type="email" outlined v-model="creds.email" label="Email" />
               <q-input
                 v-model="creds.password"
