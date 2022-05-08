@@ -115,6 +115,10 @@ class ChannelService {
     const response = await api.post<boolean>('channel/join', data)
     return response.data
   }
+  async declineInvite (id: number): Promise<boolean> {
+    const response = await api.delete<boolean>('channel/decline/'+String(id))
+    return response.data
+  }
 
   public getPublicChannels (): Promise<ChannelModel[]> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

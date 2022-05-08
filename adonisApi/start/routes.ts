@@ -19,6 +19,7 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import ChannelController from 'App/Controllers/Http/ChannelController'
 
 Route.get('/', async ({ view }) => {
   return view.render('welcome')
@@ -34,6 +35,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post('create', 'ChannelController.create')
   Route.post('join', 'ChannelController.join').middleware('auth')
+  Route.delete('decline/:id', 'ChannelController.declineInvite').middleware('auth')
   Route.get('getPublic', 'ChannelController.getPublic').middleware('auth')
   Route.get('getJoined', 'ChannelController.getJoined').middleware('auth')
   Route.get('getInvites', 'ChannelController.getInvites').middleware('auth')

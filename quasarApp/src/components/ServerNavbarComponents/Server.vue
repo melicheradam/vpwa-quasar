@@ -3,7 +3,7 @@
     <template v-if="serverType === 'invite'">
       <q-item-section side>
         <q-btn rounded flat dense>
-          <q-icon color="positive" name="done" @click="accept"/>
+          <q-icon color="positive" name="done" @click="accepted = true"/>
           <q-tooltip :offset="[0, 2]">Accept</q-tooltip>
         </q-btn>
       </q-item-section>
@@ -85,8 +85,8 @@ export default defineComponent({
             () => void channelService.addMember(Number(this.serverObj.id))
             )
         )
-        
-        
+
+
       }
     }
   },
@@ -99,14 +99,9 @@ export default defineComponent({
       else
         void this.$router.push('/channel/' + String(this.serverObj.id))
     },
-    decline(evt : Event) {
-      evt.preventDefault();
-      void this.$store.dispatch('app/declineInvite',this.serverObj)
+    decline() {
+      void this.$store.dispatch('channels/declineInvite',{ channel: (this.serverObj as ChannelModel).id })
       },
-    accept(evt : Event) {
-      evt.preventDefault();
-      void this.$store.dispatch('app/acceptInvite',this.serverObj)
-      }
   },
 });
 </script>

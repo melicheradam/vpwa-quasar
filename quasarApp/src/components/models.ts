@@ -60,7 +60,7 @@ export interface ChannelUsersModel extends ChannelModel {
 
 export interface UserModel {
   id: number,
-  userName: string,
+  nickName: string,
   firstName: string,
   lastName: string,
   email: string,

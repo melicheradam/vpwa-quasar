@@ -145,8 +145,9 @@ export default defineComponent({
       //and store it to vuex store
       // if first character is command execute it against API
       if (this.input.charAt(0) == '/') {
-        const command = this.input
-        switch(command) {
+        let splitted = this.input.split(' ')
+        console.log(splitted)
+        switch(splitted[0]) {
           case('/list'):
             this.$store.commit('app/EXPAND_RIGHT_DRAWER')
             break
@@ -161,6 +162,22 @@ export default defineComponent({
               //this.$store.dispatch('channesl/delete', {channel : this.activeChannel.id})
             }
             break
+          case('/invite'): {
+            const activeChannelId = this.activeChannel.id
+            if(this.activeChannel?.private && this.activeChannel?.ownerId !== this.$store.state.auth.user?.id) {
+              this.$q.notify({
+              type: 'negative',
+              message: 'This channel is private and you are not the owner'
+              })
+            }
+            else if(this.$store.state.channels.users[activeChannelId].some(user => user.nickName === splitted[1])) {
+              this.$q.notify({
+              type: 'negative',
+              message: 'User is already in channel'
+              })
+            }
+            break
+          }
           default:
               this.$q.notify({
               type: 'negative',

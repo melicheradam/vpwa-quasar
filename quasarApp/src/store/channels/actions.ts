@@ -78,16 +78,24 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       throw err
     }
   },
+  async declineInvite ({ commit }, { channel }: { channel: number}) {
+    try {
+      const retval = await channelService.declineInvite(channel)
+      commit('DECLINE_INVITE', {channel_id : channel} )
+      return retval
+    } catch (err) {
+      throw err
+    }
+  },
   async loadChannels ({ commit }) {
     try {
       //commit('LOADING_START')
       const publicChannels = await channelService.getPublicChannels()
       const joinedChannels = await channelService.getJoinedChannels()
       const invitesChannels = await channelService.getInvitesChannels()
-
       commit('SET_CHANNELS', {channels: publicChannels.filter(item => !joinedChannels.some(jItem => jItem.id === item.id)), type: 'public'})
       commit('SET_CHANNELS', {channels: joinedChannels, type: 'joined'})
-      commit('SET_CHANNELS', {channels: invitesChannels, type: 'invites'})
+      commit('SET_CHANNELS', {channels: invitesChannels, type: 'invite'})
       //commit('LOADING_SUCCESS', { channel, user })
     } catch (err) {
       //commit('LOADING_ERROR', err)

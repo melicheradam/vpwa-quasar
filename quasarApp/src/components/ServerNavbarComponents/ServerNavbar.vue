@@ -1,10 +1,10 @@
 <template>
   <div>
     <q-list padding>
-      <q-expansion-item dense dense-toggle expand-separator icon="priority_high" label="Invites">
+      <q-expansion-item dense dense-toggle default-opened expand-separator icon="priority_high" label="Invites">
         <q-list dense padding>
           <template v-for="server in channelsInvites" :key="server.id">
-            <Server :serverObj="server"></Server>
+            <Server :serverObj="server" :serverType="'invite'"></Server>
           </template>
         </q-list>
       </q-expansion-item>

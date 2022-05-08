@@ -82,11 +82,11 @@ export default defineComponent({
         if(this.$store.state.auth.user === null)
           return {
             id: -1,
-            userName: 'null',
+            nickName: 'null',
             firstName: 'null',
             lastName: 'null',
             email: 'null',
-            status: 'null'  
+            status: 'null'
           }
         else
           return this.$store.state.auth.user
@@ -120,7 +120,7 @@ export default defineComponent({
       void this.$store.dispatch('auth/logout').then(
         void this.$router.push('/auth/login')
       )
-      
+
     }
   }
 

@@ -31,11 +31,33 @@ export default class ChannelController {
       const user = auth.use('api').user
       if(user !== undefined){
         await user.related('channels').attach([channel])
+        try {
+          user.related('invites').detach([channel])
+        } catch (err){
+
+        }
       }
       return true
     }
     catch(err){
       Logger.warn('Could not join channel' + String(channel))
+      throw err
+    }
+  }
+  async declineInvite({ params, auth, request }: HttpContextContract) {
+    //console.log(auth.use('api'))
+    // TODO
+    //add authentication to requests
+    auth.use('api').authenticate
+    try{
+      const user = auth.use('api').user
+      if(user !== undefined){
+          user.related('invites').detach([params.id])
+      }
+      return true
+    }
+    catch(err){
+      Logger.warn('Could no decline invite to channel ' + String(params.id))
       throw err
     }
   }
@@ -53,7 +75,7 @@ export default class ChannelController {
 
     auth.user?.preload('channels')
     const joinedChannels = await auth.user?.related('channels').query()
-    
+
     return joinedChannels
   }
   async getInvites({ auth, request }: HttpContextContract) {
