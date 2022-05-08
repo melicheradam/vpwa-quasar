@@ -74,7 +74,7 @@ export default class ChannelController {
 
     auth.use('api').authenticate()
 
-    auth.user?.preload('channels')
+    auth.user?.load('channels')
     const joinedChannels = await auth.user?.related('channels').query()
     
     return joinedChannels
@@ -83,7 +83,7 @@ export default class ChannelController {
 
     auth.use('api').authenticate()
 
-    auth.user?.preload('invites')
+    auth.user?.load('invites')
     const invitedChannels = auth.user?.related('invites').query()
 
     return invitedChannels
