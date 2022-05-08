@@ -21,6 +21,25 @@ export default class ChannelController {
     })
     return channel
   }
+  async invite({ auth, request }: HttpContextContract) {
+    auth.use('api').authenticate
+    const channel = request.input('channelId', -1)
+    const invited = await User.findByOrFail('nickName', request.input('nickName', -1))
+    try{
+      if(invited !== undefined){
+        try {
+          await invited.related('invites').attach([channel])
+        } catch (err){
+          Logger.error(err)
+        }
+      }
+      return true
+    }
+    catch(err){
+      Logger.error('Could not invite user' + String((await invited).nickName))
+      throw err
+    }
+  }
   async join({ auth, request }: HttpContextContract) {
     //console.log(auth.use('api'))
     // TODO

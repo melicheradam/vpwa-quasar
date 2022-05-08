@@ -39,7 +39,7 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
     }
   },
   leave ({ getters, commit }, channel: number | null) {
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     const leaving: number[] = channel !== null ? [channel] : getters.joinedChannels
     if(channel){
       channelService.leave(channel)
@@ -72,6 +72,14 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
       throw err
     }
   },
+  async invite ({ commit }, { user, channel }: { user: string, channel : number}) {
+    try {
+      const retval = await channelService.invite(user, channel)
+      return retval
+    } catch (err) {
+      throw err
+    }
+  },
   async joindb ({ commit }, { channel }: { channel: number}) {
     try {
       const retval = await channelService.joindb(channel)
@@ -85,7 +93,7 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
     try {
       await channelService.declineInvite(channel)
       commit('DECLINE_INVITE', {channel_id : channel} )
-      
+
     } catch (err) {
       throw err
     }
@@ -133,9 +141,9 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
         channelService.removeMember(channel)
         commit('JOINED_TO_PUBLIC', {channel_id: channel})
       }
-        
 
-      
+
+
 
       //commit('LOADING_SUCCESS', { channel, user })
     } catch (err) {

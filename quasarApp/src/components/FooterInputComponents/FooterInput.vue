@@ -170,6 +170,9 @@ export default defineComponent({
               message: 'User is already in channel'
               })
             }
+            else{
+              await this.$store.dispatch('channels/invite', {user : splitted[1], channel : activeChannel.id})
+            }
             break
           }
           default:

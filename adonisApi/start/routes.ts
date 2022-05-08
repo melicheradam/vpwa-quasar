@@ -35,6 +35,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post('create', 'ChannelController.create').middleware('auth')
   Route.post('join', 'ChannelController.join').middleware('auth')
+  Route.post('invite', 'ChannelController.invite').middleware('auth')
   Route.delete('decline/:id', 'ChannelController.declineInvite').middleware('auth')
   Route.post('leave', 'ChannelController.leave').middleware('auth')
   Route.get('getPublic', 'ChannelController.getPublic').middleware('auth')

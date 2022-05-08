@@ -117,8 +117,9 @@ export default defineComponent({
       )
     },
     logout(){
-      void this.$store.dispatch('auth/logout')
-      void this.$router.push('/auth/login')
+      void this.$store.dispatch('auth/logout').then(
+        void this.$router.push('/auth/login')
+      )
 
     }
   }

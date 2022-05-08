@@ -113,6 +113,16 @@ class ChannelService {
     return this.channels.get(id)
   }
 
+  async invite (user: string, channel: number): Promise<boolean> {
+    const data = {
+      channelId : channel,
+      nickName : user
+    }
+    const response = await api.post<boolean>('channel/invite', data)
+    //void this.channel.addChannel(response.data.id)
+    return true
+  }
+
   async create (data: ChannelModelForm): Promise<ChannelModel> {
     const response = await api.post<ChannelModel>('channel/create', data)
     void this.channel.addChannel(response.data.id)
