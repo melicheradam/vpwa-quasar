@@ -36,8 +36,20 @@ const mutation: MutationTree<ChannelsStateInterface> = {
       state.messages[channel][state.messages[channel].length - 1].contentArr.push(message.contentArr[0])
     else
       state.messages[channel].push(message)
+  },
+  PREPEND_MESSAGE (state, { channel, message }: { channel: number, message: MessageModel }) {
+    if(state.messages[channel].length === 0){
+      state.messages[channel].push(message)
+      return
+    }
 
+    const first_message = state.messages[channel][0]
 
+    //combine messages sent withing 10s
+    if (state.messages[channel].length > 0 && first_message.user.id === message.user.id && message.createdAt - first_message.createdAt > (1000 * 10))
+      state.messages[channel][state.messages[channel].length - 1].contentArr.unshift(message.contentArr[0])
+    else
+      state.messages[channel].unshift(message)
   },
   NEW_CHANNEL (state, { channel, type }: { channel: ChannelModel, type: string }) {
     if(type === 'public')

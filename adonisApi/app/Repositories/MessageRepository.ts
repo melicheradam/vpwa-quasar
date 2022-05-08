@@ -5,12 +5,14 @@ import Logger from '@ioc:Adonis/Core/Logger'
 
 export default class MessageRepository implements MessageRepositoryContract {
   public async getAll(channelId: number): Promise<SerializedMessage[]> {
-    const channel = await Channel.query()
-      .where('id', channelId)
-      .preload('messages', (messagesQuery) => messagesQuery.preload('user'))
-      .firstOrFail()
-
-    return channel.messages.map((message) => message.serialize() as SerializedMessage)
+    const channel = await Channel.findOrFail(channelId)
+    const messages = await channel.related('messages').query()
+      .preload('user')
+      .orderBy('createdAt', 'desc')
+      .limit(10)
+    return messages.map((message) => {
+      return message.serialize() as SerializedMessage
+    })
   }
 
   public async create(channelId: number, userId: number, content: string): Promise<SerializedMessage> {

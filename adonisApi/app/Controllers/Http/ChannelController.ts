@@ -3,6 +3,8 @@ import CreateChannelValidator from 'App/Validators/CreateChannelValidator'
 import User from 'App/Models/User'
 import Logger from '@ioc:Adonis/Core/Logger'
 import Channel from 'App/Models/Channel'
+import { SerializedMessage } from '@ioc:Repositories/MessageRepository'
+import { DateTime } from 'luxon'
 
 
 export default class ChannelController {
@@ -117,5 +119,19 @@ export default class ChannelController {
     const channelUsers = (await Channel.findOrFail(params.id)).related('users').query()
 
     return channelUsers
+  }
+
+  async getMoreMessages({ auth, request, params }: HttpContextContract) {
+    const date = DateTime.fromMillis(Number(params.lastDate))
+    const channel = await Channel.findOrFail(params.id)
+    const messages = await channel.related('messages').query()
+      .where('createdAt', '<', date.toSQL())
+      .preload('user')
+      .orderBy('createdAt', 'desc')
+      .limit(10)
+    
+    return messages.map((message) => {
+      return message.serialize() as SerializedMessage
+    })
   }
 }
