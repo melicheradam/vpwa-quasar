@@ -47,7 +47,7 @@ export default defineComponent({
   methods: {
     onLoad (index: number, done: (stop?: boolean) => void): void {
       // fetch more messages from api
-      if(this.activeChannel !== null && this.channelMessages !== undefined && this.channelMessages.length > 0){
+      if(this.activeChannel !== null && this.channelMessages !== undefined && this.channelMessages.length > 3){
         const first_message = this.channelMessages[0]
         void this.$store.dispatch('channels/fetchMessages', {channel: this.channelID, lastDate: first_message.createdAt}).then(
           () => done(false)

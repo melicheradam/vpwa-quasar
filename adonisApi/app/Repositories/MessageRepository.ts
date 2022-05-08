@@ -9,7 +9,7 @@ export default class MessageRepository implements MessageRepositoryContract {
     const messages = await channel.related('messages').query()
       .preload('user')
       .orderBy('createdAt', 'desc')
-      .limit(10)
+      .limit(20)
     return messages.map((message) => {
       return message.serialize() as SerializedMessage
     })

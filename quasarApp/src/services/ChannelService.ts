@@ -67,6 +67,8 @@ class ChannelOpsSocketManager extends SocketManager {
     })
 
     this.socket.on('addedInvite', ({channel, nickName}: {channel: ChannelModel, nickName: string}) => {
+      console.log(store.state.auth.user?.nickName)
+      console.log(nickName)
       if(store.state.auth.user?.nickName === nickName){
         //store.commit('channels/REMOVE_CHANNEL', {channel_id: channel.id})
         store.commit('channels/NEW_CHANNEL', {channel: channel, type: 'invite'})
@@ -86,7 +88,7 @@ class ChannelOpsSocketManager extends SocketManager {
 
   // notify all listeners that a new channel was created
   public addInvite (data: {channelId: number, nickName: string}): Promise<ChannelModel> {
-    return this.emitAsync('addChannel', data)
+    return this.emitAsync('addInvite', data)
   }
 
 

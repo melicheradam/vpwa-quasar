@@ -7,7 +7,7 @@ export default class Invites extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
 
-      table.integer('from_user_id').unsigned().notNullable()
+      table.integer('from_user_id').unsigned()
       .references('id').inTable('users').onDelete('CASCADE')
       table.integer('to_user_id').unsigned().notNullable()
       .references('id').inTable('users').onDelete('CASCADE')

@@ -14,10 +14,10 @@ export default class ChannelController {
     return new_channel
   }
 
-  public async destroyChannel({ params, socket, auth }: WsContextContract) {
+  public async destroyChannel({ params, socket, auth }: WsContextContract, channel: number) {
     //const message = await this.messageRepository.create(params.id, auth.user!.id)
     // broadcast message to other users in channel
-    socket.broadcast.emit('channelDestroyed', params.id)
+    socket.broadcast.emit('channelDestroyed', channel)
     // return message to sender
     return true
   }
@@ -34,9 +34,9 @@ export default class ChannelController {
     return auth.user
   }
 
-  public async addInivte({ params, socket, auth}: WsContextContract, {channelId, nickName}: {channelId: number, nickName: string}) {
+  public async addInvite({ params, socket, auth}: WsContextContract, {channelId, nickName}: {channelId: number, nickName: string}) {
     const channel = await Channel.findOrFail(channelId)
-    socket.broadcast.emit('addedInvite', {channel: channel, nickName: params.nickName})
+    socket.broadcast.emit('addedInvite', {channel: channel, nickName: nickName})
 
     return auth.user
   }

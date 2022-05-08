@@ -85,9 +85,9 @@ const mutation: MutationTree<ChannelsStateInterface> = {
     state.invitesChannels = state.invitesChannels.filter(item => item.id !== channel_id)
   },
   JOIN_CHANNEL(state, {channel_id}: {channel_id: number}){
-    const channel = state.publicChannels.filter(item => item.id === channel_id)
+    let channel = state.publicChannels.filter(item => item.id === channel_id)
     if(channel.length === 0) {
-      const channel = state.invitesChannels.filter(item => item.id === channel_id)
+      channel = state.invitesChannels.filter(item => item.id === channel_id)
     }
     state.joinedChannels.push(channel[0])
     state.publicChannels = state.publicChannels.filter(item => item.id !== channel_id)
