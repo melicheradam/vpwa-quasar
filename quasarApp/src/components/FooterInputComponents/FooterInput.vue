@@ -137,6 +137,7 @@ export default defineComponent({
       //and store it to vuex store
       // if first character is command execute it against API
       const activeChannel = this.currentChannel as ChannelModel
+
       if (this.input.charAt(0) == '/') {
         let splitted = this.input.split(' ')
         console.log(splitted)

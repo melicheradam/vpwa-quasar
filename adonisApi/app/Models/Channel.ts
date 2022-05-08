@@ -29,7 +29,7 @@ export default class Channel extends BaseModel {
   public messages: HasMany<typeof Message>
 
   @manyToMany(() => User, {
-    pivotTable: 'channel_users',
+    pivotTable: 'channels_users',
     pivotForeignKey: 'channel_id',
     pivotRelatedForeignKey: 'user_id',
     pivotTimestamps: true,

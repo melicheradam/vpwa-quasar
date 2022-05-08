@@ -31,20 +31,19 @@ const makeRoutes = (store: Store<any>): RouteRecordRaw[] => {
 
             const channel = Number(to.params.channelID)
             if(!isNaN(channel)){
-              void store.dispatch('channels/join', {channel: channel}).then(
-                () => {
-                  store.commit('channels/SET_ACTIVE', {channel: channel})
+              void store.dispatch('channels/join', {channel: channel})
+                
+              store.commit('channels/SET_ACTIVE', {channel: channel})
 
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                  if(store.state.channels.joinedChannels.length === 0)
-                  next({name: 'home'})
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              if(store.state.channels.joinedChannels.length === 0)
+                next({name: 'home'})
 
-                  void store.dispatch('channels/loadUsers', {channel: channel})
-                }
-              )
+              void store.dispatch('channels/loadUsers', {channel: channel})
             }
             next()
           },
+          
         },
       ],
     },

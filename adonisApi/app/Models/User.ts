@@ -33,7 +33,7 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
   @manyToMany(() => Channel, {
-    pivotTable: 'channel_users',
+    pivotTable: 'channels_users',
     pivotForeignKey: 'user_id',
     pivotRelatedForeignKey: 'channel_id',
     pivotTimestamps: true,

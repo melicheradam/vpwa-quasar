@@ -14,8 +14,8 @@ export default defineComponent({
   components: { MessagesContainer },
   name: 'IndexPage',
 
-  mounted(){
+  created(){
     void this.$store.dispatch('channels/loadChannels')
-  }
+  },
 });
 </script>
