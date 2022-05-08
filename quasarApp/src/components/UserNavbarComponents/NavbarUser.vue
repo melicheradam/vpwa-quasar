@@ -43,7 +43,7 @@
             </q-card-section>
             <q-card-actions align="right" class="text-primary" >
               <q-btn flat label="Cancel" v-close-popup />
-              <q-btn flat label="Leave" color="negative"  v-close-popup @click="showDialog = false" />
+              <q-btn flat label="Leave" color="negative"  v-close-popup @click="leaveChannel" />
             </q-card-actions>
           </q-card>
         </template>
@@ -57,7 +57,7 @@
             </q-card-section>
             <q-card-actions align="right" class="text-primary">
               <q-btn flat label="Cancel" v-close-popup />
-              <q-btn flat label="Leave" color="negative"  v-close-popup @click="showDialog = false" />
+              <q-btn flat label="Leave" color="negative"  v-close-popup @click="leaveChannel" />
             </q-card-actions>
           </q-card>
         </template>
@@ -82,17 +82,19 @@ export default defineComponent({
     },
     data () {
         return {
-            activeChannel : this.$store.state.channels.activeChannel,
             showDialog : false,
             $q: useQuasar(),
         };
     },
     computed: {
+        activeChannel(){
+          return this.$store.state.channels.activeChannel
+        },
         currentUser(): UserModel | null{
-            return this.$store.state.auth.user
+          return this.$store.state.auth.user
         },
         ...mapGetters('channels', {
-            currentChannel: 'activeChannelModel'
+          currentChannel: 'activeChannelModel'
         }),
     },
     methods: {
@@ -100,7 +102,9 @@ export default defineComponent({
             //
         },
         leaveChannel(){
-            void this.$store.dispatch('app/leaveChannel')
+            this.showDialog = false
+            void this.$store.dispatch('channels/leaveChannel', {channel: this.activeChannel?.id})
+            void this.$router.push('/channel')
 
         }
 

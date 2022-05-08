@@ -1,4 +1,3 @@
-import { MessageModel, UserModel, ChannelModel } from 'components/models';
 
 export interface AppStateInterface {
 [x: string]: any;

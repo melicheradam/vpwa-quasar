@@ -18,12 +18,16 @@ Ws.namespace('channels/:id')
   .on('loadMessages', 'MessageController.loadMessages')
   .on('addMessage', 'MessageController.addMessage')
   .on('addMember', 'ChannelController.addMember')
+  .on('removeMember', 'ChannelController.removeMember')
 
 
 Ws.namespace('channel')
   // .middleware('channel') // check if user can join given channel
-  .on('addChannel', 'ChannelController.addChannel')
-  .on('removeChannel', 'ChannelController.removeChannel')
+  .connected('ActivityController.setOnline')
+  .disconnected('ActivityController.setOffline')
+  .on('setOnline', 'ChannelController.setOnline')
+  .on('setOffline', 'ChannelController.setOffline')
+  .on('destroyChannel', 'ChannelController.destroyChannel')
 
 
 Ws.namespace('/')

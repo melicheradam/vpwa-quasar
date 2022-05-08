@@ -14,17 +14,23 @@ export default class ChannelController {
     return new_channel
   }
 
-  public async removeChannel({ params, socket, auth }: WsContextContract) {
+  public async destroyChannel({ params, socket, auth }: WsContextContract) {
     //const message = await this.messageRepository.create(params.id, auth.user!.id)
     // broadcast message to other users in channel
-    socket.broadcast.emit('channelRemoved', params.id)
+    socket.broadcast.emit('channelDestroyed', params.id)
     // return message to sender
     return true
   }
 
   public async addMember({ params, socket, auth}: WsContextContract) {
     socket.broadcast.emit('addedMember', auth.user)
-    Logger.info('emitted')
+
+    return auth.user
+  }
+
+  public async removeMember({ params, socket, auth}: WsContextContract) {
+    socket.broadcast.emit('removedMember', auth.user)
+
     return auth.user
   }
 }

@@ -72,10 +72,10 @@ export default defineComponent({
     activeChannel () {
       return this.$store.state.channels.active
     },
-    leftDrawerOpen () {
+    leftDrawerOpen (): boolean {
       return this.$store.state.app.leftDrawerOpen
     },
-    rightDrawerOpen () {
+    rightDrawerOpen (): boolean {
       return this.$store.state.app.rightDrawerOpen
     }
   },

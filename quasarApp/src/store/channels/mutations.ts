@@ -60,9 +60,17 @@ const mutation: MutationTree<ChannelsStateInterface> = {
       state.joinedChannels = channels
   },
   REMOVE_CHANNEL (state, { channel_id }: { channel_id: number}){
-    state.invitesChannels.filter(item => item.id !== channel_id)
-    state.joinedChannels.filter(item => item.id !== channel_id)
-    state.publicChannels.filter(item => item.id !== channel_id)
+    state.invitesChannels = state.invitesChannels.filter(item => item.id !== channel_id)
+    state.joinedChannels = state.joinedChannels.filter(item => item.id !== channel_id)
+    state.publicChannels = state.publicChannels.filter(item => item.id !== channel_id)
+  },
+  JOINED_TO_PUBLIC (state, { channel_id }: { channel_id: number}){
+    const channel = state.joinedChannels.filter(item => item.id === channel_id)[0]
+    state.joinedChannels = state.joinedChannels.filter(item => item.id !== channel_id)
+
+    if(channel !== null && channel.private === false){
+      state.publicChannels.push(channel)
+    }
   },
   DECLINE_INVITE (state, { channel_id }: { channel_id: number}){
     state.invitesChannels = state.invitesChannels.filter(item => item.id !== channel_id)
@@ -82,6 +90,18 @@ const mutation: MutationTree<ChannelsStateInterface> = {
   },
   ADD_USER(state, { channel, user }: { channel: number, user: UserModel }){
     state.users[channel].push(user)
+  },
+  REMOVE_USER(state, { channel, user }: { channel: number, user: UserModel }){
+    state.users[channel] = state.users[channel].filter(item => item.id !== user.id)
+  },
+  SET_STATUS(state, { user, new_status }: { user: UserModel, new_status: string }){
+    const keys = Object.keys(state.users)
+
+    keys.forEach((key) => {
+      const obj = state.users[Number(key)].find(item => item.id === user.id)
+      if(obj)
+        obj.status = new_status
+    })
   }
 }
 
