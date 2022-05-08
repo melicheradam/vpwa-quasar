@@ -163,7 +163,7 @@ export default defineComponent({
             }
             break
           case('/invite'): {
-            const activeChannelId = this.activeChannel.id
+            const activeChannelId = Number(this.activeChannel?.id)
             if(this.activeChannel?.private && this.activeChannel?.ownerId !== this.$store.state.auth.user?.id) {
               this.$q.notify({
               type: 'negative',
