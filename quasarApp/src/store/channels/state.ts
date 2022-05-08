@@ -9,7 +9,7 @@ export interface ChannelsStateInterface {
   joinedChannels: ChannelModel[]
   invitesChannels: ChannelModel[]
   active: number | null
-  activeChannel : ChannelModel | null
+  //activeChannel : ChannelModel | null
 }
 
 function state (): ChannelsStateInterface {
@@ -22,7 +22,7 @@ function state (): ChannelsStateInterface {
     joinedChannels: [],
     invitesChannels: [],
     active: null,
-    activeChannel : null
+    //activeChannel : null
   }
 }
 

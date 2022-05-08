@@ -7,9 +7,9 @@ const getters: GetterTree<ChannelsStateInterface, StateInterface> = {
   joinedChannels (context){
     return Object.keys(context.messages)
   },
-  activeChannelModel (context): ChannelModel | undefined{
+  activeChannelModel (context): ChannelModel{
     if(context.active === null)
-      return undefined
+      return {} as ChannelModel
     return context.joinedChannels[context.active]
   },
   currentMessages (context): MessageModel[] | []{

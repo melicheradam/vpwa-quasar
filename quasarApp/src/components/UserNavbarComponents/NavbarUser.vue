@@ -21,7 +21,7 @@
             <q-btn flat icon="exit_to_app" @click="showDialog = true" />
         </q-item-section>
         <q-item-section side v-else>
-            <template v-if="activeChannel.ownerId === currentUser.id">
+            <template v-if="currentChannel.ownerId === currentUser.id">
               <q-tooltip :offset="[0, 2]" >Ban user</q-tooltip>
               <q-btn flat icon="hardware" @click="kickOrBanUser" />
             </template>
@@ -33,7 +33,7 @@
     </q-item>
 
       <q-dialog v-model="showDialog" persistent>
-        <template v-if="activeChannel.ownerId === currentUser.id">
+        <template v-if="currentChannel.ownerId === currentUser.id">
           <q-card style="min-width: 350px" >
             <q-card-section>
               <div class="">
@@ -87,9 +87,6 @@ export default defineComponent({
         };
     },
     computed: {
-        activeChannel(){
-          return this.$store.state.channels.activeChannel
-        },
         currentUser(): UserModel | null{
           return this.$store.state.auth.user
         },
@@ -103,7 +100,8 @@ export default defineComponent({
         },
         leaveChannel(){
             this.showDialog = false
-            void this.$store.dispatch('channels/leaveChannel', {channel: this.activeChannel?.id})
+            const channel_id = Number((this.currentChannel as ChannelModel).id)
+            void this.$store.dispatch('channels/leaveChannel', {channel: channel_id})
             void this.$router.push('/channel')
 
         }

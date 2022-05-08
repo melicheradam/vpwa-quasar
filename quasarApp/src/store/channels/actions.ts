@@ -6,9 +6,10 @@ import { ChannelModel, RawMessage, ChannelModelForm, SerializedMessage, MessageM
 
 
 const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
-  async join ({ commit }, channel: number) {
+  async join ({ commit }, { channel }: { channel: number}) {
     try {
       commit('LOADING_START')
+
       const messages = await channelService.join(channel).loadMessages()
       const formattedMessages = Array<MessageModel>()
 
@@ -82,9 +83,9 @@ const actions: ActionTree<ChannelsStateInterface, StateInterface> = {
   },
   async declineInvite ({ commit }, { channel }: { channel: number}) {
     try {
-      const retval = await channelService.declineInvite(channel)
+      await channelService.declineInvite(channel)
       commit('DECLINE_INVITE', {channel_id : channel} )
-      return retval
+      
     } catch (err) {
       throw err
     }

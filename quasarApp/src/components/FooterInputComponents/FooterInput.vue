@@ -112,17 +112,9 @@ export default defineComponent({
     select: ref('select'),
   },
   computed: {
-    activeChannel () {
-      return this.$store.state.channels.activeChannel
-    },
-    channelID: {
-      get (): number {
-        return Number(this.$route.params.channelID)
-      },
-      set () {
-        //
-      }
-    }
+    ...mapGetters('channels', {
+      currentChannel: 'activeChannelModel'
+    }),
   },
 
   methods: {
@@ -144,6 +136,7 @@ export default defineComponent({
       //here we will post message
       //and store it to vuex store
       // if first character is command execute it against API
+      const activeChannel = this.currentChannel as ChannelModel
       if (this.input.charAt(0) == '/') {
         let splitted = this.input.split(' ')
         console.log(splitted)
@@ -152,7 +145,7 @@ export default defineComponent({
             this.$store.commit('app/EXPAND_RIGHT_DRAWER')
             break
           case('/quit'):
-            if(this.activeChannel?.ownerId !== this.$store.state.auth.user?.id) {
+            if(activeChannel.ownerId !== this.$store.state.auth.user?.id) {
               this.$q.notify({
               type: 'negative',
               message: 'You are not the owner of this channel'
@@ -163,8 +156,8 @@ export default defineComponent({
             }
             break
           case('/invite'): {
-            const activeChannelId = Number(this.activeChannel?.id)
-            if(this.activeChannel?.private && this.activeChannel?.ownerId !== this.$store.state.auth.user?.id) {
+            const activeChannelId = Number(activeChannel.id)
+            if(activeChannel.private && activeChannel?.ownerId !== this.$store.state.auth.user?.id) {
               this.$q.notify({
               type: 'negative',
               message: 'This channel is private and you are not the owner'
@@ -187,7 +180,8 @@ export default defineComponent({
       }
       else {
         this.loading = true
-        await this.addMessage({ channel: this.activeChannel, message: this.input })
+        const activeChannel = this.currentChannel as ChannelModel
+        await this.addMessage({ channel: activeChannel.id, message: this.input })
         this.loading = false
       }
       const item = this.$refs.select as QSelect

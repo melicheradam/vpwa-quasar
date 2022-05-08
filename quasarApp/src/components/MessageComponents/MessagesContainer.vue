@@ -73,9 +73,5 @@ export default defineComponent({
 
     }
   },
-  mounted () {
-    if(this.activeChannel !== null)
-      void this.$store.dispatch('channels/join', this.activeChannel)
-  }
 });
 </script>
