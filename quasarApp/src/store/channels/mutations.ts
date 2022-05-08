@@ -85,6 +85,15 @@ const mutation: MutationTree<ChannelsStateInterface> = {
   },
   REMOVE_USER(state, { channel, user }: { channel: number, user: UserModel }){
     state.users[channel] = state.users[channel].filter(item => item.id !== user.id)
+  },
+  SET_STATUS(state, { user, new_status }: { user: UserModel, new_status: string }){
+    const keys = Object.keys(state.users)
+
+    keys.forEach((key) => {
+      const obj = state.users[Number(key)].find(item => item.id === user.id)
+      if(obj)
+        obj.status = new_status
+    })
   }
 }
 

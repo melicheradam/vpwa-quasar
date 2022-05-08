@@ -23,7 +23,10 @@ Ws.namespace('channels/:id')
 
 Ws.namespace('channel')
   // .middleware('channel') // check if user can join given channel
-  .on('addChannel', 'ChannelController.addChannel')
+  .connected('ActivityController.setOnline')
+  .disconnected('ActivityController.setOffline')
+  .on('setOnline', 'ChannelController.setOnline')
+  .on('setOffline', 'ChannelController.setOffline')
   .on('destroyChannel', 'ChannelController.destroyChannel')
 
 

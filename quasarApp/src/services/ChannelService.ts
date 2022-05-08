@@ -57,6 +57,14 @@ class ChannelOpsSocketManager extends SocketManager {
       store.commit('channels/REMOVE_CHANNEL', {channel_id: channel_id})
       void router.push('/channel')
     })
+
+    this.socket.on('userOnline', (user: UserModel) => {
+      store.commit('channels/SET_STATUS', {user: user, new_status: 'green'})
+    })
+
+    this.socket.on('userOffline', (user: UserModel) => {
+      store.commit('channels/SET_STATUS', {user: user, new_status: 'grey'})
+    })
   }
 
   // notify all listeners that a new channel was created
